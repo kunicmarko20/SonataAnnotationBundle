@@ -1,0 +1,30 @@
+language: php
+
+php:
+  - '7.1'
+  - '7.2'
+  - nightly
+
+env:
+  global:
+    - TARGET=test
+
+matrix:
+  fast_finish: true
+  include:
+    - php: '7.1'
+      env: SYMFONY=3.4.*
+    - php: '7.1'
+      env: SYMFONY=4.0.*
+
+  allow_failures:
+    - php: nightly
+
+install:
+  - if [ -x .travis/install_${TARGET}.sh ]; then .travis/install_${TARGET}.sh; fi;
+
+script:
+  - if [ -x .travis/script_${TARGET}.sh ]; then .travis/script_${TARGET}.sh; fi;
+
+after_success:
+  - if [ -x .travis/after_success_${TARGET}.sh ]; then .travis/after_success_${TARGET}.sh; fi;

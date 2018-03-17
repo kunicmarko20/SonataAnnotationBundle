@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <defaults public="true">
+            <bind key="$annotationReader" type="service" id="annotation_reader" />
+        </defaults>
+        <service id="sonata.annotation.reader.form" class="KunicMarko\SonataAnnotationBundle\Reader\FormReader" />
+        <service id="sonata.annotation.reader.list" class="KunicMarko\SonataAnnotationBundle\Reader\ListReader" />
+        <service id="sonata.annotation.reader.show" class="KunicMarko\SonataAnnotationBundle\Reader\ShowReader" />
+        <service id="sonata.annotation.reader.datagrid" class="KunicMarko\SonataAnnotationBundle\Reader\DatagridReader" />
+        <service id="sonata.annotation.reader.route" class="KunicMarko\SonataAnnotationBundle\Reader\RouteReader" />
+    </services>
+</container>
