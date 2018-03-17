@@ -25,7 +25,7 @@ composer require kunicmarko/sonata-annotation-bundle
 
 **2.** Register the bundle in your Kernel
 
-```
+```php
 return [
     //...
     KunicMarko\SonataAnnotationBundle\SonataAnnotationBundle::class => ['all' => true],
@@ -37,7 +37,7 @@ return [
 Instead of creating class for Admin it is enough to just add annotation
 to your entity.
 
-```
+```php
 <?php
 
 namespace App\Entity;
@@ -83,7 +83,7 @@ just to use annotation.
 
 ### Admin
 
-```
+```php
 <?php
 
 namespace App\Entity;
@@ -126,7 +126,7 @@ class Category
 
 ### FormField
 
-```
+```php
 <?php
 
 namespace App\Entity;
@@ -160,7 +160,7 @@ class Category
 
 ### ShowField
 
-```
+```php
 <?php
 
 namespace App\Entity;
@@ -193,7 +193,7 @@ class Category
 
 ### ListField
 
-```
+```php
 <?php
 
 namespace App\Entity;
@@ -236,7 +236,7 @@ class Category
 
 ### DatagridField
 
-```
+```php
 <?php
 
 namespace App\Entity;
