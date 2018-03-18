@@ -2,7 +2,7 @@
 
 namespace KunicMarko\SonataAnnotationBundle\Reader;
 
-use KunicMarko\SonataAnnotationBundle\Annotation\Admin;
+use KunicMarko\SonataAnnotationBundle\Annotation\ListAction;
 use KunicMarko\SonataAnnotationBundle\Annotation\ListField;
 use Sonata\AdminBundle\Mapper\BaseMapper;
 
@@ -15,16 +15,31 @@ class ListReader extends AbstractReader
     {
         parent::configureFields($entity, $baseMapper);
 
-        $this->addListActions($entity, $baseMapper);
+        if ($actions = $this->getListActions($this->annotationReader->getClassAnnotations($entity))) {
+            $baseMapper->add('_action', null, [
+                'actions' => $actions
+            ]);
+        }
     }
 
-    private function addListActions(\ReflectionClass $entity, BaseMapper $baseMapper): void
+    private function getListActions(array $annotations): array
     {
-        $annotation = $this->annotationReader->getClassAnnotation($entity, Admin::class);
+        $actions = [];
 
-        $baseMapper->add('_action', null, [
-            'actions' => $annotation->actions
-        ]);
+        foreach ($annotations as $annotation) {
+            if (!$this->isSupported($annotation)) {
+                continue;
+            }
+
+            $actions[$annotation->name] = $annotation->options;
+        }
+
+        return $actions;
+    }
+
+    private function isSupported($annotation): bool
+    {
+        return $annotation instanceof ListAction;
     }
 
     protected function addPropertiesToMapper(array $properties, BaseMapper $baseMapper): void

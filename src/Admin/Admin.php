@@ -44,6 +44,24 @@ class Admin extends AbstractAdmin
             ->configureRoutes($this->getReflectionClass(), $collection);
     }
 
+    public function configureActionButtons($action, $object = null): array
+    {
+        return $this->get('sonata.annotation.reader.action_button')
+            ->configureActions(
+                $this->getReflectionClass(),
+                parent::configureActionButtons($action, $object)
+            );
+    }
+
+    public function getDashboardActions(): array
+    {
+        return $this->get('sonata.annotation.reader.dashboard_action')
+            ->configureActions(
+                $this->getReflectionClass(),
+                parent::getDashboardActions()
+            );
+    }
+
     private function get(string $service)
     {
         return $this->getConfigurationPool()->getContainer()->get($service);

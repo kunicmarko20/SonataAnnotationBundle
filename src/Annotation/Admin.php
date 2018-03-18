@@ -10,15 +10,9 @@ namespace KunicMarko\SonataAnnotationBundle\Annotation;
  */
 class Admin
 {
-    public const DEFAULT_ACTIONS = [
-        'show' => null,
-        'edit'   => null,
-        'delete' => null,
-    ];
-
+    public $label;
     public $managerType = 'orm';
     public $group;
-    public $label;
     public $showInDashboard;
     public $onTop;
     public $icon;
@@ -26,8 +20,6 @@ class Admin
     public $labelCatalogue;
     public $controller;
     public $serviceId;
-    public $actions = self::DEFAULT_ACTIONS;
-    public $routes = [];
 
     public function getTagOptions(): array
     {

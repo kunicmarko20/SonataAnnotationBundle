@@ -19,7 +19,7 @@ Documentation
 
 **1.**  Add dependency with composer
 
-```
+```bash
 composer require kunicmarko/sonata-annotation-bundle
 ```
 
@@ -46,9 +46,7 @@ use Doctrine\ORM\Mapping as ORM;
 use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
 
 /**
- * @Sonata\Admin(
- *     label="Category"
- * )
+ * @Sonata\Admin("Category")
  *
  * @ORM\Table
  * @ORM\Entity
@@ -69,7 +67,7 @@ class Category
 
 Clear cache:
 
-```
+```bash
 bin/console cache:clear
 ```
 
@@ -103,17 +101,7 @@ use App\Controller\YourCRUDController;
  *     labelTranslatorStrategy="sonata.admin.label.strategy.native",
  *     labelCatalogue="App",
  *     controller=YourCRUDController::class,
- *     serviceId="app.admin.category",
- *     routes={
- *          "import"="/import"
- *     },
- *     actions={
- *          "edit"={},
- *          "delete"={},
- *          "import"={
- *              "template"="import_button.html.twig"
- *          },
- *     }
+ *     serviceId="app.admin.category"
  * )
  *
  * @ORM\Table
@@ -133,12 +121,9 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
-use App\Controller\YourCRUDController;
 
 /**
- * @Sonata\Admin(
- *     label="Category",
- * )
+ * @Sonata\Admin("Category")
  *
  * @ORM\Table
  * @ORM\Entity
@@ -167,12 +152,9 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
-use App\Controller\YourCRUDController;
 
 /**
- * @Sonata\Admin(
- *     label="Category",
- * )
+ * @Sonata\Admin("Category")
  *
  * @ORM\Table
  * @ORM\Entity
@@ -200,12 +182,9 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
-use App\Controller\YourCRUDController;
 
 /**
- * @Sonata\Admin(
- *     label="Category",
- * )
+ * @Sonata\Admin("Category")
  *
  * @ORM\Table
  * @ORM\Entity
@@ -243,12 +222,9 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
-use App\Controller\YourCRUDController;
 
 /**
- * @Sonata\Admin(
- *     label="Category",
- * )
+ * @Sonata\Admin("Category")
  *
  * @ORM\Table
  * @ORM\Entity
@@ -269,3 +245,161 @@ class Category
     private $name;
 }
 ```
+
+### ListAction
+
+```php
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
+
+/**
+ * @Sonata\Admin("Category")
+ *
+ * @Sonata\ListAction("show")
+ * @Sonata\ListAction("edit")
+ * @Sonata\ListAction("delete")
+ *
+ * @ORM\Table
+ * @ORM\Entity
+ */
+class Category
+{
+}
+```
+
+### Route
+
+Add custom routes to your admin class:
+
+```php
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
+use App\Controller\YourCRUDController;
+
+/**
+ * @Sonata\Admin(
+ *     label="Category",
+ *     controller=YourCRUDController::class
+ * )
+ *
+ * @Sonata\Route(name="import", path="/import")
+ * @Sonata\Route(name="notify", path="/notify")
+ *
+ * @ORM\Table
+ * @ORM\Entity
+ */
+class Category
+{
+}
+```
+
+This just registers a custom route, you have additional helper annotations
+that we will mention in next sub sections. We mention one by one but you
+can use them all at the same time if you want.
+
+#### ActionButton
+
+This will add button next to your add button in a list view.
+
+```php
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
+use App\Controller\YourCRUDController;
+
+/**
+ * @Sonata\Admin(
+ *     label="Category",
+ *     controller=YourCRUDController::class
+ * )
+ *
+ * @Sonata\Route(name="import", path="/import")
+ *
+ * @Sonata\ActionButton("import_action_button.html.twig")
+ *
+ * @ORM\Table
+ * @ORM\Entity
+ */
+class Category
+{
+}
+```
+
+
+#### DashboardAction
+
+This will add button to your dashboard block for this entity.
+
+```php
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
+use App\Controller\YourCRUDController;
+
+/**
+ * @Sonata\Admin(
+ *     label="Category",
+ *     controller=YourCRUDController::class
+ * )
+ *
+ * @Sonata\Route(name="import", path="/import")
+ *
+ * @Sonata\DashboardAction("import_dashboard_button.html.twig")
+ *
+ * @ORM\Table
+ * @ORM\Entity
+ */
+class Category
+{
+}
+```
+
+#### ListAction
+
+We already mentioned this one but here we show you that you can also add custom
+route. 
+
+```php
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
+use App\Controller\YourCRUDController;
+
+/**
+ * @Sonata\Admin(
+ *     label="Category",
+ *     controller=YourCRUDController::class
+ * )
+ *
+ * @Sonata\Route(name="import", path="/import")
+ *
+ * @Sonata\ListAction("show")
+ * @Sonata\ListAction("edit")
+ * @Sonata\ListAction("delete")
+ * @Sonata\ListAction(name="import", options={"template"="import_list_button.html.twig"})
+ *
+ * @ORM\Table
+ * @ORM\Entity
+ */
+class Category
+{
+}
+```
+

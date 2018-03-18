@@ -3,13 +3,11 @@
 namespace KunicMarko\SonataAnnotationBundle\Reader;
 
 use Doctrine\Common\Annotations\Reader;
-use KunicMarko\SonataAnnotationBundle\Annotation\Route;
-use Sonata\AdminBundle\Route\RouteCollection;
 
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class RouteReader
+abstract class AbstractActionReader
 {
     protected $annotationReader;
 
@@ -18,7 +16,7 @@ class RouteReader
         $this->annotationReader = $annotationReader;
     }
 
-    public function configureRoutes(\ReflectionClass $entity, RouteCollection $collection): void
+    public function configureActions(\ReflectionClass $entity, array $actions): array
     {
         $annotations = $this->annotationReader->getClassAnnotations($entity);
 
@@ -27,12 +25,11 @@ class RouteReader
                 continue;
             }
 
-            $collection->add($annotation->name, $annotation->path);
+            $actions[random_int(-99999, 99999)]['template'] = $annotation->template;
         }
+
+        return $actions;
     }
 
-    private function isSupported($annotation): bool
-    {
-        return $annotation instanceof Route;
-    }
+    abstract protected function isSupported($annotation): bool;
 }
