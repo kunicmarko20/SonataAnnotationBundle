@@ -21,6 +21,18 @@
     "symfony/finder": "^3.4 || ^4.0",
     "symfony/http-kernel": "^3.4 || ^4.0"
   },
+  "require-dev": {
+    "matthiasnoback/symfony-dependency-injection-test": "^3.0",
+    "symfony/phpunit-bridge": "^4.0"
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.x-dev"
+    }
+  },
   "autoload": {
     "psr-4": { "KunicMarko\\SonataAnnotationBundle\\": "src/" }
   },
