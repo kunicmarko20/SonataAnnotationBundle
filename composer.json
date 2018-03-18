@@ -1,7 +1,15 @@
 {
   "name": "kunicmarko/sonata-annotation-bundle",
-  "description": "Symfony Bundle that adds annotations for Sonata Admin.",
   "type": "symfony-bundle",
+  "description": "Symfony Bundle that adds annotations for Sonata Admin.",
+  "keywords": [
+    "symfony",
+    "sonata",
+    "sonata-admin",
+    "annotations"
+  ],
+  "homepage": "https://github.com/kunicmarko20/SonataAnnotationBundle",
+  "license": "MIT",
   "authors": [
     {
       "name": "Marko Kunic",
@@ -9,9 +17,6 @@
       "homepage": "https://twitter.com/kunicmarko20"
     }
   ],
-  "keywords": ["symfony", "sonata", "sonata-admin", "annotations"],
-  "homepage": "https://github.com/kunicmarko20/SonataAnnotationBundle",
-  "license": "MIT",
   "require": {
     "php": "^7.1",
     "doctrine/annotations": "^1.6",
@@ -21,10 +26,26 @@
     "symfony/finder": "^3.4 || ^4.0",
     "symfony/http-kernel": "^3.4 || ^4.0"
   },
+  "require-dev": {
+    "matthiasnoback/symfony-dependency-injection-test": "^3.0",
+    "symfony/phpunit-bridge": "^4.0"
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.x-dev"
+    }
+  },
   "autoload": {
-    "psr-4": { "KunicMarko\\SonataAnnotationBundle\\": "src/" }
+    "psr-4": {
+      "KunicMarko\\SonataAnnotationBundle\\": "src/"
+    }
   },
   "autoload-dev": {
-    "psr-4": { "KunicMarko\\SonataAnnotationBundle\\Tests\\": "tests/" }
+    "psr-4": {
+      "KunicMarko\\SonataAnnotationBundle\\Tests\\": "tests/"
+    }
   }
 }
