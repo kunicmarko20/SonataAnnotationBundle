@@ -16,7 +16,7 @@ abstract class AbstractActionReader
         $this->annotationReader = $annotationReader;
     }
 
-    public function configureActions(\ReflectionClass $entity, array $actions): array
+    public function getActions(\ReflectionClass $entity, array $actions): array
     {
         $annotations = $this->annotationReader->getClassAnnotations($entity);
 

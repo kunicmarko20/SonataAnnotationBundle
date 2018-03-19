@@ -4,12 +4,13 @@
         <defaults public="true">
             <bind key="$annotationReader" type="service" id="annotation_reader" />
         </defaults>
-        <service id="sonata.annotation.reader.form" class="KunicMarko\SonataAnnotationBundle\Reader\FormReader" />
-        <service id="sonata.annotation.reader.list" class="KunicMarko\SonataAnnotationBundle\Reader\ListReader" />
-        <service id="sonata.annotation.reader.show" class="KunicMarko\SonataAnnotationBundle\Reader\ShowReader" />
-        <service id="sonata.annotation.reader.datagrid" class="KunicMarko\SonataAnnotationBundle\Reader\DatagridReader" />
-        <service id="sonata.annotation.reader.route" class="KunicMarko\SonataAnnotationBundle\Reader\RouteReader" />
-        <service id="sonata.annotation.reader.action_button" class="KunicMarko\SonataAnnotationBundle\Reader\ActionButtonReader" />
-        <service id="sonata.annotation.reader.dashboard_action" class="KunicMarko\SonataAnnotationBundle\Reader\DashboardActionReader" />
+        <service id="KunicMarko\SonataAnnotationBundle\Reader\FormReader" />
+        <service id="KunicMarko\SonataAnnotationBundle\Reader\ListReader" />
+        <service id="KunicMarko\SonataAnnotationBundle\Reader\ShowReader" />
+        <service id="KunicMarko\SonataAnnotationBundle\Reader\DatagridReader" />
+        <service id="KunicMarko\SonataAnnotationBundle\Reader\RouteReader" />
+        <service id="KunicMarko\SonataAnnotationBundle\Reader\ActionButtonReader" />
+        <service id="KunicMarko\SonataAnnotationBundle\Reader\DashboardActionReader" />
+        <service id="KunicMarko\SonataAnnotationBundle\Reader\ExportReader" />
     </services>
 </container>

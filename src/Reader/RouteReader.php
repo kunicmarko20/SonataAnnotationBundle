@@ -27,7 +27,7 @@ class RouteReader
                 continue;
             }
 
-            $collection->add($annotation->name, $annotation->path);
+            $collection->{$annotation->option}(...$annotation->getArgumentsByOption());
         }
     }
 

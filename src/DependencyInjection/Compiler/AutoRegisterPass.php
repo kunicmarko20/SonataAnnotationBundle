@@ -54,7 +54,7 @@ class AutoRegisterPass implements CompilerPassInterface
         return $this->getNamespace($file->getPathname()) . '\\' . $this->getClassName($file->getFilename());
     }
 
-    private function getNamespace(string $filePath)
+    private function getNamespace(string $filePath): string
     {
         $namespaceLine = preg_grep('/^namespace /', file($filePath));
         preg_match('/namespace (.*);$/', reset($namespaceLine), $match);

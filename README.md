@@ -7,6 +7,7 @@ This bundle was greatly inspired by [IbrowsSonataAdminAnnotationBundle](https://
 
 [![Build Status](https://travis-ci.org/kunicmarko20/SonataAnnotationBundle.svg?branch=master)](https://travis-ci.org/kunicmarko20/SonataAnnotationBundle)
 [![Coverage Status](https://coveralls.io/repos/github/kunicmarko20/SonataAnnotationBundle/badge.svg?branch=master)](https://coveralls.io/github/kunicmarko20/SonataAnnotationBundle?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/kunicmarko20/SonataAnnotationBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/kunicmarko20/SonataAnnotationBundle/?branch=master)
 
 Documentation
 -------------
@@ -14,6 +15,17 @@ Documentation
 * [Installation](#installation)
 * [How to use](#how-to-use)
 * [Annotations](#annotations)
+    * [Admin](#admin)
+    * [FormField](#formfield)
+    * [ShowField](#showfield)
+    * [ListField](#listfield)
+    * [DatagridField](#datagridfield)
+    * [ExportField](#exportfield)
+    * [ExportFormats](#exportformats)
+    * [Route](#route)
+    * [ActionButton](#actionbutton)
+    * [DashboardAction](#dashboardaction)
+    * [ListAction](#listaction)
 
 ## Installation
 
@@ -246,7 +258,10 @@ class Category
 }
 ```
 
-### ListAction
+### ExportField
+
+You can add annotation to fields that you want to export, also you can add
+label for the field, if left blank field name will be used as label.
 
 ```php
 <?php
@@ -259,21 +274,62 @@ use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
 /**
  * @Sonata\Admin("Category")
  *
- * @Sonata\ListAction("show")
- * @Sonata\ListAction("edit")
- * @Sonata\ListAction("delete")
+ * @ORM\Table
+ * @ORM\Entity
+ */
+class Category
+{
+    /**
+     * @Sonata\ExportField()
+     *
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
+
+    /**
+     * @Sonata\ExportField("Custom Name")
+     *
+     * @ORM\Column(name="tag", type="string", length=255)
+     */
+    private $tag;
+}
+```
+
+### ExportFormats
+
+You can customize the export formats you want to allow, if this annotation
+is not present, all formats are shown.
+
+```php
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
+
+/**
+ * @Sonata\Admin("Category")
+ *
+ * @Sonata\ExportFormats({"json", "xml"})
  *
  * @ORM\Table
  * @ORM\Entity
  */
 class Category
 {
+    /**
+     * @Sonata\ExportField()
+     *
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
 }
 ```
 
 ### Route
 
-Add custom routes to your admin class:
+Add custom routes to your admin class or remove already existing ones:
 
 ```php
 <?php
@@ -291,7 +347,8 @@ use App\Controller\YourCRUDController;
  * )
  *
  * @Sonata\Route(name="import", path="/import")
- * @Sonata\Route(name="notify", path="/notify")
+ * @Sonata\Route(name="send_mail", path="{id}/send_mail")
+ * @Sonata\Route("edit", option="remove")
  *
  * @ORM\Table
  * @ORM\Entity
@@ -336,7 +393,6 @@ class Category
 }
 ```
 
-
 #### DashboardAction
 
 This will add button to your dashboard block for this entity.
@@ -368,10 +424,7 @@ class Category
 }
 ```
 
-#### ListAction
-
-We already mentioned this one but here we show you that you can also add custom
-route. 
+### ListAction
 
 ```php
 <?php
@@ -402,4 +455,3 @@ class Category
 {
 }
 ```
-
