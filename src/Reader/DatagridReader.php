@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace KunicMarko\SonataAnnotationBundle\Reader;
 
 use KunicMarko\SonataAnnotationBundle\Annotation\DatagridField;

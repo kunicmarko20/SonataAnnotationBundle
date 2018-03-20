@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace KunicMarko\SonataAnnotationBundle\DependencyInjection;
 
-use KunicMarko\SonataAnnotationBundle\Admin\Admin;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -19,7 +20,6 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('directory')->defaultNull()->end()
-                ->scalarNode('admin')->defaultValue(Admin::class)->end()
             ->end();
 
         return $treeBuilder;

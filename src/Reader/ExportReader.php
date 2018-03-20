@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace KunicMarko\SonataAnnotationBundle\Reader;
 
 use Doctrine\Common\Annotations\Reader;
@@ -11,19 +13,14 @@ use KunicMarko\SonataAnnotationBundle\Annotation\ExportFormats;
  */
 class ExportReader
 {
-    protected $annotationReader;
+    use AnnotationReaderTrait;
 
-    public function __construct(Reader $annotationReader)
-    {
-        $this->annotationReader = $annotationReader;
-    }
-
-    public function getFields(\ReflectionClass $entity): array
+    public function getFields(\ReflectionClass $class): array
     {
         $properties = [];
 
-        foreach ($entity->getProperties() as $property) {
-            if ($annotation = $this->annotationReader->getPropertyAnnotation($property, ExportField::class)) {
+        foreach ($class->getProperties() as $property) {
+            if ($annotation = $this->getPropertyAnnotation($property, ExportField::class)) {
                 $properties[$annotation->label ?? $property->getName()] = $property->getName();
             }
         }
@@ -31,9 +28,9 @@ class ExportReader
         return $properties;
     }
 
-    public function getFormats(\ReflectionClass $entity): array
+    public function getFormats(\ReflectionClass $class): array
     {
-        if ($annotation = $this->annotationReader->getClassAnnotation($entity, ExportFormats::class)) {
+        if ($annotation = $this->getClassAnnotation($class, ExportFormats::class)) {
             return $annotation->formats;
         }
 

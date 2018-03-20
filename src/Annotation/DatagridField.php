@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace KunicMarko\SonataAnnotationBundle\Annotation;
 
 /**
@@ -10,8 +12,19 @@ namespace KunicMarko\SonataAnnotationBundle\Annotation;
  */
 class DatagridField extends AbstractField
 {
+    /**
+     * @var array
+     */
     public $filterOptions = [];
+
+    /**
+     * @var string
+     */
     public $fieldType;
+
+    /**
+     * @var string
+     */
     public $fieldOptions;
 
     public function getSettings(): array

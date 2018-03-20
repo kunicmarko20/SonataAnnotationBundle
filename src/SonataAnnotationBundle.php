@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace KunicMarko\SonataAnnotationBundle;
 
 use KunicMarko\SonataAnnotationBundle\DependencyInjection\Compiler\AutoRegisterPass;

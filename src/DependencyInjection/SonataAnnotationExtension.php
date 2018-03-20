@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace KunicMarko\SonataAnnotationBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
@@ -12,7 +14,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  */
 class SonataAnnotationExtension extends Extension
 {
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
@@ -20,11 +22,6 @@ class SonataAnnotationExtension extends Extension
         $container->setParameter(
             'sonata_annotation.directory',
             $config['directory'] ?? $container->getParameter('kernel.root_dir')
-        );
-
-        $container->setParameter(
-            'sonata_annotation.admin',
-            $config['admin']
         );
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));

@@ -1,26 +1,19 @@
 <?php
 
-namespace KunicMarko\SonataAnnotationBundle\Reader;
+declare(strict_types=1);
 
-use Doctrine\Common\Annotations\Reader;
+namespace KunicMarko\SonataAnnotationBundle\Reader;
 
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
 abstract class AbstractActionReader
 {
-    protected $annotationReader;
+    use AnnotationReaderTrait;
 
-    public function __construct(Reader $annotationReader)
+    public function getActions(\ReflectionClass $class, array $actions): array
     {
-        $this->annotationReader = $annotationReader;
-    }
-
-    public function getActions(\ReflectionClass $entity, array $actions): array
-    {
-        $annotations = $this->annotationReader->getClassAnnotations($entity);
-
-        foreach ($annotations as $annotation) {
+        foreach ($this->getClassAnnotations($class) as $annotation) {
             if (!$this->isSupported($annotation)) {
                 continue;
             }

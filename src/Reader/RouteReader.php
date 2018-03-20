@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace KunicMarko\SonataAnnotationBundle\Reader;
 
 use Doctrine\Common\Annotations\Reader;
@@ -11,24 +13,21 @@ use Sonata\AdminBundle\Route\RouteCollection;
  */
 class RouteReader
 {
-    protected $annotationReader;
+    use AnnotationReaderTrait;
 
-    public function __construct(Reader $annotationReader)
+    public function getRoutes(\ReflectionClass $class): array
     {
-        $this->annotationReader = $annotationReader;
-    }
+        $routes = [];
 
-    public function configureRoutes(\ReflectionClass $entity, RouteCollection $collection): void
-    {
-        $annotations = $this->annotationReader->getClassAnnotations($entity);
-
-        foreach ($annotations as $annotation) {
+        foreach ($this->getClassAnnotations($class) as $annotation) {
             if (!$this->isSupported($annotation)) {
                 continue;
             }
 
-            $collection->{$annotation->option}(...$annotation->getArgumentsByOption());
+            $routes[$annotation->name] = $annotation;
         }
+
+        return $routes;
     }
 
     private function isSupported($annotation): bool

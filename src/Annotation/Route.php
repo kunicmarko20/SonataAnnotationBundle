@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace KunicMarko\SonataAnnotationBundle\Annotation;
 
 /**
@@ -8,20 +10,28 @@ namespace KunicMarko\SonataAnnotationBundle\Annotation;
  *
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class Route
+class Route implements AnnotationInterface
 {
-    private const DEFAULT_OPTION = 'add';
+    public const ID_PARAMETER = '{id}';
+    private const DEFAULT_METHOD = 'add';
 
+    /**
+     * @var string
+     */
     public $name;
+
+    /**
+     * @var string
+     */
     public $path;
-    public $option = self::DEFAULT_OPTION;
 
-    public function getArgumentsByOption(): array
+    /**
+     * @var string
+     */
+    public $method = self::DEFAULT_METHOD;
+
+    public function shouldAddRoute(): bool
     {
-        if ($this->option === self::DEFAULT_OPTION) {
-            return [$this->name, $this->path];
-        }
-
-        return [$this->name];
+        return $this->method === self::DEFAULT_METHOD;
     }
 }

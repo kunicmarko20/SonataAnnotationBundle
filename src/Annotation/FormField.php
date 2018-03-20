@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace KunicMarko\SonataAnnotationBundle\Annotation;
 
 /**
@@ -10,6 +12,9 @@ namespace KunicMarko\SonataAnnotationBundle\Annotation;
  */
 class FormField extends AbstractField
 {
+    /**
+     * @var array
+     */
     public $options = [];
 
     public function getSettings(): array

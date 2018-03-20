@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace KunicMarko\SonataAnnotationBundle\Reader;
 
 use Doctrine\Common\Annotations\Reader;
@@ -10,27 +12,22 @@ use Sonata\AdminBundle\Mapper\BaseMapper;
  */
 abstract class AbstractReader
 {
-    protected $annotationReader;
+    use AnnotationReaderTrait;
 
-    public function __construct(Reader $annotationReader)
-    {
-        $this->annotationReader = $annotationReader;
-    }
-
-    public function configureFields(\ReflectionClass $entity, BaseMapper $baseMapper): void
+    public function configureFields(\ReflectionClass $class, BaseMapper $baseMapper): void
     {
         $this->addPropertiesToMapper(
-            $this->findProperties($entity),
+            $this->findProperties($class),
             $baseMapper
         );
     }
 
-    protected function findProperties(\ReflectionClass $entity): array
+    protected function findProperties(\ReflectionClass $class): array
     {
         $properties = [];
 
-        foreach ($entity->getProperties() as $property) {
-            if ($annotation = $this->annotationReader->getPropertyAnnotation($property, $this->getAnnotation())) {
+        foreach ($class->getProperties() as $property) {
+            if ($annotation = $this->getPropertyAnnotation($property, $this->getAnnotation())) {
                 $properties[$property->getName()] = $annotation;
             }
         }

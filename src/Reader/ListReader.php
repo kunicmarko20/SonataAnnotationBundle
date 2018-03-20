@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace KunicMarko\SonataAnnotationBundle\Reader;
 
 use KunicMarko\SonataAnnotationBundle\Annotation\ListAction;
@@ -11,11 +13,11 @@ use Sonata\AdminBundle\Mapper\BaseMapper;
  */
 class ListReader extends AbstractReader
 {
-    public function configureFields(\ReflectionClass $entity, BaseMapper $baseMapper): void
+    public function configureFields(\ReflectionClass $class, BaseMapper $baseMapper): void
     {
-        parent::configureFields($entity, $baseMapper);
+        parent::configureFields($class, $baseMapper);
 
-        if ($actions = $this->getListActions($this->annotationReader->getClassAnnotations($entity))) {
+        if ($actions = $this->getListActions($this->getClassAnnotations($class))) {
             $baseMapper->add('_action', null, [
                 'actions' => $actions
             ]);

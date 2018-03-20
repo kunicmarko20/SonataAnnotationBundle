@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace KunicMarko\SonataAnnotationBundle\Annotation;
 
 /**
@@ -8,8 +10,15 @@ namespace KunicMarko\SonataAnnotationBundle\Annotation;
  *
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class ListAction
+class ListAction implements AnnotationInterface
 {
+    /**
+     * @var string
+     */
     public $name;
-    public $options;
+
+    /**
+     * @var array
+     */
+    public $options = [];
 }

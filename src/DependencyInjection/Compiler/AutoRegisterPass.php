@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace KunicMarko\SonataAnnotationBundle\DependencyInjection\Compiler;
 
 use Doctrine\Common\Annotations\Reader;
@@ -23,12 +25,12 @@ class AutoRegisterPass implements CompilerPassInterface
         $annotationReader = $container->get('annotation_reader');
 
         foreach ($this->findFiles($container->getParameter('sonata_annotation.directory')) as $file) {
-            $fullyQualifiedClassName = $this->getFullyQualifiedClassName($file);
+            $className = $this->getFullyQualifiedClassName($file);
 
-            if ($annotation = $this->getAnnotation($annotationReader, $fullyQualifiedClassName)) {
+            if ($annotation = $this->getAnnotation($annotationReader, $className)) {
                 $definition = new Definition(
-                    $container->getParameter('sonata_annotation.admin'),
-                    [null, $fullyQualifiedClassName, $annotation->controller]
+                    $annotation->admin,
+                    [$annotation->code, $className, $annotation->controller]
                 );
 
                 $definition->addTag('sonata.admin', $annotation->getTagOptions());

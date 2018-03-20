@@ -10,10 +10,10 @@ namespace KunicMarko\SonataAnnotationBundle\Annotation;
  *
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class ExportFormats implements AnnotationInterface
+class DatagridValues implements AnnotationInterface
 {
     /**
      * @var array
      */
-    public $formats = [];
+    public $values = [];
 }

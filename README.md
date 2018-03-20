@@ -3,7 +3,16 @@ Sonata Annotation Bundle
 
 Adds Annotations for Sonata Admin.
 
+The point is to reduce noise, having lots of admin classes with just mappings
+that don't do anything else should be avoided. Add annotations to your models
+and you are done. If you need something that is not covered by this bundle,
+create admin class instead.
+
 This bundle was greatly inspired by [IbrowsSonataAdminAnnotationBundle](https://github.com/ibrows/IbrowsSonataAdminAnnotationBundle)
+
+[![PHP Version](https://img.shields.io/badge/php-%5E7.1-blue.svg)](https://img.shields.io/badge/php-%5E7.1-blue.svg)
+[![Latest Stable Version](https://poser.pugx.org/kunicmarko/sonata-annotation-bundle/v/stable)](https://packagist.org/packages/kunicmarko/sonata-annotation-bundle)
+[![Latest Unstable Version](https://poser.pugx.org/kunicmarko/sonata-annotation-bundle/v/unstable)](https://packagist.org/packages/kunicmarko/sonata-annotation-bundle)
 
 [![Build Status](https://travis-ci.org/kunicmarko20/SonataAnnotationBundle.svg?branch=master)](https://travis-ci.org/kunicmarko20/SonataAnnotationBundle)
 [![Coverage Status](https://coveralls.io/repos/github/kunicmarko20/SonataAnnotationBundle/badge.svg?branch=master)](https://coveralls.io/github/kunicmarko20/SonataAnnotationBundle?branch=master)
@@ -26,6 +35,8 @@ Documentation
     * [ActionButton](#actionbutton)
     * [DashboardAction](#dashboardaction)
     * [ListAction](#listaction)
+    * [DatagridValues](#datagridvalues)
+    * [ParentAssociationMapping](#parentassociationmapping)
 
 ## Installation
 
@@ -101,6 +112,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
 use App\Controller\YourCRUDController;
+use App\Admin\YourAdmin;
 
 /**
  * @Sonata\Admin(
@@ -113,7 +125,9 @@ use App\Controller\YourCRUDController;
  *     labelTranslatorStrategy="sonata.admin.label.strategy.native",
  *     labelCatalogue="App",
  *     controller=YourCRUDController::class,
- *     serviceId="app.admin.category"
+ *     serviceId="app.admin.category",
+ *     admin=YourAdmin::class,
+ *     code="admin_code",
  * )
  *
  * @ORM\Table
@@ -122,6 +136,7 @@ use App\Controller\YourCRUDController;
 class Category
 {
 }
+
 ```
 
 ### FormField
@@ -348,7 +363,7 @@ use App\Controller\YourCRUDController;
  *
  * @Sonata\Route(name="import", path="/import")
  * @Sonata\Route(name="send_mail", path="{id}/send_mail")
- * @Sonata\Route("edit", option="remove")
+ * @Sonata\Route("edit", method="remove")
  *
  * @ORM\Table
  * @ORM\Entity
@@ -447,6 +462,60 @@ use App\Controller\YourCRUDController;
  * @Sonata\ListAction("edit")
  * @Sonata\ListAction("delete")
  * @Sonata\ListAction(name="import", options={"template"="import_list_button.html.twig"})
+ *
+ * @ORM\Table
+ * @ORM\Entity
+ */
+class Category
+{
+}
+```
+
+### DatagridValues
+
+```php
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
+use App\Controller\YourCRUDController;
+
+/**
+ * @Sonata\Admin("Category")
+ *
+ * @Sonata\DatagridValues({
+ *      "_sort_by":"p.name"
+ * })
+ *
+ * @ORM\Table
+ * @ORM\Entity
+ */
+class Category
+{
+    /**
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
+}
+```
+
+### ParentAssociationMapping
+
+```php
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
+use App\Controller\YourCRUDController;
+
+/**
+ * @Sonata\Admin("Category")
+ *
+ * @Sonata\ParentAssociationMapping("Parent")
  *
  * @ORM\Table
  * @ORM\Entity

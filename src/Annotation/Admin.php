@@ -1,6 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace KunicMarko\SonataAnnotationBundle\Annotation;
+
+use KunicMarko\SonataAnnotationBundle\Admin\Admin as AdminClass;
 
 /**
  * @Annotation
@@ -8,18 +12,67 @@ namespace KunicMarko\SonataAnnotationBundle\Annotation;
  *
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class Admin
+class Admin implements AnnotationInterface
 {
+    /**
+     * @var string
+     */
     public $label;
+
+    /**
+     * @var string
+     */
     public $managerType = 'orm';
+
+    /**
+     * @var string
+     */
     public $group;
+
+    /**
+     * @var bool
+     */
     public $showInDashboard;
+
+    /**
+     * @var bool
+     */
     public $onTop;
+
+    /**
+     * @var string
+     */
     public $icon;
+
+    /**
+     * @var string
+     */
     public $labelTranslatorStrategy;
+
+    /**
+     * @var string
+     */
     public $labelCatalogue;
+
+    /**
+     * @var string
+     */
     public $controller;
+
+    /**
+     * @var string
+     */
     public $serviceId;
+
+    /**
+     * @var string
+     */
+    public $admin = AdminClass::class;
+
+    /**
+     * @var string
+     */
+    public $code;
 
     public function getTagOptions(): array
     {

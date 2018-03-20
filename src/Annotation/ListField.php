@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace KunicMarko\SonataAnnotationBundle\Annotation;
 
 /**
@@ -10,5 +12,8 @@ namespace KunicMarko\SonataAnnotationBundle\Annotation;
  */
 class ListField extends AbstractField
 {
+    /**
+     * @var bool
+     */
     public $identifier = false;
 }

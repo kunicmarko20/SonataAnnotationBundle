@@ -10,10 +10,10 @@ namespace KunicMarko\SonataAnnotationBundle\Annotation;
  *
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class ExportFormats implements AnnotationInterface
+class ParentAssociationMapping implements AnnotationInterface
 {
     /**
-     * @var array
+     * @var string
      */
-    public $formats = [];
+    public $parent;
 }

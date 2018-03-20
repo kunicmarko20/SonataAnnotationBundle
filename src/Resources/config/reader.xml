@@ -12,5 +12,7 @@
         <service id="KunicMarko\SonataAnnotationBundle\Reader\ActionButtonReader" />
         <service id="KunicMarko\SonataAnnotationBundle\Reader\DashboardActionReader" />
         <service id="KunicMarko\SonataAnnotationBundle\Reader\ExportReader" />
+        <service id="KunicMarko\SonataAnnotationBundle\Reader\DatagridValuesReader" />
+        <service id="KunicMarko\SonataAnnotationBundle\Reader\ParentAssociationMappingReader" />
     </services>
 </container>

@@ -1,13 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace KunicMarko\SonataAnnotationBundle\Admin;
 
+use KunicMarko\SonataAnnotationBundle\Annotation\Route;
 use KunicMarko\SonataAnnotationBundle\Reader\ActionButtonReader;
 use KunicMarko\SonataAnnotationBundle\Reader\DashboardActionReader;
 use KunicMarko\SonataAnnotationBundle\Reader\DatagridReader;
+use KunicMarko\SonataAnnotationBundle\Reader\DatagridValuesReader;
 use KunicMarko\SonataAnnotationBundle\Reader\ExportReader;
 use KunicMarko\SonataAnnotationBundle\Reader\FormReader;
 use KunicMarko\SonataAnnotationBundle\Reader\ListReader;
+use KunicMarko\SonataAnnotationBundle\Reader\ParentAssociationMappingReader;
 use KunicMarko\SonataAnnotationBundle\Reader\RouteReader;
 use KunicMarko\SonataAnnotationBundle\Reader\ShowReader;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -22,6 +27,9 @@ use Sonata\AdminBundle\Show\ShowMapper;
  */
 class Admin extends AbstractAdmin
 {
+    private $parentAssociationMappingLoaded = false;
+    private $datagridValuesLoaded = false;
+
     protected function configureFormFields(FormMapper $formMapper): void
     {
         $this->get(FormReader::class)
@@ -48,8 +56,24 @@ class Admin extends AbstractAdmin
 
     protected function configureRoutes(RouteCollection $collection): void
     {
-        $this->get(RouteReader::class)
-            ->configureRoutes($this->getReflectionClass(), $collection);
+        foreach ($this->get(RouteReader::class)->getRoutes($this->getReflectionClass()) as $route) {
+            $this->handleRoute($collection, $route);
+        }
+    }
+
+    private function handleRoute(RouteCollection $collection, Route $route): void
+    {
+        if ($route->shouldAddRoute()) {
+            $collection->add($route->name, $this->replaceIdParameterInRoutePath($route->path));
+            return;
+        }
+
+        $collection->remove($route->name);
+    }
+
+    private function replaceIdParameterInRoutePath(string $path): string
+    {
+        return str_replace(Route::ID_PARAMETER, $this->getRouterIdParameter(), $path);
     }
 
     public function configureActionButtons($action, $object = null): array
@@ -80,6 +104,30 @@ class Admin extends AbstractAdmin
     {
         return $this->get(ExportReader::class)
             ->getFormats($this->getReflectionClass()) ?: parent::getExportFormats();
+    }
+
+    public function buildDatagrid()
+    {
+        if (!$this->datagridValuesLoaded) {
+            $this->datagridValues = $this->get(DatagridValuesReader::class)
+                ->getDatagridValues($this->getReflectionClass()) ?: $this->datagridValues;
+
+            $this->datagridValuesLoaded = true;
+        }
+
+        parent::buildDatagrid();
+    }
+
+    public function getParentAssociationMapping()
+    {
+        if (!$this->parentAssociationMappingLoaded) {
+            $this->parentAssociationMapping = $this->get(ParentAssociationMappingReader::class)
+                ->getParent($this->getReflectionClass()) ?: $this->parentAssociationMapping;
+
+            $this->parentAssociationMappingLoaded = true;
+        }
+
+        return $this->parentAssociationMapping;
     }
 
     private function get(string $service)
