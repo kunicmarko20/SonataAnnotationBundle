@@ -17,15 +17,21 @@ class ExportReader
 
     public function getFields(\ReflectionClass $class): array
     {
-        $properties = [];
+        $fields = [];
 
         foreach ($class->getProperties() as $property) {
             if ($annotation = $this->getPropertyAnnotation($property, ExportField::class)) {
-                $properties[$annotation->label ?? $property->getName()] = $property->getName();
+                $fields[$annotation->label ?? $property->getName()] = $property->getName();
             }
         }
 
-        return $properties;
+        foreach ($class->getMethods() as $method) {
+            if ($annotation = $this->getMethodAnnotation($method, ExportField::class)) {
+                $fields[$annotation->label ?? $method->getName()] = $method->getName();
+            }
+        }
+
+        return $fields;
     }
 
     public function getFormats(\ReflectionClass $class): array

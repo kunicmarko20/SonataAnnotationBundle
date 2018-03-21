@@ -15,8 +15,10 @@ class ParentAssociationMappingReader
 
     public function getParent(\ReflectionClass $class): ?string
     {
-        if ($annotation = $this->getClassAnnotation($class, ParentAssociationMapping::class)) {
-            return $annotation->parent;
+        foreach ($class->getProperties() as $property) {
+            if ($this->getPropertyAnnotation($property, ParentAssociationMapping::class)) {
+                return $property->getName();
+            }
         }
 
         return null;

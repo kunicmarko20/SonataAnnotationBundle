@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace KunicMarko\SonataAnnotationBundle\Admin;
 
-use KunicMarko\SonataAnnotationBundle\Annotation\Route;
+use KunicMarko\SonataAnnotationBundle\Annotation\AddRoute;
 use KunicMarko\SonataAnnotationBundle\Reader\ActionButtonReader;
 use KunicMarko\SonataAnnotationBundle\Reader\DashboardActionReader;
 use KunicMarko\SonataAnnotationBundle\Reader\DatagridReader;
@@ -56,24 +56,20 @@ class Admin extends AbstractAdmin
 
     protected function configureRoutes(RouteCollection $collection): void
     {
-        foreach ($this->get(RouteReader::class)->getRoutes($this->getReflectionClass()) as $route) {
-            $this->handleRoute($collection, $route);
-        }
-    }
+        [$addRoutes, $removeRoutes] = $this->get(RouteReader::class)->getRoutes($this->getReflectionClass());
 
-    private function handleRoute(RouteCollection $collection, Route $route): void
-    {
-        if ($route->shouldAddRoute()) {
+        foreach ($addRoutes as $route) {
             $collection->add($route->name, $this->replaceIdParameterInRoutePath($route->path));
-            return;
         }
 
-        $collection->remove($route->name);
+        foreach ($removeRoutes as $route) {
+            $collection->remove($route->name);
+        }
     }
 
     private function replaceIdParameterInRoutePath(string $path): string
     {
-        return str_replace(Route::ID_PARAMETER, $this->getRouterIdParameter(), $path);
+        return str_replace(AddRoute::ID_PARAMETER, $this->getRouterIdParameter(), $path);
     }
 
     public function configureActionButtons($action, $object = null): array

@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace KunicMarko\SonataAnnotationBundle\Reader;
 
-use Doctrine\Common\Annotations\Reader;
-use KunicMarko\SonataAnnotationBundle\Annotation\Route;
-use Sonata\AdminBundle\Route\RouteCollection;
+use KunicMarko\SonataAnnotationBundle\Annotation\AddRoute;
+use KunicMarko\SonataAnnotationBundle\Annotation\RemoveRoute;
 
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
@@ -17,21 +16,30 @@ class RouteReader
 
     public function getRoutes(\ReflectionClass $class): array
     {
-        $routes = [];
+        $addRoutes = [];
+        $removeRoutes = [];
 
         foreach ($this->getClassAnnotations($class) as $annotation) {
-            if (!$this->isSupported($annotation)) {
+            if ($this->isAddRoute($annotation)) {
+                $addRoutes[$annotation->name] = $annotation;
                 continue;
             }
 
-            $routes[$annotation->name] = $annotation;
+            if ($this->isRemoveRoute($annotation)) {
+                $removeRoutes[$annotation->name] = $annotation;
+            }
         }
 
-        return $routes;
+        return [$addRoutes, $removeRoutes];
     }
 
-    private function isSupported($annotation): bool
+    private function isAddRoute($annotation): bool
     {
-        return $annotation instanceof Route;
+        return $annotation instanceof AddRoute;
+    }
+
+    private function isRemoveRoute($annotation): bool
+    {
+        return $annotation instanceof RemoveRoute;
     }
 }

@@ -6,7 +6,7 @@ namespace KunicMarko\SonataAnnotationBundle\Annotation;
 
 /**
  * @Annotation
- * @Target({"PROPERTY","ANNOTATION"})
+ * @Target("PROPERTY")
  *
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */

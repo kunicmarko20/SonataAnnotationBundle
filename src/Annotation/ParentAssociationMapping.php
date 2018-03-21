@@ -6,14 +6,10 @@ namespace KunicMarko\SonataAnnotationBundle\Annotation;
 
 /**
  * @Annotation
- * @Target("CLASS")
+ * @Target("PROPERTY")
  *
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
 class ParentAssociationMapping implements AnnotationInterface
 {
-    /**
-     * @var string
-     */
-    public $parent;
 }

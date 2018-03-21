@@ -6,14 +6,14 @@ namespace KunicMarko\SonataAnnotationBundle\Annotation;
 
 /**
  * @Annotation
- * @Target({"PROPERTY", "METHOD"})
+ * @Target("CLASS")
  *
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class ExportField implements AnnotationInterface
+class RemoveRoute implements AnnotationInterface
 {
     /**
      * @var string
      */
-    public $label;
+    public $name;
 }

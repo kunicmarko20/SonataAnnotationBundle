@@ -33,4 +33,9 @@ trait AnnotationReaderTrait
     {
         return $this->annotationReader->getPropertyAnnotation($property, $annotation);
     }
+
+    protected function getMethodAnnotation(\ReflectionMethod $method, string $annotation): ?AnnotationInterface
+    {
+        return $this->annotationReader->getMethodAnnotation($method, $annotation);
+    }
 }

@@ -31,7 +31,8 @@ Documentation
     * [DatagridField](#datagridfield)
     * [ExportField](#exportfield)
     * [ExportFormats](#exportformats)
-    * [Route](#route)
+    * [AddRoute](#addroute)
+    * [RemoveRoute](#removeroute)
     * [ActionButton](#actionbutton)
     * [DashboardAction](#dashboardaction)
     * [ListAction](#listaction)
@@ -197,6 +198,14 @@ class Category
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
+    
+    /**
+     * @Sonata\ShowField()
+     */
+    public function showThis(): string
+    {
+        return 'show value';
+    }
 }
 ```
 
@@ -237,6 +246,14 @@ class Category
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
+
+    /**
+     * @Sonata\ListField()
+     */
+    public function listThis(): string
+    {
+        return 'list value';
+    }
 }
 ```
 
@@ -275,7 +292,7 @@ class Category
 
 ### ExportField
 
-You can add annotation to fields that you want to export, also you can add
+You can add annotation to fields/method that you want to export, also you can add
 label for the field, if left blank field name will be used as label.
 
 ```php
@@ -307,6 +324,14 @@ class Category
      * @ORM\Column(name="tag", type="string", length=255)
      */
     private $tag;
+
+    /**
+     * @Sonata\ExportField()
+     */
+    public function exportThis(): string
+    {
+        return 'export value';
+    }
 }
 ```
 
@@ -342,9 +367,9 @@ class Category
 }
 ```
 
-### Route
+### AddRoute
 
-Add custom routes to your admin class or remove already existing ones:
+Add custom routes to your admin class:
 
 ```php
 <?php
@@ -361,9 +386,8 @@ use App\Controller\YourCRUDController;
  *     controller=YourCRUDController::class
  * )
  *
- * @Sonata\Route(name="import", path="/import")
- * @Sonata\Route(name="send_mail", path="{id}/send_mail")
- * @Sonata\Route("edit", method="remove")
+ * @Sonata\AddRoute(name="import", path="/import")
+ * @Sonata\AddRoute(name="send_mail", path="{id}/send_mail")
  *
  * @ORM\Table
  * @ORM\Entity
@@ -373,11 +397,36 @@ class Category
 }
 ```
 
-This just registers a custom route, you have additional helper annotations
-that we will mention in next sub sections. We mention one by one but you
-can use them all at the same time if you want.
+### RemoveRoute
 
-#### ActionButton
+remove already existing routes:
+
+```php
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
+use App\Controller\YourCRUDController;
+
+/**
+ * @Sonata\Admin(
+ *     label="Category",
+ *     controller=YourCRUDController::class
+ * )
+ *
+ * @Sonata\RemoveRoute("edit")
+ *
+ * @ORM\Table
+ * @ORM\Entity
+ */
+class Category
+{
+}
+```
+
+### ActionButton
 
 This will add button next to your add button in a list view.
 
@@ -396,7 +445,7 @@ use App\Controller\YourCRUDController;
  *     controller=YourCRUDController::class
  * )
  *
- * @Sonata\Route(name="import", path="/import")
+ * @Sonata\AddRoute(name="import", path="/import")
  *
  * @Sonata\ActionButton("import_action_button.html.twig")
  *
@@ -408,7 +457,7 @@ class Category
 }
 ```
 
-#### DashboardAction
+### DashboardAction
 
 This will add button to your dashboard block for this entity.
 
@@ -427,7 +476,7 @@ use App\Controller\YourCRUDController;
  *     controller=YourCRUDController::class
  * )
  *
- * @Sonata\Route(name="import", path="/import")
+ * @Sonata\AddRoute(name="import", path="/import")
  *
  * @Sonata\DashboardAction("import_dashboard_button.html.twig")
  *
@@ -456,7 +505,7 @@ use App\Controller\YourCRUDController;
  *     controller=YourCRUDController::class
  * )
  *
- * @Sonata\Route(name="import", path="/import")
+ * @Sonata\AddRoute(name="import", path="/import")
  *
  * @Sonata\ListAction("show")
  * @Sonata\ListAction("edit")
@@ -515,12 +564,17 @@ use App\Controller\YourCRUDController;
 /**
  * @Sonata\Admin("Category")
  *
- * @Sonata\ParentAssociationMapping("Parent")
- *
  * @ORM\Table
  * @ORM\Entity
  */
 class Category
 {
+    /**
+     * @Sonata\ParentAssociationMapping()
+     *
+     * @ORM\ManyToOne(targetEntity="Parent")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
+     */
+    private $parent;
 }
 ```

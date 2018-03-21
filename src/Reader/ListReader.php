@@ -44,6 +44,19 @@ class ListReader extends AbstractReader
         return $annotation instanceof ListAction;
     }
 
+    protected function findProperties(\ReflectionClass $class): array
+    {
+        $fields = parent::findProperties($class);
+
+        foreach ($class->getMethods() as $method) {
+            if ($annotation = $this->getMethodAnnotation($method, $this->getAnnotation())) {
+                $fields[$method->getName()] = $annotation;
+            }
+        }
+
+        return $fields;
+    }
+
     protected function addPropertiesToMapper(array $properties, BaseMapper $baseMapper): void
     {
         foreach ($properties as $name => $annotation) {
