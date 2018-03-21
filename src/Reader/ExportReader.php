@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace KunicMarko\SonataAnnotationBundle\Reader;
 
-use Doctrine\Common\Annotations\Reader;
 use KunicMarko\SonataAnnotationBundle\Annotation\ExportField;
 use KunicMarko\SonataAnnotationBundle\Annotation\ExportFormats;
 
