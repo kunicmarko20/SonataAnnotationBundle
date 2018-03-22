@@ -25,6 +25,7 @@ Documentation
 * [How to use](#how-to-use)
 * [Annotations](#annotations)
     * [Admin](#admin)
+    * [Access](#access)
     * [FormField](#formfield)
     * [ShowField](#showfield)
     * [ListField](#listfield)
@@ -130,6 +131,33 @@ use App\Admin\YourAdmin;
  *     admin=YourAdmin::class,
  *     code="admin_code",
  * )
+ *
+ * @ORM\Table
+ * @ORM\Entity
+ */
+class Category
+{
+}
+
+```
+
+### Access
+
+If you are using role handler as described [here](https://sonata-project.org/bundles/admin/3-x/doc/reference/security.html#role-handler)
+you can add permission per role with this annotation.
+
+```php
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
+
+/**
+ * @Sonata\Admin("Category")
+ *
+ * @Sonata\Access("ROLE_CLIENT", permissions={"LIST", "VIEW", "EXPORT"})
  *
  * @ORM\Table
  * @ORM\Entity
@@ -428,7 +456,8 @@ class Category
 
 ### ActionButton
 
-This will add button next to your add button in a list view.
+This will add button next to your add button in a list view. [Here](https://sonata-project.org/bundles/admin/3-x/doc/cookbook/recipe_custom_action.html#custom-action-without-entity)
+you can find how the template should look like.
 
 ```php
 <?php
@@ -459,7 +488,8 @@ class Category
 
 ### DashboardAction
 
-This will add button to your dashboard block for this entity.
+This will add button to your dashboard block for this entity. [Here](https://sonata-project.org/bundles/admin/3-x/doc/cookbook/recipe_custom_action.html#custom-action-without-entity)
+you can find how the template should look like.
 
 ```php
 <?php
@@ -522,6 +552,7 @@ class Category
 
 ### DatagridValues
 
+As explained [here](https://symfony.com/doc/master/bundles/SonataAdminBundle/reference/action_list.html#configure-the-default-ordering-in-the-list-view).
 ```php
 <?php
 
@@ -534,9 +565,7 @@ use App\Controller\YourCRUDController;
 /**
  * @Sonata\Admin("Category")
  *
- * @Sonata\DatagridValues({
- *      "_sort_by":"p.name"
- * })
+ * @Sonata\DatagridValues({"_sort_by":"p.name"})
  *
  * @ORM\Table
  * @ORM\Entity
