@@ -14,9 +14,9 @@ This bundle was greatly inspired by [IbrowsSonataAdminAnnotationBundle](https://
 [![Latest Stable Version](https://poser.pugx.org/kunicmarko/sonata-annotation-bundle/v/stable)](https://packagist.org/packages/kunicmarko/sonata-annotation-bundle)
 [![Latest Unstable Version](https://poser.pugx.org/kunicmarko/sonata-annotation-bundle/v/unstable)](https://packagist.org/packages/kunicmarko/sonata-annotation-bundle)
 
-[![Build Status](https://travis-ci.org/kunicmarko20/SonataAnnotationBundle.svg?branch=master)](https://travis-ci.org/kunicmarko20/SonataAnnotationBundle)
-[![Coverage Status](https://coveralls.io/repos/github/kunicmarko20/SonataAnnotationBundle/badge.svg?branch=master)](https://coveralls.io/github/kunicmarko20/SonataAnnotationBundle?branch=master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/kunicmarko20/SonataAnnotationBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/kunicmarko20/SonataAnnotationBundle/?branch=master)
+[![Build Status](https://travis-ci.org/kunicmarko20/SonataAnnotationBundle.svg?branch=1.x)](https://travis-ci.org/kunicmarko20/SonataAnnotationBundle)
+[![Coverage Status](https://coveralls.io/repos/github/kunicmarko20/SonataAnnotationBundle/badge.svg?branch=1.x)](https://coveralls.io/github/kunicmarko20/SonataAnnotationBundle?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/kunicmarko20/SonataAnnotationBundle/badges/quality-score.png?b=1.x)](https://scrutinizer-ci.com/g/kunicmarko20/SonataAnnotationBundle/?branch=master)
 
 Documentation
 -------------
@@ -39,6 +39,7 @@ Documentation
     * [ListAction](#listaction)
     * [DatagridValues](#datagridvalues)
     * [ParentAssociationMapping](#parentassociationmapping)
+* [Extending The Admin](#extending-the-admin)
 
 ## Installation
 
@@ -414,7 +415,7 @@ use App\Controller\YourCRUDController;
  *     controller=YourCRUDController::class
  * )
  *
- * @Sonata\AddRoute(name="import", path="/import")
+ * @Sonata\AddRoute("import")
  * @Sonata\AddRoute(name="send_mail", path="{id}/send_mail")
  *
  * @ORM\Table
@@ -605,5 +606,50 @@ class Category
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      */
     private $parent;
+}
+```
+
+### Extending The Admin
+
+Sometimes you need to do something custom and this bundle can't help you with
+that but you still want to use annotations for most of the other stuff. You can
+extend our admin class `KunicMarko\SonataAnnotationBundle\Admin\AnnotationAdmin`
+and overwrite the methods you need.
+
+```php
+<?php
+
+namespace App\Admin;
+
+use KunicMarko\SonataAnnotationBundle\Admin\AnnotationAdmin;
+
+class YourAdmin extends AnnotationAdmin
+{
+    //do what you want
+}
+```
+
+And then in your entity you just provide that class
+
+```php
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
+use App\Admin\YourAdmin;
+
+/**
+ * @Sonata\Admin(
+ *     label="Category",
+ *     admin=YourAdmin::class
+ * )
+ *
+ * @ORM\Table
+ * @ORM\Entity
+ */
+class Category
+{
 }
 ```

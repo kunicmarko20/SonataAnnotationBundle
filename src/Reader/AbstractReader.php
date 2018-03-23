@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace KunicMarko\SonataAnnotationBundle\Reader;
 
-use Doctrine\Common\Annotations\Reader;
 use Sonata\AdminBundle\Mapper\BaseMapper;
 
 /**

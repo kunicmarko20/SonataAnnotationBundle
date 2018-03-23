@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace KunicMarko\SonataAnnotationBundle\Annotation;
 
-use KunicMarko\SonataAnnotationBundle\Admin\Admin as AdminClass;
+use KunicMarko\SonataAnnotationBundle\Admin\AnnotationAdmin;
 
 /**
  * @Annotation
@@ -67,7 +67,7 @@ class Admin implements AnnotationInterface
     /**
      * @var string
      */
-    public $admin = AdminClass::class;
+    public $admin = AnnotationAdmin::class;
 
     /**
      * @var string

@@ -25,7 +25,7 @@ use Sonata\AdminBundle\Show\ShowMapper;
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class Admin extends AbstractAdmin
+class AnnotationAdmin extends AbstractAdmin
 {
     private $parentAssociationMappingLoaded = false;
     private $datagridValuesLoaded = false;
@@ -59,7 +59,10 @@ class Admin extends AbstractAdmin
         [$addRoutes, $removeRoutes] = $this->get(RouteReader::class)->getRoutes($this->getReflectionClass());
 
         foreach ($addRoutes as $route) {
-            $collection->add($route->name, $this->replaceIdParameterInRoutePath($route->path));
+            $collection->add(
+                $route->name,
+                $route->path ? $this->replaceIdParameterInRoutePath($route->path) : $route->name
+            );
         }
 
         foreach ($removeRoutes as $route) {
