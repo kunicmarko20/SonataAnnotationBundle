@@ -32,12 +32,17 @@ class Admin implements AnnotationInterface
     /**
      * @var bool
      */
-    public $showInDashboard;
+    public $showInDashboard = true;
 
     /**
      * @var bool
      */
-    public $onTop;
+    public $keepOpen = false;
+
+    /**
+     * @var bool
+     */
+    public $onTop = false;
 
     /**
      * @var string
@@ -53,6 +58,11 @@ class Admin implements AnnotationInterface
      * @var string
      */
     public $labelCatalogue;
+
+    /**
+     * @var string
+     */
+    public $pagerType;
 
     /**
      * @var string
@@ -81,10 +91,12 @@ class Admin implements AnnotationInterface
             'group'                     => $this->group,
             'label'                     => $this->label,
             'show_in_dashboard'         => $this->showInDashboard,
+            'keep_open'                 => $this->keepOpen,
             'on_top'                    => $this->onTop,
             'icon'                      => $this->icon,
             'label_translator_strategy' => $this->labelTranslatorStrategy,
             'label_catalogue'           => $this->labelCatalogue,
+            'pager_type'                => $this->pagerType,
         ];
     }
 }
