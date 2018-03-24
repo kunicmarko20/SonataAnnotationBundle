@@ -12,6 +12,14 @@ namespace KunicMarko\SonataAnnotationBundle\Annotation;
  */
 class FormField extends AbstractField
 {
+    public const ACTION_CREATE = 'create';
+    public const ACTION_EDIT = 'edit';
+
+    /**
+     * @var string
+     */
+    public $action;
+
     /**
      * @var array
      */

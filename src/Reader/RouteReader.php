@@ -20,26 +20,16 @@ class RouteReader
         $removeRoutes = [];
 
         foreach ($this->getClassAnnotations($class) as $annotation) {
-            if ($this->isAddRoute($annotation)) {
+            if ($annotation instanceof AddRoute) {
                 $addRoutes[$annotation->name] = $annotation;
                 continue;
             }
 
-            if ($this->isRemoveRoute($annotation)) {
+            if ($annotation instanceof RemoveRoute) {
                 $removeRoutes[$annotation->name] = $annotation;
             }
         }
 
         return [$addRoutes, $removeRoutes];
-    }
-
-    private function isAddRoute($annotation): bool
-    {
-        return $annotation instanceof AddRoute;
-    }
-
-    private function isRemoveRoute($annotation): bool
-    {
-        return $annotation instanceof RemoveRoute;
     }
 }

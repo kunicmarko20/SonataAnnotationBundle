@@ -171,6 +171,10 @@ class Category
 
 ### FormField
 
+You can specify action option that would allow you to have different fields or
+have different configuration for the same field for create and edit action.
+If not set, field will be used for create and edit.
+
 ```php
 <?php
 
@@ -178,6 +182,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 /**
  * @Sonata\Admin("Category")
@@ -189,6 +195,7 @@ class Category
 {
     /**
      * @Sonata\FormField(
+     *      action="create",
      *      type="",
      *      options={},
      *      fieldDescriptionOptions={}
@@ -197,6 +204,32 @@ class Category
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
+
+    /**
+     * @Sonata\FormField(
+     *      type="",
+     *      options={},
+     *      fieldDescriptionOptions={}
+     * )
+     *
+     * @ORM\Column(name="description", type="string", length=255)
+     */
+    private $description;
+    
+    /**
+     * @Sonata\FormField(
+     *      action="create",
+     *      type=TextType::class
+     * )
+     *
+     * @Sonata\FormField(
+     *      action="edit",
+     *      type=TextareaType::class
+     * )
+     *
+     * @ORM\Column(name="something", type="string", length=255)
+     */
+    private $something;
 }
 ```
 

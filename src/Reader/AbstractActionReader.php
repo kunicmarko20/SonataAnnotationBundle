@@ -14,11 +14,9 @@ abstract class AbstractActionReader
     public function getActions(\ReflectionClass $class, array $actions): array
     {
         foreach ($this->getClassAnnotations($class) as $annotation) {
-            if (!$this->isSupported($annotation)) {
-                continue;
+            if ($this->isSupported($annotation)) {
+                $actions[random_int(-99999, 99999)]['template'] = $annotation->template;
             }
-
-            $actions[random_int(-99999, 99999)]['template'] = $annotation->template;
         }
 
         return $actions;
