@@ -45,11 +45,11 @@ class AutoRegisterCompilerPass implements CompilerPassInterface
             $definition->addTag('sonata.admin', $annotation->getTagOptions());
 
             $container->setDefinition(
-                $id = ($annotation->serviceId ?? $this->getServiceId($file)),
+                $serviceId = ($annotation->serviceId ?? $this->getServiceId($file)),
                 $definition
             );
 
-            if ($permissions = $this->getRoles($reflection, $this->getBaseRole($id))) {
+            if ($permissions = $this->getRoles($reflection, $this->getRolePrefix($serviceId))) {
                 $roles = array_merge_recursive($roles, $permissions);
             }
         }
@@ -95,9 +95,9 @@ class AutoRegisterCompilerPass implements CompilerPassInterface
         return self::DEFAULT_SERVICE_PREFIX . $this->getClassName($file->getFilename());
     }
 
-    private function getBaseRole(string $id): string
+    private function getRolePrefix(string $serviceId): string
     {
-        return 'ROLE_'.str_replace('.', '_', strtoupper($id)).'_';
+        return 'ROLE_' . str_replace('.', '_', strtoupper($serviceId)) . '_';
     }
 
     private function getRoles(\ReflectionClass $class, string $prefix)

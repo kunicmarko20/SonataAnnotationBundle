@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace KunicMarko\SonataAnnotationBundle\Reader;
 
+use KunicMarko\SonataAnnotationBundle\Annotation\ShowAssociationField;
 use KunicMarko\SonataAnnotationBundle\Annotation\ShowField;
 use Sonata\AdminBundle\Show\ShowMapper;
 
@@ -17,8 +18,19 @@ class ShowReader
     public function configureFields(\ReflectionClass $class, ShowMapper $showMapper): void
     {
         foreach ($class->getProperties() as $property) {
-            if ($annotation = $this->getPropertyAnnotation($property, ShowField::class)) {
-                $showMapper->add($property->getName(), ...$annotation->getSettings());
+            foreach ($this->getPropertyAnnotations($property) as $annotation) {
+                if ($annotation instanceof ShowAssociationField) {
+                    $showMapper->add(
+                        $property->getName() . '.' . $annotation->field,
+                        ...$annotation->getSettings()
+                    );
+
+                    continue;
+                }
+
+                if ($annotation instanceof ShowField) {
+                    $showMapper->add($property->getName(), ...$annotation->getSettings());
+                }
             }
         }
 

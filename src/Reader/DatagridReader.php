@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace KunicMarko\SonataAnnotationBundle\Reader;
 
+use KunicMarko\SonataAnnotationBundle\Annotation\DatagridAssociationField;
 use KunicMarko\SonataAnnotationBundle\Annotation\DatagridField;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 
@@ -17,8 +18,19 @@ class DatagridReader
     public function configureFields(\ReflectionClass $class, DatagridMapper $datagridMapper): void
     {
         foreach ($class->getProperties() as $property) {
-            if ($annotation = $this->getPropertyAnnotation($property, DatagridField::class)) {
-                $datagridMapper->add($property->getName(), ...$annotation->getSettings());
+            foreach ($this->getPropertyAnnotations($property) as $annotation) {
+                if ($annotation instanceof DatagridAssociationField) {
+                    $datagridMapper->add(
+                        $property->getName() . '.' . $annotation->field,
+                        ...$annotation->getSettings()
+                    );
+
+                    continue;
+                }
+
+                if ($annotation instanceof DatagridField) {
+                    $datagridMapper->add($property->getName(), ...$annotation->getSettings());
+                }
             }
         }
     }

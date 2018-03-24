@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace KunicMarko\SonataAnnotationBundle\Reader;
 
 use KunicMarko\SonataAnnotationBundle\Annotation\ListAction;
+use KunicMarko\SonataAnnotationBundle\Annotation\ListAssociationField;
 use KunicMarko\SonataAnnotationBundle\Annotation\ListField;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 
@@ -18,8 +19,20 @@ class ListReader
     public function configureFields(\ReflectionClass $class, ListMapper $listMapper): void
     {
         foreach ($class->getProperties() as $property) {
-            if ($annotation = $this->getPropertyAnnotation($property, ListField::class)) {
-                $this->addField($property->getName(), $annotation, $listMapper);
+            foreach ($this->getPropertyAnnotations($property) as $annotation) {
+                if ($annotation instanceof ListAssociationField) {
+                    $this->addField(
+                        $property->getName() . '.' . $annotation->field,
+                        $annotation,
+                        $listMapper
+                    );
+
+                    continue;
+                }
+
+                if ($annotation instanceof ListField) {
+                    $this->addField($property->getName(), $annotation, $listMapper);
+                }
             }
         }
 
