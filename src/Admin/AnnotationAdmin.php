@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace KunicMarko\SonataAnnotationBundle\Admin;
 
 use KunicMarko\SonataAnnotationBundle\Annotation\AddRoute;
+use KunicMarko\SonataAnnotationBundle\Annotation\RemoveRoute;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -55,15 +56,17 @@ class AnnotationAdmin extends AbstractAdmin
         [$addRoutes, $removeRoutes] = $this->get('sonata.annotation.reader.route')
             ->getRoutes($this->getReflectionClass());
 
+        /** @var AddRoute $route */
         foreach ($addRoutes as $route) {
             $collection->add(
-                $route->name,
-                $route->path ? $this->replaceIdParameterInRoutePath($route->path) : $route->name
+                $route->getName(),
+                $route->path ? $this->replaceIdParameterInRoutePath($route->path) : $route->getName()
             );
         }
 
+        /** @var RemoveRoute $route */
         foreach ($removeRoutes as $route) {
-            $collection->remove($route->name);
+            $collection->remove($route->getName());
         }
     }
 

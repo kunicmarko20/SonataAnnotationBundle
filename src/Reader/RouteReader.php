@@ -21,12 +21,12 @@ class RouteReader
 
         foreach ($this->getClassAnnotations($class) as $annotation) {
             if ($annotation instanceof AddRoute) {
-                $addRoutes[$annotation->name] = $annotation;
+                $addRoutes[$annotation->getName()] = $annotation;
                 continue;
             }
 
             if ($annotation instanceof RemoveRoute) {
-                $removeRoutes[$annotation->name] = $annotation;
+                $removeRoutes[$annotation->getName()] = $annotation;
             }
         }
 

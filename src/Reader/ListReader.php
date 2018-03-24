@@ -22,7 +22,7 @@ class ListReader
             foreach ($this->getPropertyAnnotations($property) as $annotation) {
                 if ($annotation instanceof ListAssociationField) {
                     $this->addField(
-                        $property->getName() . '.' . $annotation->field,
+                        $property->getName() . '.' . $annotation->getField(),
                         $annotation,
                         $listMapper
                     );
@@ -38,7 +38,7 @@ class ListReader
 
         foreach ($class->getMethods() as $method) {
             if ($annotation = $this->getMethodAnnotation($method, ListField::class)) {
-                $this->addField($property->getName(), $annotation, $listMapper);
+                $this->addField($method->getName(), $annotation, $listMapper);
             }
         }
 
@@ -65,7 +65,7 @@ class ListReader
 
         foreach ($annotations as $annotation) {
             if ($annotation instanceof ListAction) {
-                $actions[$annotation->name] = $annotation->options;
+                $actions[$annotation->getName()] = $annotation->options;
             }
         }
 

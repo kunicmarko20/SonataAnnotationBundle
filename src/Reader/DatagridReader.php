@@ -21,7 +21,7 @@ class DatagridReader
             foreach ($this->getPropertyAnnotations($property) as $annotation) {
                 if ($annotation instanceof DatagridAssociationField) {
                     $datagridMapper->add(
-                        $property->getName() . '.' . $annotation->field,
+                        $property->getName() . '.' . $annotation->getField(),
                         ...$annotation->getSettings()
                     );
 

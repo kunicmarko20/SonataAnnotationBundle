@@ -22,7 +22,7 @@ class ExportReader
         foreach ($class->getProperties() as $property) {
             foreach ($this->getPropertyAnnotations($property) as $annotation) {
                 if ($annotation instanceof ExportAssociationField) {
-                    $fieldName = $property->getName() . '.' . $annotation->field;
+                    $fieldName = $property->getName() . '.' . $annotation->getField();
 
                     $fields[$annotation->label ?? $fieldName] = $fieldName;
                     continue;

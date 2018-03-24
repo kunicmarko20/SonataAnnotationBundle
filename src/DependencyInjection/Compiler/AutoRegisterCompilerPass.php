@@ -109,7 +109,7 @@ class AutoRegisterCompilerPass implements CompilerPassInterface
                 continue;
             }
 
-            $roles[$annotation->role] = array_map(
+            $roles[$annotation->getRole()] = array_map(
                 function (string $permission) use ($prefix) {
                     return $prefix . strtoupper($permission);
                 },

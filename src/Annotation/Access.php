@@ -21,4 +21,18 @@ class Access implements AnnotationInterface
      * @var array
      */
     public $permissions;
+
+    public function getRole(): string
+    {
+        if ($this->role) {
+            return $this->role;
+        }
+
+        throw new \InvalidArgumentException(
+            sprintf(
+                'Argument "role" is mandatory in "%s" annotation.',
+                self::class
+            )
+        );
+    }
 }

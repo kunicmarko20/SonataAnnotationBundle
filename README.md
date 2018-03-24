@@ -15,8 +15,8 @@ This bundle was greatly inspired by [IbrowsSonataAdminAnnotationBundle](https://
 [![Latest Unstable Version](https://poser.pugx.org/kunicmarko/sonata-annotation-bundle/v/unstable)](https://packagist.org/packages/kunicmarko/sonata-annotation-bundle)
 
 [![Build Status](https://travis-ci.org/kunicmarko20/SonataAnnotationBundle.svg?branch=1.x)](https://travis-ci.org/kunicmarko20/SonataAnnotationBundle)
-[![Coverage Status](https://coveralls.io/repos/github/kunicmarko20/SonataAnnotationBundle/badge.svg?branch=1.x)](https://coveralls.io/github/kunicmarko20/SonataAnnotationBundle?branch=master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/kunicmarko20/SonataAnnotationBundle/badges/quality-score.png?b=1.x)](https://scrutinizer-ci.com/g/kunicmarko20/SonataAnnotationBundle/?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/kunicmarko20/SonataAnnotationBundle/badge.svg?branch=1.x)](https://coveralls.io/github/kunicmarko20/SonataAnnotationBundle?branch=1.x)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/kunicmarko20/SonataAnnotationBundle/badges/quality-score.png?b=1.x)](https://scrutinizer-ci.com/g/kunicmarko20/SonataAnnotationBundle/?branch=1.x)
 
 Documentation
 -------------
@@ -101,13 +101,9 @@ Clear cache:
 bin/console cache:clear
 ```
 
-And you will see Admin appear in your admin panel.
+And you will see Admin appear in your sidebar.
 
 ## Annotations
-
-Here I will show you all the annotations and all the options you can set.
-All options are optional, you don't need to set anything, it is enough
-just to use annotation.
 
 ### Admin
 
@@ -783,7 +779,7 @@ class Category
 Sometimes you need to do something custom and this bundle can't help you with
 that but you still want to use annotations for most of the other stuff. You can
 extend our admin class `KunicMarko\SonataAnnotationBundle\Admin\AnnotationAdmin`
-and overwrite the methods you need.
+and overwrite the methods you want.
 
 ```php
 <?php

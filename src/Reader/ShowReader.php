@@ -21,7 +21,7 @@ class ShowReader
             foreach ($this->getPropertyAnnotations($property) as $annotation) {
                 if ($annotation instanceof ShowAssociationField) {
                     $showMapper->add(
-                        $property->getName() . '.' . $annotation->field,
+                        $property->getName() . '.' . $annotation->getField(),
                         ...$annotation->getSettings()
                     );
 
