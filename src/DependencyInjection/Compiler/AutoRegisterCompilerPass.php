@@ -100,7 +100,7 @@ class AutoRegisterCompilerPass implements CompilerPassInterface
         return 'ROLE_' . str_replace('.', '_', strtoupper($serviceId)) . '_';
     }
 
-    private function getRoles(\ReflectionClass $class, string $prefix)
+    private function getRoles(\ReflectionClass $class, string $prefix): array
     {
         $roles = [];
 

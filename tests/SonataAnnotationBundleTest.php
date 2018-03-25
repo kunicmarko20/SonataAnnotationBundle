@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace KunicMarko\SonataAnnotationBundle\Tests;
 
 use KunicMarko\SonataAnnotationBundle\DependencyInjection\Compiler\AutoRegisterCompilerPass;
@@ -24,12 +26,12 @@ class SonataAnnotationBundleTest extends TestCase
         $this->bundle = new SonataAnnotationBundle();
     }
 
-    public function testBundle()
+    public function testBundle(): void
     {
         $this->assertInstanceOf(Bundle::class, $this->bundle);
     }
 
-    public function testCompilerPasses()
+    public function testCompilerPasses(): void
     {
         $containerBuilder = $this->prophesize(ContainerBuilder::class);
 
