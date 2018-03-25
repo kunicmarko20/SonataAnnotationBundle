@@ -7,4 +7,5 @@ phpcs.xml         export-ignore
 phpunit.xml.dist  export-ignore
 README.md         export-ignore
 /.travis/         export-ignore
+/.github/         export-ignore
 /tests/           export-ignore
