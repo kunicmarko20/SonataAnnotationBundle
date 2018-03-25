@@ -2,11 +2,14 @@
 
 declare(strict_types=1);
 
-namespace KunicMarko\SonataAnnotationBundle\Tests\Reader\Fixtures;
+namespace KunicMarko\SonataAnnotationBundle\Tests\Fixtures;
 
 use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
 
 /**
+ * @Sonata\Admin("Test")
+ * @Sonata\Access("ROLE_VENDOR", permissions={"LIST"})
+ *
  * @Sonata\ActionButton("fake_template.html.twig")
  * @Sonata\DashboardAction("fake_template.html.twig")
  * @Sonata\ExportFormats({"json", "xml"})

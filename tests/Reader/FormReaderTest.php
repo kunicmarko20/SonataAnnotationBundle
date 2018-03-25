@@ -6,8 +6,8 @@ namespace KunicMarko\SonataAnnotationBundle\Tests\Reader;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use KunicMarko\SonataAnnotationBundle\Reader\FormReader;
-use KunicMarko\SonataAnnotationBundle\Tests\Reader\Fixtures\AnnotationClass;
-use KunicMarko\SonataAnnotationBundle\Tests\Reader\Fixtures\EmptyClass;
+use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationClass;
+use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\EmptyClass;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Sonata\AdminBundle\Form\FormMapper;

@@ -6,8 +6,7 @@ namespace KunicMarko\SonataAnnotationBundle\Tests\Reader;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use KunicMarko\SonataAnnotationBundle\Reader\ParentAssociationMappingReader;
-use KunicMarko\SonataAnnotationBundle\Tests\Reader\Fixtures\AnnotationClass;
-use KunicMarko\SonataAnnotationBundle\Tests\Reader\Fixtures\EmptyClass;
+use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\EmptyClass;
 use PHPUnit\Framework\TestCase;
 
 /**

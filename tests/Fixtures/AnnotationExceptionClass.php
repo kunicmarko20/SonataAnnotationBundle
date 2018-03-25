@@ -2,11 +2,16 @@
 
 declare(strict_types=1);
 
-namespace KunicMarko\SonataAnnotationBundle\Tests\Reader\Fixtures;
+namespace KunicMarko\SonataAnnotationBundle\Tests\Fixtures;
 
 use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
 
 /**
+ * @Sonata\Admin(
+ *     serviceId="test.the.id"
+ * )
+ *
+ * @Sonata\Access("ROLE_VENDOR", permissions={"ALL"})
  * @Sonata\ActionButton()
  *
  * @Sonata\AddRoute()
