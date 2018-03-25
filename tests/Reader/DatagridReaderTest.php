@@ -16,7 +16,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class DatagridReaderTest extends TestCase
+final class DatagridReaderTest extends TestCase
 {
     /**
      * @var DatagridReader

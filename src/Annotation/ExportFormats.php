@@ -10,7 +10,7 @@ namespace KunicMarko\SonataAnnotationBundle\Annotation;
  *
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class ExportFormats implements AnnotationInterface
+final class ExportFormats implements AnnotationInterface
 {
     /**
      * @var array

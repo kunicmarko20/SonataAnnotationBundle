@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class SonataAnnotationBundleTest extends TestCase
+final class SonataAnnotationBundleTest extends TestCase
 {
     /**
      * @var SonataAnnotationBundle

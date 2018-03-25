@@ -10,7 +10,7 @@ namespace KunicMarko\SonataAnnotationBundle\Annotation;
  *
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class DatagridValues implements AnnotationInterface
+final class DatagridValues implements AnnotationInterface
 {
     /**
      * @var array

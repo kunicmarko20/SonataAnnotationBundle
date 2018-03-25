@@ -10,6 +10,6 @@ namespace KunicMarko\SonataAnnotationBundle\Annotation;
  *
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class DashboardAction extends AbstractAction
+final class DashboardAction extends AbstractAction
 {
 }

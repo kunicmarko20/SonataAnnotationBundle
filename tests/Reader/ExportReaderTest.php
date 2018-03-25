@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class ExportReaderTest extends TestCase
+final class ExportReaderTest extends TestCase
 {
     /**
      * @var ExportReader

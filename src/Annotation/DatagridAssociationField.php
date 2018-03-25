@@ -10,7 +10,7 @@ namespace KunicMarko\SonataAnnotationBundle\Annotation;
  *
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class DatagridAssociationField extends DatagridField
+final class DatagridAssociationField extends DatagridField
 {
     /**
      * @var string

@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class AutoRegisterCompilerPassTest extends TestCase
+final class AutoRegisterCompilerPassTest extends TestCase
 {
     /**
      * @var ContainerBuilder

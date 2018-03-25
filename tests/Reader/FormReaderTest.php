@@ -15,7 +15,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class FormReaderTest extends TestCase
+final class FormReaderTest extends TestCase
 {
     /**
      * @var FormReader

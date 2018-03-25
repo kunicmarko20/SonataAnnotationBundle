@@ -16,7 +16,7 @@ use Sonata\AdminBundle\Show\ShowMapper;
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class ShowReaderTest extends TestCase
+final class ShowReaderTest extends TestCase
 {
     /**
      * @var ShowReader

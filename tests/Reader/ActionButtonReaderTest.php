@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class ActionButtonReaderTest extends TestCase
+final class ActionButtonReaderTest extends TestCase
 {
     /**
      * @var ActionButtonReader

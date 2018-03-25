@@ -16,7 +16,7 @@ use Symfony\Component\Finder\SplFileInfo;
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class AutoRegisterCompilerPass implements CompilerPassInterface
+final class AutoRegisterCompilerPass implements CompilerPassInterface
 {
     private const DEFAULT_SERVICE_PREFIX = 'app.admin.';
 

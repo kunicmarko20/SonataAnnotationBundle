@@ -9,7 +9,7 @@ use KunicMarko\SonataAnnotationBundle\Annotation\DashboardAction;
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class DashboardActionReader extends AbstractActionReader
+final class DashboardActionReader extends AbstractActionReader
 {
     protected function isSupported($annotation): bool
     {

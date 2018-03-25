@@ -17,7 +17,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class ListReaderTest extends TestCase
+final class ListReaderTest extends TestCase
 {
     /**
      * @var ListReader

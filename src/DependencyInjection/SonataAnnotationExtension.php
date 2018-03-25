@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class SonataAnnotationExtension extends Extension
+final class SonataAnnotationExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container): void
     {

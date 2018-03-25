@@ -12,7 +12,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class ListReader
+final class ListReader
 {
     use AnnotationReaderTrait;
 

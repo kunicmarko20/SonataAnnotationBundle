@@ -10,7 +10,7 @@ use KunicMarko\SonataAnnotationBundle\Annotation\RemoveRoute;
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class RouteReader
+final class RouteReader
 {
     use AnnotationReaderTrait;
 

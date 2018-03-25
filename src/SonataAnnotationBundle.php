@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class SonataAnnotationBundle extends Bundle
+final class SonataAnnotationBundle extends Bundle
 {
     public function build(ContainerBuilder $container): void
     {

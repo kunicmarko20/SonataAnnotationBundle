@@ -9,7 +9,7 @@ use KunicMarko\SonataAnnotationBundle\Annotation\DatagridValues;
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class DatagridValuesReader
+final class DatagridValuesReader
 {
     use AnnotationReaderTrait;
 

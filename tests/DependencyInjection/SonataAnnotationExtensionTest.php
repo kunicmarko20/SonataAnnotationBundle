@@ -12,7 +12,7 @@ use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class SonataAnnotationExtensionTest extends AbstractExtensionTestCase
+final class SonataAnnotationExtensionTest extends AbstractExtensionTestCase
 {
     public function testLoadsFormServiceDefinition(): void
     {

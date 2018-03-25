@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class RouteReaderTest extends TestCase
+final class RouteReaderTest extends TestCase
 {
     /**
      * @var RouteReader
