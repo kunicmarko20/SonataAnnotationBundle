@@ -28,7 +28,6 @@ final class AutoRegisterCompilerPass implements CompilerPassInterface
     public function process(ContainerBuilder $container): void
     {
         $this->annotationReader = $container->get('annotation_reader');
-        $roles = $container->getParameter('security.role_hierarchy.roles');
 
         foreach ($this->findFiles($container->getParameter('sonata_annotation.directory')) as $file) {
             $className = $this->getFullyQualifiedClassName($file);
@@ -48,13 +47,7 @@ final class AutoRegisterCompilerPass implements CompilerPassInterface
                 $serviceId = ($annotation->serviceId ?? $this->getServiceId($file)),
                 $definition
             );
-
-            if ($permissions = $this->getRoles($reflection, $this->getRolePrefix($serviceId))) {
-                $roles = array_merge_recursive($roles, $permissions);
-            }
         }
-
-        $container->setParameter('security.role_hierarchy.roles', $roles);
     }
 
     private function findFiles(string $directory): \IteratorAggregate
@@ -93,30 +86,5 @@ final class AutoRegisterCompilerPass implements CompilerPassInterface
     private function getServiceId(SplFileInfo $file): string
     {
         return self::DEFAULT_SERVICE_PREFIX . $this->getClassName($file->getFilename());
-    }
-
-    private function getRolePrefix(string $serviceId): string
-    {
-        return 'ROLE_' . str_replace('.', '_', strtoupper($serviceId)) . '_';
-    }
-
-    private function getRoles(\ReflectionClass $class, string $prefix): array
-    {
-        $roles = [];
-
-        foreach ($this->annotationReader->getClassAnnotations($class) as $annotation) {
-            if (!$annotation instanceof Access) {
-                continue;
-            }
-
-            $roles[$annotation->getRole()] = array_map(
-                function (string $permission) use ($prefix) {
-                    return $prefix . strtoupper($permission);
-                },
-                $annotation->permissions
-            );
-        }
-
-        return $roles;
     }
 }

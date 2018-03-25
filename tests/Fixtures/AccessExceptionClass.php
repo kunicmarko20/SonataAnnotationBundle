@@ -7,7 +7,6 @@ namespace KunicMarko\SonataAnnotationBundle\Tests\Fixtures;
 use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
 
 /**
- * @Sonata\Admin("Test")
  * @Sonata\Access()
  *
  * @author Marko Kunic <kunicmarko20@gmail.com>

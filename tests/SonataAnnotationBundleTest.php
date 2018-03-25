@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace KunicMarko\SonataAnnotationBundle\Tests;
 
+use KunicMarko\SonataAnnotationBundle\DependencyInjection\Compiler\AccessCompilerPass;
 use KunicMarko\SonataAnnotationBundle\DependencyInjection\Compiler\AutoRegisterCompilerPass;
 use KunicMarko\SonataAnnotationBundle\SonataAnnotationBundle;
 use PHPUnit\Framework\TestCase;
@@ -37,6 +38,11 @@ final class SonataAnnotationBundleTest extends TestCase
 
         $containerBuilder->addCompilerPass(
             Argument::type(AutoRegisterCompilerPass::class),
+            Argument::cetera()
+        )->shouldBeCalledTimes(1);
+
+        $containerBuilder->addCompilerPass(
+            Argument::type(AccessCompilerPass::class),
             Argument::cetera()
         )->shouldBeCalledTimes(1);
 
