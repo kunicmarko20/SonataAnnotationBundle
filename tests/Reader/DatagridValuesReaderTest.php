@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class DatagridValuesReaderTest extends TestCase
+final class DatagridValuesReaderTest extends TestCase
 {
     /**
      * @var DatagridValuesReader

@@ -12,7 +12,7 @@ use KunicMarko\SonataAnnotationBundle\Admin\AnnotationAdmin;
  *
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class Admin implements AnnotationInterface
+final class Admin implements AnnotationInterface
 {
     /**
      * @var string

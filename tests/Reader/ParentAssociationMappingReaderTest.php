@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class ParentAssociationMappingReaderTest extends TestCase
+final class ParentAssociationMappingReaderTest extends TestCase
 {
     /**
      * @var ParentAssociationMappingReader

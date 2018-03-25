@@ -11,7 +11,7 @@ use KunicMarko\SonataAnnotationBundle\Annotation\ExportFormats;
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class ExportReader
+final class ExportReader
 {
     use AnnotationReaderTrait;
 

@@ -10,7 +10,7 @@ namespace KunicMarko\SonataAnnotationBundle\Annotation;
  *
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class FormField extends AbstractField
+final class FormField extends AbstractField
 {
     public const ACTION_CREATE = 'create';
     public const ACTION_EDIT = 'edit';

@@ -10,7 +10,7 @@ namespace KunicMarko\SonataAnnotationBundle\Annotation;
  *
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class ShowAssociationField extends ShowField
+final class ShowAssociationField extends ShowField
 {
     /**
      * @var string

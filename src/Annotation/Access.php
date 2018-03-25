@@ -10,7 +10,7 @@ namespace KunicMarko\SonataAnnotationBundle\Annotation;
  *
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class Access implements AnnotationInterface
+final class Access implements AnnotationInterface
 {
     /**
      * @var string

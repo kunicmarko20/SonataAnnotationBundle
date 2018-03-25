@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\Container;
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class AnnotationAdminTest extends TestCase
+final class AnnotationAdminTest extends TestCase
 {
     /**
      * @var AnnotationAdmin

@@ -10,7 +10,7 @@ namespace KunicMarko\SonataAnnotationBundle\Annotation;
  *
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class RemoveRoute implements AnnotationInterface
+final class RemoveRoute implements AnnotationInterface
 {
     /**
      * @var string

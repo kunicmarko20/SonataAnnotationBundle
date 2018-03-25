@@ -7,6 +7,6 @@ namespace KunicMarko\SonataAnnotationBundle\Tests\Fixtures;
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class EmptyClass
+final class EmptyClass
 {
 }

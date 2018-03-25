@@ -11,7 +11,7 @@ use Sonata\AdminBundle\Show\ShowMapper;
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class ShowReader
+final class ShowReader
 {
     use AnnotationReaderTrait;
 

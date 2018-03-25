@@ -11,7 +11,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class DatagridReader
+final class DatagridReader
 {
     use AnnotationReaderTrait;
 

@@ -10,7 +10,7 @@ namespace KunicMarko\SonataAnnotationBundle\Annotation;
  *
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class AddRoute implements AnnotationInterface
+final class AddRoute implements AnnotationInterface
 {
     public const ID_PARAMETER = '{id}';
 

@@ -10,7 +10,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class FormReader
+final class FormReader
 {
     use AnnotationReaderTrait;
 

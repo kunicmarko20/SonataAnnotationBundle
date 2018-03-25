@@ -10,6 +10,6 @@ namespace KunicMarko\SonataAnnotationBundle\Annotation;
  *
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class ActionButton extends AbstractAction
+final class ActionButton extends AbstractAction
 {
 }

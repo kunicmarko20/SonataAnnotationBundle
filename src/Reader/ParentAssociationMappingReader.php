@@ -9,7 +9,7 @@ use KunicMarko\SonataAnnotationBundle\Annotation\ParentAssociationMapping;
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class ParentAssociationMappingReader
+final class ParentAssociationMappingReader
 {
     use AnnotationReaderTrait;
 

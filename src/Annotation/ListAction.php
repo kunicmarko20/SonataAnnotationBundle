@@ -10,7 +10,7 @@ namespace KunicMarko\SonataAnnotationBundle\Annotation;
  *
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class ListAction implements AnnotationInterface
+final class ListAction implements AnnotationInterface
 {
     /**
      * @var string

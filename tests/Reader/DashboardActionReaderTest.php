@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class DashboardActionReaderTest extends TestCase
+final class DashboardActionReaderTest extends TestCase
 {
     /**
      * @var DashboardActionReader

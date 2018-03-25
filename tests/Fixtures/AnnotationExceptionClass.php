@@ -18,7 +18,7 @@ use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
  *
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class AnnotationExceptionClass
+final class AnnotationExceptionClass
 {
     /**
      * @Sonata\ExportAssociationField()
