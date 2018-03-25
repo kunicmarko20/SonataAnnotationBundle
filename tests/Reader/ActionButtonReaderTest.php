@@ -26,13 +26,6 @@ class ActionButtonReaderTest extends TestCase
         $this->actionButtonReader = new ActionButtonReader(new AnnotationReader());
     }
 
-    public function testGetActionsPresentAnnotation(): void
-    {
-        $actions = $this->actionButtonReader->getActions(new \ReflectionClass(AnnotationClass::class), []);
-
-        $this->assertContains('fake_template.html.twig', reset($actions));
-    }
-
     /**
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Argument "template" is mandatory in "KunicMarko\SonataAnnotationBundle\Annotation\ActionButton" annotation.

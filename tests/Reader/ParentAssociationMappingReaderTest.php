@@ -25,13 +25,6 @@ class ParentAssociationMappingReaderTest extends TestCase
         $this->parentAssociationMappingReader = new ParentAssociationMappingReader(new AnnotationReader());
     }
 
-    public function testGetParentPresentAnnotation(): void
-    {
-        $parent = $this->parentAssociationMappingReader->getParent(new \ReflectionClass(AnnotationClass::class));
-
-        $this->assertSame('parent', $parent);
-    }
-
     public function testGetParentNoAnnotation(): void
     {
         $parent = $this->parentAssociationMappingReader->getParent(new \ReflectionClass(EmptyClass::class));

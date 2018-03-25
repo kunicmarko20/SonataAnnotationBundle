@@ -105,7 +105,7 @@ class AnnotationAdmin extends AbstractAdmin
             ->getFormats($this->getReflectionClass()) ?: parent::getExportFormats();
     }
 
-    public function buildDatagrid()
+    public function buildDatagrid(): void
     {
         if (!$this->datagridValuesLoaded) {
             $this->datagridValues = $this->get('sonata.annotation.reader.datagrid_values')
@@ -117,7 +117,7 @@ class AnnotationAdmin extends AbstractAdmin
         parent::buildDatagrid();
     }
 
-    public function getParentAssociationMapping()
+    public function getParentAssociationMapping(): ?string
     {
         if (!$this->parentAssociationMappingLoaded) {
             $this->parentAssociationMapping = $this->get('sonata.annotation.reader.parent_association_mapping')

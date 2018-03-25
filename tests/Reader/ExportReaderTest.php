@@ -26,13 +26,6 @@ class ExportReaderTest extends TestCase
         $this->exportReader = new ExportReader(new AnnotationReader());
     }
 
-    public function testGetFormatsAnnotationPresent(): void
-    {
-        $formats = $this->exportReader->getFormats(new \ReflectionClass(AnnotationClass::class));
-
-        $this->assertSame(['json', 'xml'], $formats);
-    }
-
     public function testGetFormatsNoAnnotation(): void
     {
         $formats = $this->exportReader->getFormats(new \ReflectionClass(EmptyClass::class));
