@@ -29,7 +29,7 @@ class ParentAssociationMappingReaderTest extends TestCase
     {
         $parent = $this->parentAssociationMappingReader->getParent(new \ReflectionClass(AnnotationClass::class));
 
-        $this->assertSame('field', $parent);
+        $this->assertSame('parent', $parent);
     }
 
     public function testGetParentNoAnnotation(): void

@@ -20,8 +20,14 @@ class SonataAnnotationExtensionTest extends AbstractExtensionTestCase
 
         $this->load();
 
-        $this->assertContainerBuilderHasService(RouteReader::class);
-        $this->assertContainerBuilderHasService(ListReader::class);
+        $this->assertContainerBuilderHasService(
+            'sonata.annotation.reader.route',
+            RouteReader::class
+        );
+        $this->assertContainerBuilderHasService(
+            'sonata.annotation.reader.list',
+            ListReader::class
+        );
 
         $this->assertContainerBuilderHasParameter(
             'sonata_annotation.directory',

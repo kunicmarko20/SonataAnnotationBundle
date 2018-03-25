@@ -7,6 +7,7 @@ namespace KunicMarko\SonataAnnotationBundle\Tests\Reader;
 use Doctrine\Common\Annotations\AnnotationReader;
 use KunicMarko\SonataAnnotationBundle\Reader\ExportReader;
 use KunicMarko\SonataAnnotationBundle\Tests\Reader\Fixtures\AnnotationClass;
+use KunicMarko\SonataAnnotationBundle\Tests\Reader\Fixtures\AnnotationExceptionClass;
 use KunicMarko\SonataAnnotationBundle\Tests\Reader\Fixtures\EmptyClass;
 use PHPUnit\Framework\TestCase;
 
@@ -43,10 +44,20 @@ class ExportReaderTest extends TestCase
     {
         $fields = $this->exportReader->getFields(new \ReflectionClass(AnnotationClass::class));
 
-        $this->assertCount(3, $fields);
+        $this->assertCount(4, $fields);
         $this->assertSame('field', $fields['field']);
         $this->assertSame('additionalField', $fields['label']);
         $this->assertSame('method', $fields['method']);
+        $this->assertSame('parent.name', $fields['parent.name']);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Argument "field" is mandatory in "KunicMarko\SonataAnnotationBundle\Annotation\ExportAssociationField" annotation.
+     */
+    public function testGetFieldsAnnotationException(): void
+    {
+        $this->exportReader->getFields(new \ReflectionClass(AnnotationExceptionClass::class));
     }
 
     public function testGetFieldsNoAnnotation(): void

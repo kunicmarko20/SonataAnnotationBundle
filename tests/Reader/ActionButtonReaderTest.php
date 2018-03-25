@@ -7,6 +7,7 @@ namespace KunicMarko\SonataAnnotationBundle\Tests\Reader;
 use Doctrine\Common\Annotations\AnnotationReader;
 use KunicMarko\SonataAnnotationBundle\Reader\ActionButtonReader;
 use KunicMarko\SonataAnnotationBundle\Tests\Reader\Fixtures\AnnotationClass;
+use KunicMarko\SonataAnnotationBundle\Tests\Reader\Fixtures\AnnotationExceptionClass;
 use KunicMarko\SonataAnnotationBundle\Tests\Reader\Fixtures\EmptyClass;
 use PHPUnit\Framework\TestCase;
 
@@ -30,6 +31,15 @@ class ActionButtonReaderTest extends TestCase
         $actions = $this->actionButtonReader->getActions(new \ReflectionClass(AnnotationClass::class), []);
 
         $this->assertContains('fake_template.html.twig', reset($actions));
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Argument "template" is mandatory in "KunicMarko\SonataAnnotationBundle\Annotation\ActionButton" annotation.
+     */
+    public function testGetActionsException(): void
+    {
+        $this->actionButtonReader->getActions(new \ReflectionClass(AnnotationExceptionClass::class), []);
     }
 
     public function testGetActionsNoAnnotation(): void
