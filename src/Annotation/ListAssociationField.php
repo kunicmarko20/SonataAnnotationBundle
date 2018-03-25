@@ -6,31 +6,26 @@ namespace KunicMarko\SonataAnnotationBundle\Annotation;
 
 /**
  * @Annotation
- * @Target("CLASS")
+ * @Target({"PROPERTY"})
  *
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class ListAction implements AnnotationInterface
+class ListAssociationField extends ListField
 {
     /**
      * @var string
      */
-    public $name;
+    public $field;
 
-    /**
-     * @var array
-     */
-    public $options = [];
-
-    public function getName(): string
+    public function getField(): string
     {
-        if ($this->name) {
-            return $this->name;
+        if ($this->field) {
+            return $this->field;
         }
 
         throw new \InvalidArgumentException(
             sprintf(
-                'Argument "name" is mandatory in "%s" annotation.',
+                'Argument "field" is mandatory in "%s" annotation.',
                 self::class
             )
         );

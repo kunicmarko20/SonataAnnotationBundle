@@ -16,4 +16,18 @@ class RemoveRoute implements AnnotationInterface
      * @var string
      */
     public $name;
+
+    public function getName(): string
+    {
+        if ($this->name) {
+            return $this->name;
+        }
+
+        throw new \InvalidArgumentException(
+            sprintf(
+                'Argument "name" is mandatory in "%s" annotation.',
+                self::class
+            )
+        );
+    }
 }

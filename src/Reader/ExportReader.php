@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace KunicMarko\SonataAnnotationBundle\Reader;
 
-use Doctrine\Common\Annotations\Reader;
+use KunicMarko\SonataAnnotationBundle\Annotation\ExportAssociationField;
 use KunicMarko\SonataAnnotationBundle\Annotation\ExportField;
 use KunicMarko\SonataAnnotationBundle\Annotation\ExportFormats;
 
@@ -20,8 +20,17 @@ class ExportReader
         $fields = [];
 
         foreach ($class->getProperties() as $property) {
-            if ($annotation = $this->getPropertyAnnotation($property, ExportField::class)) {
-                $fields[$annotation->label ?? $property->getName()] = $property->getName();
+            foreach ($this->getPropertyAnnotations($property) as $annotation) {
+                if ($annotation instanceof ExportAssociationField) {
+                    $fieldName = $property->getName() . '.' . $annotation->getField();
+
+                    $fields[$annotation->label ?? $fieldName] = $fieldName;
+                    continue;
+                }
+
+                if ($annotation instanceof ExportField) {
+                    $fields[$annotation->label ?? $property->getName()] = $property->getName();
+                }
             }
         }
 

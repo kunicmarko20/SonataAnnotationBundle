@@ -19,7 +19,7 @@ trait AnnotationReaderTrait
         $this->annotationReader = $annotationReader;
     }
 
-    protected function getClassAnnotation(\ReflectionClass $class, string $annotation): ?AnnotationInterface
+    protected function getClassAnnotation(\ReflectionClass $class, string $annotation)
     {
         return $this->annotationReader->getClassAnnotation($class, $annotation);
     }
@@ -29,12 +29,17 @@ trait AnnotationReaderTrait
         return $this->annotationReader->getClassAnnotations($class);
     }
 
-    protected function getPropertyAnnotation(\ReflectionProperty $property, string $annotation): ?AnnotationInterface
+    protected function getPropertyAnnotation(\ReflectionProperty $property, string $annotation)
     {
         return $this->annotationReader->getPropertyAnnotation($property, $annotation);
     }
 
-    protected function getMethodAnnotation(\ReflectionMethod $method, string $annotation): ?AnnotationInterface
+    protected function getPropertyAnnotations(\ReflectionProperty $property): array
+    {
+        return $this->annotationReader->getPropertyAnnotations($property);
+    }
+
+    protected function getMethodAnnotation(\ReflectionMethod $method, string $annotation)
     {
         return $this->annotationReader->getMethodAnnotation($method, $annotation);
     }

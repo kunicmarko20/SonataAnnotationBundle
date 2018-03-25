@@ -25,11 +25,16 @@ Documentation
 * [How to use](#how-to-use)
 * [Annotations](#annotations)
     * [Admin](#admin)
+    * [Access](#access)
     * [FormField](#formfield)
     * [ShowField](#showfield)
+    * [ShowAssociationField](#showassociationfield)
     * [ListField](#listfield)
+    * [ListAssociationField](#listassociationfield)
     * [DatagridField](#datagridfield)
+    * [DatagridAssociationField](#datagridassociationfield)
     * [ExportField](#exportfield)
+    * [ExportAssociationField](#exportassociationfield)
     * [ExportFormats](#exportformats)
     * [AddRoute](#addroute)
     * [RemoveRoute](#removeroute)
@@ -38,6 +43,7 @@ Documentation
     * [ListAction](#listaction)
     * [DatagridValues](#datagridvalues)
     * [ParentAssociationMapping](#parentassociationmapping)
+* [Extending The Admin](#extending-the-admin)
 
 ## Installation
 
@@ -95,13 +101,9 @@ Clear cache:
 bin/console cache:clear
 ```
 
-And you will see Admin appear in your admin panel.
+And you will see Admin appear in your sidebar.
 
 ## Annotations
-
-Here I will show you all the annotations and all the options you can set.
-All options are optional, you don't need to set anything, it is enough
-just to use annotation.
 
 ### Admin
 
@@ -121,10 +123,12 @@ use App\Admin\YourAdmin;
  *     managerType="orm",
  *     group="Category",
  *     showInDashboard=true,
+ *     keepOpen=true,
  *     onTop=true,
  *     icon="<i class='fa fa-user'></i>",
  *     labelTranslatorStrategy="sonata.admin.label.strategy.native",
  *     labelCatalogue="App",
+ *     pagerType="simple",
  *     controller=YourCRUDController::class,
  *     serviceId="app.admin.category",
  *     admin=YourAdmin::class,
@@ -140,7 +144,10 @@ class Category
 
 ```
 
-### FormField
+### Access
+
+If you are using role handler as described [here](https://sonata-project.org/bundles/admin/3-x/doc/reference/security.html#role-handler)
+you can add permission per role with this annotation.
 
 ```php
 <?php
@@ -153,6 +160,36 @@ use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
 /**
  * @Sonata\Admin("Category")
  *
+ * @Sonata\Access("ROLE_CLIENT", permissions={"LIST", "VIEW", "EXPORT"})
+ *
+ * @ORM\Table
+ * @ORM\Entity
+ */
+class Category
+{
+}
+
+```
+
+### FormField
+
+You can specify action option that would allow you to have different fields or
+have different configuration for the same field for create and edit action.
+If not set, field will be used for create and edit.
+
+```php
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+
+/**
+ * @Sonata\Admin("Category")
+ *
  * @ORM\Table
  * @ORM\Entity
  */
@@ -160,6 +197,7 @@ class Category
 {
     /**
      * @Sonata\FormField(
+     *      action="create",
      *      type="",
      *      options={},
      *      fieldDescriptionOptions={}
@@ -168,6 +206,32 @@ class Category
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
+
+    /**
+     * @Sonata\FormField(
+     *      type="",
+     *      options={},
+     *      fieldDescriptionOptions={}
+     * )
+     *
+     * @ORM\Column(name="description", type="string", length=255)
+     */
+    private $description;
+    
+    /**
+     * @Sonata\FormField(
+     *      action="create",
+     *      type=TextType::class
+     * )
+     *
+     * @Sonata\FormField(
+     *      action="edit",
+     *      type=TextareaType::class
+     * )
+     *
+     * @ORM\Column(name="something", type="string", length=255)
+     */
+    private $something;
 }
 ```
 
@@ -206,6 +270,38 @@ class Category
     {
         return 'show value';
     }
+}
+```
+
+### ShowAssociationField
+
+```php
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
+
+/**
+ * @Sonata\Admin("Category")
+ *
+ * @ORM\Table
+ * @ORM\Entity
+ */
+class Category
+{
+    /**
+     * @Sonata\ShowAssociationField(
+     *      field="name",
+     *      type="",
+     *      fieldDescriptionOptions={}
+     * )
+     *
+     * @ORM\ManyToOne(targetEntity="Owner")
+     * @ORM\JoinColumn(name="owner_id", referencedColumnName="id")
+     */
+    private $owner;
 }
 ```
 
@@ -257,6 +353,40 @@ class Category
 }
 ```
 
+### ListAssociationField
+
+```php
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
+
+/**
+ * @Sonata\Admin("Category")
+ *
+ * @ORM\Table
+ * @ORM\Entity
+ */
+class Category
+{
+    /**
+     * @Sonata\ListAssociationField(
+     *      field="name",
+     *      type="",
+     *      fieldDescriptionOptions={},
+     *      identifier=false
+     * )
+     *
+     * @ORM\ManyToOne(targetEntity="Owner")
+     * @ORM\JoinColumn(name="owner_id", referencedColumnName="id")
+     */
+    private $owner;
+}
+```
+
+
 ### DatagridField
 
 ```php
@@ -287,6 +417,41 @@ class Category
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
+}
+```
+
+### DatagridAssociationField
+
+```php
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
+
+/**
+ * @Sonata\Admin("Category")
+ *
+ * @ORM\Table
+ * @ORM\Entity
+ */
+class Category
+{
+    /**
+     * @Sonata\DatagridAssociationField(
+     *      field="name",
+     *      type="",
+     *      fieldDescriptionOptions={},
+     *      filterOptions={},
+     *      fieldType="",
+     *      fieldOptions={}
+     * )
+     *
+     * @ORM\ManyToOne(targetEntity="Owner")
+     * @ORM\JoinColumn(name="owner_id", referencedColumnName="id")
+     */
+    private $owner;
 }
 ```
 
@@ -332,6 +497,37 @@ class Category
     {
         return 'export value';
     }
+}
+```
+
+### ExportAssociationField
+
+```php
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
+
+/**
+ * @Sonata\Admin("Category")
+ *
+ * @ORM\Table
+ * @ORM\Entity
+ */
+class Category
+{
+    /**
+     * @Sonata\ExportAssociationField(
+     *      field="name",
+     *      label="Owner"
+     * )
+     *
+     * @ORM\ManyToOne(targetEntity="Owner")
+     * @ORM\JoinColumn(name="owner_id", referencedColumnName="id")
+     */
+    private $owner;
 }
 ```
 
@@ -386,7 +582,7 @@ use App\Controller\YourCRUDController;
  *     controller=YourCRUDController::class
  * )
  *
- * @Sonata\AddRoute(name="import", path="/import")
+ * @Sonata\AddRoute("import")
  * @Sonata\AddRoute(name="send_mail", path="{id}/send_mail")
  *
  * @ORM\Table
@@ -428,7 +624,8 @@ class Category
 
 ### ActionButton
 
-This will add button next to your add button in a list view.
+This will add button next to your add button in a list view. [Here](https://sonata-project.org/bundles/admin/3-x/doc/cookbook/recipe_custom_action.html#custom-action-without-entity)
+you can find how the template should look like.
 
 ```php
 <?php
@@ -459,7 +656,8 @@ class Category
 
 ### DashboardAction
 
-This will add button to your dashboard block for this entity.
+This will add button to your dashboard block for this entity. [Here](https://sonata-project.org/bundles/admin/3-x/doc/cookbook/recipe_custom_action.html#custom-action-without-entity)
+you can find how the template should look like.
 
 ```php
 <?php
@@ -522,6 +720,7 @@ class Category
 
 ### DatagridValues
 
+As explained [here](https://symfony.com/doc/master/bundles/SonataAdminBundle/reference/action_list.html#configure-the-default-ordering-in-the-list-view).
 ```php
 <?php
 
@@ -534,9 +733,7 @@ use App\Controller\YourCRUDController;
 /**
  * @Sonata\Admin("Category")
  *
- * @Sonata\DatagridValues({
- *      "_sort_by":"p.name"
- * })
+ * @Sonata\DatagridValues({"_sort_by":"p.name"})
  *
  * @ORM\Table
  * @ORM\Entity
@@ -576,5 +773,50 @@ class Category
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      */
     private $parent;
+}
+```
+
+### Extending The Admin
+
+Sometimes you need to do something custom and this bundle can't help you with
+that but you still want to use annotations for most of the other stuff. You can
+extend our admin class `KunicMarko\SonataAnnotationBundle\Admin\AnnotationAdmin`
+and overwrite the methods you want.
+
+```php
+<?php
+
+namespace App\Admin;
+
+use KunicMarko\SonataAnnotationBundle\Admin\AnnotationAdmin;
+
+class YourAdmin extends AnnotationAdmin
+{
+    //do what you want
+}
+```
+
+And then in your entity you just provide that class
+
+```php
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
+use App\Admin\YourAdmin;
+
+/**
+ * @Sonata\Admin(
+ *     label="Category",
+ *     admin=YourAdmin::class
+ * )
+ *
+ * @ORM\Table
+ * @ORM\Entity
+ */
+class Category
+{
 }
 ```

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace KunicMarko\SonataAnnotationBundle\Annotation;
 
-use KunicMarko\SonataAnnotationBundle\Admin\Admin as AdminClass;
+use KunicMarko\SonataAnnotationBundle\Admin\AnnotationAdmin;
 
 /**
  * @Annotation
@@ -32,12 +32,17 @@ class Admin implements AnnotationInterface
     /**
      * @var bool
      */
-    public $showInDashboard;
+    public $showInDashboard = true;
 
     /**
      * @var bool
      */
-    public $onTop;
+    public $keepOpen = false;
+
+    /**
+     * @var bool
+     */
+    public $onTop = false;
 
     /**
      * @var string
@@ -57,6 +62,11 @@ class Admin implements AnnotationInterface
     /**
      * @var string
      */
+    public $pagerType;
+
+    /**
+     * @var string
+     */
     public $controller;
 
     /**
@@ -67,7 +77,7 @@ class Admin implements AnnotationInterface
     /**
      * @var string
      */
-    public $admin = AdminClass::class;
+    public $admin = AnnotationAdmin::class;
 
     /**
      * @var string
@@ -81,10 +91,12 @@ class Admin implements AnnotationInterface
             'group'                     => $this->group,
             'label'                     => $this->label,
             'show_in_dashboard'         => $this->showInDashboard,
+            'keep_open'                 => $this->keepOpen,
             'on_top'                    => $this->onTop,
             'icon'                      => $this->icon,
             'label_translator_strategy' => $this->labelTranslatorStrategy,
             'label_catalogue'           => $this->labelCatalogue,
+            'pager_type'                => $this->pagerType,
         ];
     }
 }

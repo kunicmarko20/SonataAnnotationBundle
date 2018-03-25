@@ -10,27 +10,27 @@ namespace KunicMarko\SonataAnnotationBundle\Annotation;
  *
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class ListAction implements AnnotationInterface
+class Access implements AnnotationInterface
 {
     /**
      * @var string
      */
-    public $name;
+    public $role;
 
     /**
      * @var array
      */
-    public $options = [];
+    public $permissions;
 
-    public function getName(): string
+    public function getRole(): string
     {
-        if ($this->name) {
-            return $this->name;
+        if ($this->role) {
+            return $this->role;
         }
 
         throw new \InvalidArgumentException(
             sprintf(
-                'Argument "name" is mandatory in "%s" annotation.',
+                'Argument "role" is mandatory in "%s" annotation.',
                 self::class
             )
         );

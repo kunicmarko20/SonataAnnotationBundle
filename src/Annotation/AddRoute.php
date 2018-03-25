@@ -23,4 +23,18 @@ class AddRoute implements AnnotationInterface
      * @var string
      */
     public $path;
+
+    public function getName(): string
+    {
+        if ($this->name) {
+            return $this->name;
+        }
+
+        throw new \InvalidArgumentException(
+            sprintf(
+                'Argument "name" is mandatory in "%s" annotation.',
+                self::class
+            )
+        );
+    }
 }

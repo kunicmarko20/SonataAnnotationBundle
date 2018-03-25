@@ -5,16 +5,7 @@ declare(strict_types=1);
 namespace KunicMarko\SonataAnnotationBundle\Admin;
 
 use KunicMarko\SonataAnnotationBundle\Annotation\AddRoute;
-use KunicMarko\SonataAnnotationBundle\Reader\ActionButtonReader;
-use KunicMarko\SonataAnnotationBundle\Reader\DashboardActionReader;
-use KunicMarko\SonataAnnotationBundle\Reader\DatagridReader;
-use KunicMarko\SonataAnnotationBundle\Reader\DatagridValuesReader;
-use KunicMarko\SonataAnnotationBundle\Reader\ExportReader;
-use KunicMarko\SonataAnnotationBundle\Reader\FormReader;
-use KunicMarko\SonataAnnotationBundle\Reader\ListReader;
-use KunicMarko\SonataAnnotationBundle\Reader\ParentAssociationMappingReader;
-use KunicMarko\SonataAnnotationBundle\Reader\RouteReader;
-use KunicMarko\SonataAnnotationBundle\Reader\ShowReader;
+use KunicMarko\SonataAnnotationBundle\Annotation\RemoveRoute;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -25,45 +16,57 @@ use Sonata\AdminBundle\Show\ShowMapper;
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-class Admin extends AbstractAdmin
+class AnnotationAdmin extends AbstractAdmin
 {
     private $parentAssociationMappingLoaded = false;
     private $datagridValuesLoaded = false;
 
     protected function configureFormFields(FormMapper $formMapper): void
     {
-        $this->get(FormReader::class)
-            ->configureFields($this->getReflectionClass(), $formMapper);
+        if ($this->request->get($this->getIdParameter())) {
+            $this->get('sonata.annotation.reader.form')
+                ->configureEditFields($this->getReflectionClass(), $formMapper);
+            return;
+        }
+
+        $this->get('sonata.annotation.reader.form')
+            ->configureCreateFields($this->getReflectionClass(), $formMapper);
     }
 
     protected function configureListFields(ListMapper $listMapper): void
     {
-        $this->get(ListReader::class)
+        $this->get('sonata.annotation.reader.list')
             ->configureFields($this->getReflectionClass(), $listMapper);
     }
 
     protected function configureShowFields(ShowMapper $showMapper): void
     {
-        $this->get(ShowReader::class)
+        $this->get('sonata.annotation.reader.show')
             ->configureFields($this->getReflectionClass(), $showMapper);
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
     {
-        $this->get(DatagridReader::class)
+        $this->get('sonata.annotation.reader.datagrid')
             ->configureFields($this->getReflectionClass(), $datagridMapper);
     }
 
     protected function configureRoutes(RouteCollection $collection): void
     {
-        [$addRoutes, $removeRoutes] = $this->get(RouteReader::class)->getRoutes($this->getReflectionClass());
+        [$addRoutes, $removeRoutes] = $this->get('sonata.annotation.reader.route')
+            ->getRoutes($this->getReflectionClass());
 
+        /** @var AddRoute $route */
         foreach ($addRoutes as $route) {
-            $collection->add($route->name, $this->replaceIdParameterInRoutePath($route->path));
+            $collection->add(
+                $route->getName(),
+                $route->path ? $this->replaceIdParameterInRoutePath($route->path) : $route->getName()
+            );
         }
 
+        /** @var RemoveRoute $route */
         foreach ($removeRoutes as $route) {
-            $collection->remove($route->name);
+            $collection->remove($route->getName());
         }
     }
 
@@ -74,7 +77,7 @@ class Admin extends AbstractAdmin
 
     public function configureActionButtons($action, $object = null): array
     {
-        return $this->get(ActionButtonReader::class)
+        return $this->get('sonata.annotation.reader.action_button')
             ->getActions(
                 $this->getReflectionClass(),
                 parent::configureActionButtons($action, $object)
@@ -83,7 +86,7 @@ class Admin extends AbstractAdmin
 
     public function getDashboardActions(): array
     {
-        return $this->get(DashboardActionReader::class)
+        return $this->get('sonata.annotation.reader.dashboard_action')
             ->getActions(
                 $this->getReflectionClass(),
                 parent::getDashboardActions()
@@ -92,20 +95,20 @@ class Admin extends AbstractAdmin
 
     public function getExportFields(): array
     {
-        return $this->get(ExportReader::class)
+        return $this->get('sonata.annotation.reader.export')
             ->getFields($this->getReflectionClass()) ?: parent::getExportFields();
     }
 
     public function getExportFormats(): array
     {
-        return $this->get(ExportReader::class)
+        return $this->get('sonata.annotation.reader.export')
             ->getFormats($this->getReflectionClass()) ?: parent::getExportFormats();
     }
 
-    public function buildDatagrid()
+    public function buildDatagrid(): void
     {
         if (!$this->datagridValuesLoaded) {
-            $this->datagridValues = $this->get(DatagridValuesReader::class)
+            $this->datagridValues = $this->get('sonata.annotation.reader.datagrid_values')
                 ->getDatagridValues($this->getReflectionClass()) ?: $this->datagridValues;
 
             $this->datagridValuesLoaded = true;
@@ -114,10 +117,10 @@ class Admin extends AbstractAdmin
         parent::buildDatagrid();
     }
 
-    public function getParentAssociationMapping()
+    public function getParentAssociationMapping(): ?string
     {
         if (!$this->parentAssociationMappingLoaded) {
-            $this->parentAssociationMapping = $this->get(ParentAssociationMappingReader::class)
+            $this->parentAssociationMapping = $this->get('sonata.annotation.reader.parent_association_mapping')
                 ->getParent($this->getReflectionClass()) ?: $this->parentAssociationMapping;
 
             $this->parentAssociationMappingLoaded = true;
