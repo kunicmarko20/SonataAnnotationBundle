@@ -149,6 +149,9 @@ class Category
 If you are using role handler as described [here](https://sonata-project.org/bundles/admin/3-x/doc/reference/security.html#role-handler)
 you can add permission per role with this annotation.
 
+>This annotation can be used without Admin annotation present. If you have an admin class for your entity
+you can still use this annotation.
+
 ```php
 <?php
 
@@ -298,6 +301,12 @@ class Category
      *      fieldDescriptionOptions={}
      * )
      *
+     * @Sonata\ShowAssociationField(
+     *      field="email",
+     *      type="",
+     *      fieldDescriptionOptions={}
+     * )
+     *
      * @ORM\ManyToOne(targetEntity="Owner")
      * @ORM\JoinColumn(name="owner_id", referencedColumnName="id")
      */
@@ -378,6 +387,13 @@ class Category
      *      fieldDescriptionOptions={},
      *      identifier=false
      * )
+     * 
+     * @Sonata\ListAssociationField(
+     *      field="email",
+     *      type="",
+     *      fieldDescriptionOptions={},
+     *      identifier=false
+     * )
      *
      * @ORM\ManyToOne(targetEntity="Owner")
      * @ORM\JoinColumn(name="owner_id", referencedColumnName="id")
@@ -441,6 +457,15 @@ class Category
     /**
      * @Sonata\DatagridAssociationField(
      *      field="name",
+     *      type="",
+     *      fieldDescriptionOptions={},
+     *      filterOptions={},
+     *      fieldType="",
+     *      fieldOptions={}
+     * )
+     *
+     * @Sonata\DatagridAssociationField(
+     *      field="email",
      *      type="",
      *      fieldDescriptionOptions={},
      *      filterOptions={},
@@ -522,6 +547,11 @@ class Category
      * @Sonata\ExportAssociationField(
      *      field="name",
      *      label="Owner"
+     * )
+     *
+     * @Sonata\ExportAssociationField(
+     *      field="email",
+     *      label="Email"
      * )
      *
      * @ORM\ManyToOne(targetEntity="Owner")

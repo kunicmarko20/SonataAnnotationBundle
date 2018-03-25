@@ -26,14 +26,13 @@ final class AutoRegisterCompilerPassTest extends TestCase
     {
         $this->container =  new ContainerBuilder();
         $this->container->set('annotation_reader', new AnnotationReader());
-        $this->container->setParameter('security.role_hierarchy.roles', []);
         $this->container->setParameter('sonata_annotation.directory', __DIR__ . '/../../Fixtures');
     }
 
     /**
      * @dataProvider processData
      */
-    public function testProcess(string $serviceId, string $class, ?string $label, string $role): void
+    public function testProcess(string $serviceId, string $class, ?string $label): void
     {
         $autoRegisterCompilerPass = new AutoRegisterCompilerPass();
 
@@ -51,9 +50,6 @@ final class AutoRegisterCompilerPassTest extends TestCase
         $this->assertSame('orm', $attributes[0]['manager_type']);
         $this->assertSame($label, $attributes[0]['label']);
 
-        $this->assertArrayHasKey('ROLE_VENDOR', $roles = $this->container->getParameter('security.role_hierarchy.roles'));
-        $this->assertContains($role, $roles['ROLE_VENDOR']);
-
         $this->assertCount(2, $this->container->findTaggedServiceIds('sonata.admin'));
     }
 
@@ -64,37 +60,12 @@ final class AutoRegisterCompilerPassTest extends TestCase
                 'app.admin.AnnotationClass',
                 AnnotationClass::class,
                 'Test',
-                'ROLE_APP_ADMIN_ANNOTATIONCLASS_LIST',
             ],
             [
                 'test.the.id',
                 AnnotationExceptionClass::class,
                 null,
-                'ROLE_TEST_THE_ID_ALL',
             ],
         ];
-    }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Argument "role" is mandatory in "KunicMarko\SonataAnnotationBundle\Annotation\Access" annotation.
-     */
-    public function testProcessException(): void
-    {
-        copy(
-            ($directory = __DIR__ . '/../../Fixtures/'). 'AccessExceptionClass.php.dist',
-            $directory . 'AccessExceptionClass.php'
-        );
-
-        $autoRegisterCompilerPass = new AutoRegisterCompilerPass();
-
-        $autoRegisterCompilerPass->process($this->container);
-    }
-
-    protected function tearDown(): void
-    {
-        if (file_exists($file = __DIR__ . '/../../Fixtures/AccessExceptionClass.php')) {
-            unlink($file);
-        }
     }
 }
