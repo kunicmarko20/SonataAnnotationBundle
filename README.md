@@ -42,7 +42,7 @@ Documentation
     * [DashboardAction](#dashboardaction)
     * [ListAction](#listaction)
     * [DatagridValues](#datagridvalues)
-    * [ParentAssociationMapping](#parentassociationmapping)
+    * [ChildAdmin](#childadmin)
 * [Extending The Admin](#extending-the-admin)
 
 ## Installation
@@ -777,7 +777,7 @@ class Category
 }
 ```
 
-### ParentAssociationMapping
+### ChildAdmin
 
 ```php
 <?php
@@ -786,23 +786,40 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
-use App\Controller\YourCRUDController;
 
 /**
  * @Sonata\Admin("Category")
+ * @Sonata\ChildAdmin(class=Post::class, field="category")
  *
  * @ORM\Table
  * @ORM\Entity
  */
 class Category
 {
+}
+```
+
+```php
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
+
+/**
+ * @Sonata\Admin("Post")
+ *
+ * @ORM\Table
+ * @ORM\Entity
+ */
+class Post
+{
     /**
-     * @Sonata\ParentAssociationMapping()
-     *
-     * @ORM\ManyToOne(targetEntity="Parent")
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Category")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      */
-    private $parent;
+    private $category;
 }
 ```
 

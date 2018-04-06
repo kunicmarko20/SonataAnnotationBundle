@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace KunicMarko\SonataAnnotationBundle\DependencyInjection\Compiler;
 
 use Doctrine\Common\Annotations\Reader;
-use KunicMarko\SonataAnnotationBundle\Annotation\Access;
 use KunicMarko\SonataAnnotationBundle\Annotation\Admin;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

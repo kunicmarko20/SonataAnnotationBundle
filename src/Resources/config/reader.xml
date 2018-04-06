@@ -13,6 +13,6 @@
         <service id="sonata.annotation.reader.dashboard_action" class="KunicMarko\SonataAnnotationBundle\Reader\DashboardActionReader" />
         <service id="sonata.annotation.reader.export" class="KunicMarko\SonataAnnotationBundle\Reader\ExportReader" />
         <service id="sonata.annotation.reader.datagrid_values" class="KunicMarko\SonataAnnotationBundle\Reader\DatagridValuesReader" />
-        <service id="sonata.annotation.reader.parent_association_mapping" class="KunicMarko\SonataAnnotationBundle\Reader\ParentAssociationMappingReader" />
+        <service id="sonata.annotation.reader.child_admin" class="KunicMarko\SonataAnnotationBundle\Reader\ChildAdminReader" />
     </services>
 </container>
