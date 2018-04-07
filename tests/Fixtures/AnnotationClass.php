@@ -37,7 +37,6 @@ final class AnnotationClass
     private $field;
 
     /**
-     * @Sonata\ParentAssociationMapping()
      * @Sonata\ExportAssociationField(field="name")
      * @Sonata\ShowAssociationField(field="name")
      * @Sonata\DatagridAssociationField(field="name")

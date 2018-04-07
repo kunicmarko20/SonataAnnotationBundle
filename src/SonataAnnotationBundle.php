@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace KunicMarko\SonataAnnotationBundle;
 
 use KunicMarko\SonataAnnotationBundle\DependencyInjection\Compiler\AccessCompilerPass;
+use KunicMarko\SonataAnnotationBundle\DependencyInjection\Compiler\AddChildrenCompilerPass;
 use KunicMarko\SonataAnnotationBundle\DependencyInjection\Compiler\AutoRegisterCompilerPass;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -19,5 +20,6 @@ final class SonataAnnotationBundle extends Bundle
     {
         $container->addCompilerPass(new AutoRegisterCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 1);
         $container->addCompilerPass(new AccessCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1);
+        $container->addCompilerPass(new AddChildrenCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1);
     }
 }
