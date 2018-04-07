@@ -30,7 +30,9 @@ final class AutoRegisterCompilerPass implements CompilerPassInterface
         $this->annotationReader = $container->get('annotation_reader');
 
         foreach ($this->findFiles($container->getParameter('sonata_annotation.directory')) as $file) {
-            $className = $this->getFullyQualifiedClassName($file);
+            if (!($className = $this->getFullyQualifiedClassName($file))) {
+                continue;
+            }
 
             if (!($annotation = $this->getClassAnnotation($reflection = new \ReflectionClass($className)))) {
                 continue;
@@ -58,15 +60,25 @@ final class AutoRegisterCompilerPass implements CompilerPassInterface
             ->name('*.php');
     }
 
-    private function getFullyQualifiedClassName(SplFileInfo $file): string
+    private function getFullyQualifiedClassName(SplFileInfo $file): ?string
     {
-        return $this->getNamespace($file->getPathname()) . '\\' . $this->getClassName($file->getFilename());
+        if (!($namespace = $this->getNamespace($file->getPathname()))) {
+            return null;
+        }
+
+        return $namespace . '\\' . $this->getClassName($file->getFilename());
     }
 
-    private function getNamespace(string $filePath): string
+    private function getNamespace(string $filePath): ?string
     {
         $namespaceLine = preg_grep('/^namespace /', file($filePath));
+
+        if (!$namespaceLine) {
+            return null;
+        }
+
         preg_match('/namespace (.*);$/', reset($namespaceLine), $match);
+
         return array_pop($match);
     }
 
