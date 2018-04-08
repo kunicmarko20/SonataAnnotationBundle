@@ -16,7 +16,7 @@ final class SonataAnnotationExtensionTest extends AbstractExtensionTestCase
 {
     public function testLoadsFormServiceDefinition(): void
     {
-        $this->container->setParameter('kernel.root_dir', $param = 'test');
+        $this->container->setParameter('kernel.project_dir', $param = 'test');
 
         $this->load();
 
@@ -31,7 +31,7 @@ final class SonataAnnotationExtensionTest extends AbstractExtensionTestCase
 
         $this->assertContainerBuilderHasParameter(
             'sonata_annotation.directory',
-            $param
+            $param . '/src/'
         );
     }
 
