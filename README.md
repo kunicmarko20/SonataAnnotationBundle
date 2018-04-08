@@ -22,6 +22,7 @@ Documentation
 -------------
 
 * [Installation](#installation)
+* [Configuration](#configuration)
 * [How to use](#how-to-use)
 * [Annotations](#annotations)
     * [Admin](#admin)
@@ -60,6 +61,16 @@ return [
     //...
     KunicMarko\SonataAnnotationBundle\SonataAnnotationBundle::class => ['all' => true],
 ];
+```
+
+## Configuration
+
+By default we scan all files in your `src` directory, if you save your entities somewhere
+else you can change the directory:
+
+```yaml
+sonata_annotation:
+    directory: '%kernel.project_dir%/src/'
 ```
 
 ## How to use
