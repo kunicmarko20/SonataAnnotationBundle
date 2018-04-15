@@ -10,7 +10,7 @@ namespace KunicMarko\SonataAnnotationBundle\Annotation;
  *
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-final class ChildAdmin implements AnnotationInterface
+final class AddChild implements AnnotationInterface
 {
     /**
      * @var string

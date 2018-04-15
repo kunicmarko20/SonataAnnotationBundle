@@ -26,6 +26,7 @@ Documentation
 * [Annotations](#annotations)
     * [Admin](#admin)
     * [Access](#access)
+    * [AddChild](#addChild)
     * [FormField](#formfield)
     * [ShowField](#showfield)
     * [ShowAssociationField](#showassociationfield)
@@ -42,7 +43,6 @@ Documentation
     * [DashboardAction](#dashboardaction)
     * [ListAction](#listaction)
     * [DatagridValues](#datagridvalues)
-    * [ChildAdmin](#childadmin)
 * [Extending The Admin](#extending-the-admin)
 
 ## Installation
@@ -172,6 +172,57 @@ class Category
 {
 }
 
+```
+
+### AddChild
+
+You can read more about this [here](https://sonata-project.org/bundles/admin/master/doc/reference/child_admin.html).
+
+>This annotation can be used without Admin annotation present. If you have an admin class for your entity
+you can still use this annotation.
+
+```php
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
+
+/**
+ * @Sonata\Admin("Category")
+ * @Sonata\AddChild(class=Post::class, field="category")
+ *
+ * @ORM\Table
+ * @ORM\Entity
+ */
+class Category
+{
+}
+```
+
+```php
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
+
+/**
+ * @Sonata\Admin("Post")
+ *
+ * @ORM\Table
+ * @ORM\Entity
+ */
+class Post
+{
+    /**
+     * @ORM\ManyToOne(targetEntity="Category")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     */
+    private $category;
+}
 ```
 
 ### FormField
@@ -774,52 +825,6 @@ class Category
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
-}
-```
-
-### ChildAdmin
-
-```php
-<?php
-
-namespace App\Entity;
-
-use Doctrine\ORM\Mapping as ORM;
-use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
-
-/**
- * @Sonata\Admin("Category")
- * @Sonata\ChildAdmin(class=Post::class, field="category")
- *
- * @ORM\Table
- * @ORM\Entity
- */
-class Category
-{
-}
-```
-
-```php
-<?php
-
-namespace App\Entity;
-
-use Doctrine\ORM\Mapping as ORM;
-use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
-
-/**
- * @Sonata\Admin("Post")
- *
- * @ORM\Table
- * @ORM\Entity
- */
-class Post
-{
-    /**
-     * @ORM\ManyToOne(targetEntity="Category")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
-     */
-    private $category;
 }
 ```
 
