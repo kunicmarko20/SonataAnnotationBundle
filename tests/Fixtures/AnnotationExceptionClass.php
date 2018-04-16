@@ -13,6 +13,7 @@ use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
  *
  * @Sonata\Access("ROLE_VENDOR", permissions={"ALL"})
  * @Sonata\ActionButton()
+ * @Sonata\AddChild()
  *
  * @Sonata\AddRoute()
  *

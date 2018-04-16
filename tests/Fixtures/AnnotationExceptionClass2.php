@@ -9,6 +9,7 @@ use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
 /**
  * @Sonata\ListAction()
  * @Sonata\RemoveRoute()
+ * @Sonata\AddChild(class=AnnotationClass::class)
  *
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
