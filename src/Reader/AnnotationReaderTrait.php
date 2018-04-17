@@ -29,11 +29,6 @@ trait AnnotationReaderTrait
         return $this->annotationReader->getClassAnnotations($class);
     }
 
-    protected function getPropertyAnnotation(\ReflectionProperty $property, string $annotation)
-    {
-        return $this->annotationReader->getPropertyAnnotation($property, $annotation);
-    }
-
     protected function getPropertyAnnotations(\ReflectionProperty $property): array
     {
         return $this->annotationReader->getPropertyAnnotations($property);

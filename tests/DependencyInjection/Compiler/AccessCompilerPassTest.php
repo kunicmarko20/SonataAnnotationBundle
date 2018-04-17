@@ -6,7 +6,6 @@ namespace KunicMarko\SonataAnnotationBundle\Tests\DependencyInjection\Compiler;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use KunicMarko\SonataAnnotationBundle\DependencyInjection\Compiler\AccessCompilerPass;
-use KunicMarko\SonataAnnotationBundle\DependencyInjection\Compiler\AutoRegisterCompilerPass;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AccessExceptionClass;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationClass;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationExceptionClass;
