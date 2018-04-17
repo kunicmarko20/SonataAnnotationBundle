@@ -12,4 +12,15 @@ namespace KunicMarko\SonataAnnotationBundle\Annotation;
  */
 final class ParentAssociationMapping implements AnnotationInterface
 {
+    public function __construct()
+    {
+        @trigger_error(
+            sprintf(
+                'The "%s" annotation is deprecated since 1.1, to be removed in 2.0. Use %s instead.',
+                self::class,
+                AddChild::class
+            ),
+            E_USER_DEPRECATED
+        );
+    }
 }

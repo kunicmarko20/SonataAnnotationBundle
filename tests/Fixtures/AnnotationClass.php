@@ -9,6 +9,7 @@ use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
 /**
  * @Sonata\Admin("Test")
  * @Sonata\Access("ROLE_VENDOR", permissions={"LIST"})
+ * @Sonata\AddChild(class=EmptyClass::class, field="test")
  *
  * @Sonata\ActionButton("fake_template.html.twig")
  * @Sonata\DashboardAction("fake_template.html.twig")
@@ -37,7 +38,6 @@ final class AnnotationClass
     private $field;
 
     /**
-     * @Sonata\ParentAssociationMapping()
      * @Sonata\ExportAssociationField(field="name")
      * @Sonata\ShowAssociationField(field="name")
      * @Sonata\DatagridAssociationField(field="name")

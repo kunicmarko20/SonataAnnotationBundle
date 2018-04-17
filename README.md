@@ -22,10 +22,12 @@ Documentation
 -------------
 
 * [Installation](#installation)
+* [Configuration](#configuration)
 * [How to use](#how-to-use)
 * [Annotations](#annotations)
     * [Admin](#admin)
     * [Access](#access)
+    * [AddChild](#addChild)
     * [FormField](#formfield)
     * [ShowField](#showfield)
     * [ShowAssociationField](#showassociationfield)
@@ -42,7 +44,6 @@ Documentation
     * [DashboardAction](#dashboardaction)
     * [ListAction](#listaction)
     * [DatagridValues](#datagridvalues)
-    * [ParentAssociationMapping](#parentassociationmapping)
 * [Extending The Admin](#extending-the-admin)
 
 ## Installation
@@ -60,6 +61,16 @@ return [
     //...
     KunicMarko\SonataAnnotationBundle\SonataAnnotationBundle::class => ['all' => true],
 ];
+```
+
+## Configuration
+
+By default we scan all files in your `src` directory, if you save your entities somewhere
+else you can change the directory:
+
+```yaml
+sonata_annotation:
+    directory: '%kernel.project_dir%/src/'
 ```
 
 ## How to use
@@ -172,6 +183,57 @@ class Category
 {
 }
 
+```
+
+### AddChild
+
+You can read more about this [here](https://sonata-project.org/bundles/admin/master/doc/reference/child_admin.html).
+
+>This annotation can be used without Admin annotation present. If you have an admin class for your entity
+you can still use this annotation.
+
+```php
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
+
+/**
+ * @Sonata\Admin("Category")
+ * @Sonata\AddChild(class=Post::class, field="category")
+ *
+ * @ORM\Table
+ * @ORM\Entity
+ */
+class Category
+{
+}
+```
+
+```php
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
+
+/**
+ * @Sonata\Admin("Post")
+ *
+ * @ORM\Table
+ * @ORM\Entity
+ */
+class Post
+{
+    /**
+     * @ORM\ManyToOne(targetEntity="Category")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     */
+    private $category;
+}
 ```
 
 ### FormField
@@ -774,35 +836,6 @@ class Category
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
-}
-```
-
-### ParentAssociationMapping
-
-```php
-<?php
-
-namespace App\Entity;
-
-use Doctrine\ORM\Mapping as ORM;
-use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
-use App\Controller\YourCRUDController;
-
-/**
- * @Sonata\Admin("Category")
- *
- * @ORM\Table
- * @ORM\Entity
- */
-class Category
-{
-    /**
-     * @Sonata\ParentAssociationMapping()
-     *
-     * @ORM\ManyToOne(targetEntity="Parent")
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
-     */
-    private $parent;
 }
 ```
 

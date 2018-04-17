@@ -21,7 +21,7 @@ final class SonataAnnotationExtension extends Extension
 
         $container->setParameter(
             'sonata_annotation.directory',
-            $config['directory'] ?? $container->getParameter('kernel.root_dir')
+            $config['directory'] ?? $container->getParameter('kernel.project_dir') . '/src/'
         );
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
