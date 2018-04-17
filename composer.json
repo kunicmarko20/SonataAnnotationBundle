@@ -20,11 +20,14 @@
   "require": {
     "php": "^7.1",
     "doctrine/annotations": "^1.6",
-    "sonata-project/admin-bundle": "^3.33",
+    "sonata-project/admin-bundle": "^3.35",
     "symfony/config": "^3.4 || ^4.0",
     "symfony/dependency-injection": "^3.4 || ^4.0",
     "symfony/finder": "^3.4 || ^4.0",
     "symfony/http-kernel": "^3.4 || ^4.0"
+  },
+  "conflict": {
+    "sonata-project/admin-bundle": "<3.35"
   },
   "require-dev": {
     "matthiasnoback/symfony-dependency-injection-test": "^3.0",

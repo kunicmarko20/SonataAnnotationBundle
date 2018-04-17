@@ -18,7 +18,6 @@ use Sonata\AdminBundle\Show\ShowMapper;
  */
 class AnnotationAdmin extends AbstractAdmin
 {
-    private $parentAssociationMappingLoaded = false;
     private $datagridValuesLoaded = false;
 
     protected function configureFormFields(FormMapper $formMapper): void
@@ -115,18 +114,6 @@ class AnnotationAdmin extends AbstractAdmin
         }
 
         parent::buildDatagrid();
-    }
-
-    public function getParentAssociationMapping(): ?string
-    {
-        if (!$this->parentAssociationMappingLoaded) {
-            $this->parentAssociationMapping = $this->get('sonata.annotation.reader.parent_association_mapping')
-                ->getParent($this->getReflectionClass()) ?: $this->parentAssociationMapping;
-
-            $this->parentAssociationMappingLoaded = true;
-        }
-
-        return $this->parentAssociationMapping;
     }
 
     private function get(string $service)

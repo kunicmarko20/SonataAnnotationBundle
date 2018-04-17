@@ -13,6 +13,7 @@ use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
  *
  * @Sonata\Access("ROLE_VENDOR", permissions={"ALL"})
  * @Sonata\ActionButton()
+ * @Sonata\AddChild()
  *
  * @Sonata\AddRoute()
  *
@@ -21,6 +22,7 @@ use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
 final class AnnotationExceptionClass
 {
     /**
+     * @Sonata\ParentAssociationMapping()
      * @Sonata\ExportAssociationField()
      * @Sonata\ShowAssociationField()
      * @Sonata\ListAssociationField()

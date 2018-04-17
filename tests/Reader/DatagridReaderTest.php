@@ -51,6 +51,8 @@ final class DatagridReaderTest extends TestCase
     }
 
     /**
+     * @group legacy
+     * @expectedDeprecation The "KunicMarko\SonataAnnotationBundle\Annotation\ParentAssociationMapping" annotation is deprecated since 1.1, to be removed in 2.0. Use KunicMarko\SonataAnnotationBundle\Annotation\AddChild instead.
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Argument "field" is mandatory in "KunicMarko\SonataAnnotationBundle\Annotation\DatagridAssociationField" annotation.
      */

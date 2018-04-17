@@ -6,7 +6,6 @@ use Doctrine\Common\Annotations\AnnotationReader;
 use KunicMarko\SonataAnnotationBundle\Admin\AnnotationAdmin;
 use KunicMarko\SonataAnnotationBundle\Reader\ActionButtonReader;
 use KunicMarko\SonataAnnotationBundle\Reader\ExportReader;
-use KunicMarko\SonataAnnotationBundle\Reader\ParentAssociationMappingReader;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationClass;
 use PHPUnit\Framework\TestCase;
 use Sonata\AdminBundle\Admin\Pool;
@@ -61,17 +60,5 @@ final class AnnotationAdminTest extends TestCase
         $formats = $this->admin->getExportFormats('');
 
         $this->assertSame(['json', 'xml'], $formats);
-    }
-
-    public function testGetParentAssociationMapping()
-    {
-        $this->container->set(
-            'sonata.annotation.reader.parent_association_mapping',
-            new ParentAssociationMappingReader(new AnnotationReader())
-        );
-
-        $parent = $this->admin->getParentAssociationMapping();
-
-        $this->assertSame('parent', $parent);
     }
 }

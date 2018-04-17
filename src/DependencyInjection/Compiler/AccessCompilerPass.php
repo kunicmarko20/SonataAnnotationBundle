@@ -6,19 +6,15 @@ namespace KunicMarko\SonataAnnotationBundle\DependencyInjection\Compiler;
 
 use Doctrine\Common\Annotations\Reader;
 use KunicMarko\SonataAnnotationBundle\Annotation\Access;
-use KunicMarko\SonataAnnotationBundle\Annotation\Admin;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Definition;
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
 final class AccessCompilerPass implements CompilerPassInterface
 {
-    private const ENTITY_ARGUMENT_IN_SERVICE_DEFINITION = 1;
+    use FindClassTrait;
 
     /**
      * @var Reader
@@ -41,28 +37,6 @@ final class AccessCompilerPass implements CompilerPassInterface
         }
 
         $container->setParameter('security.role_hierarchy.roles', $roles);
-    }
-
-    private function getClass(ContainerBuilder $container, string $id): ?string
-    {
-        $definition = $container->getDefinition($id);
-
-        //Entity can be a class or a parameter
-        $class = $definition->getArgument(self::ENTITY_ARGUMENT_IN_SERVICE_DEFINITION);
-
-        if ($class[0] !== '%') {
-            return $class;
-        }
-
-        if ($container->hasParameter($class = trim($class, '%'))) {
-            return $container->getParameter($class);
-        }
-
-        throw new \LogicException(sprintf(
-            'Service "%s" has a parameter "%s" as an argument but it is not found.',
-            $id,
-            $class
-        ));
     }
 
     private function getRolePrefix(string $serviceId): string
