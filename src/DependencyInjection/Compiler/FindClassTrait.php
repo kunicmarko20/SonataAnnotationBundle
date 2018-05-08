@@ -7,6 +7,8 @@ namespace KunicMarko\SonataAnnotationBundle\DependencyInjection\Compiler;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
+ * @internal
+ *
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
 trait FindClassTrait

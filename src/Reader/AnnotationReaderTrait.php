@@ -8,6 +8,8 @@ use Doctrine\Common\Annotations\Reader;
 use KunicMarko\SonataAnnotationBundle\Annotation\AnnotationInterface;
 
 /**
+ * @internal
+ *
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
 trait AnnotationReaderTrait
