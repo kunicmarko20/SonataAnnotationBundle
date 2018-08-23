@@ -1,5 +1,6 @@
 language: php
 
+sudo: true
 php:
   - '7.1'
   - '7.2'
@@ -15,7 +16,11 @@ matrix:
     - php: '7.1'
       env: SYMFONY=3.4.*
     - php: '7.1'
-      env: SYMFONY=4.0.*
+      env: SYMFONY=4.0.3
+    - php: '7.1'
+      env: SYMFONY=4.1.*
+    - php: '7.1'
+      env: TARGET=behat
 
   allow_failures:
     - php: nightly
