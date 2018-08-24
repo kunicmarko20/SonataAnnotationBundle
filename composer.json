@@ -30,7 +30,17 @@
     "sonata-project/admin-bundle": "<3.35"
   },
   "require-dev": {
+    "behat/behat": "^3.5",
+    "behat/mink": "1.7.x-dev",
+    "behat/mink-browserkit-driver": "^1.3",
+    "behat/mink-extension": "^2.3",
+    "behat/mink-goutte-driver": "^1.2",
+    "behat/mink-selenium2-driver": "^1.3",
+    "behat/symfony2-extension": "^2.1",
+    "doctrine/doctrine-fixtures-bundle": "^3.0",
     "matthiasnoback/symfony-dependency-injection-test": "^3.0",
+    "sonata-project/doctrine-orm-admin-bundle": "^3.6",
+    "symfony/framework-bundle": "^3.4 || ^4.0",
     "symfony/phpunit-bridge": "^4.0"
   },
   "config": {
@@ -48,7 +58,9 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "KunicMarko\\SonataAnnotationBundle\\Tests\\": "tests/"
+      "KunicMarko\\SonataAnnotationBundle\\Tests\\": "tests/",
+      "KunicMarko\\SonataAnnotationBundle\\Features\\Fixtures\\Project\\": "features/Fixtures/Project/src",
+      "KunicMarko\\SonataAnnotationBundle\\Features\\": "features/"
     }
   }
 }
