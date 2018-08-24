@@ -2,7 +2,7 @@
 set -ev
 
 sudo apt update
-composer install --dev --prefer-dist
+composer install --prefer-dist
 sudo apt install xvfb
 sudo apt install firefox
 wget https://selenium-release.storage.googleapis.com/3.14/selenium-server-standalone-3.14.0.jar

@@ -21,6 +21,8 @@ matrix:
       env: SYMFONY=4.1.*
     - php: '7.1'
       env: TARGET=behat
+    - php: '7.2'
+      env: TARGET=bc_check
 
   allow_failures:
     - php: nightly
