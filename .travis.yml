@@ -13,13 +13,15 @@ env:
 matrix:
   fast_finish: true
   include:
-    - php: '7.1'
+    - php: '7.2'
       env: SYMFONY=3.4.*
-    - php: '7.1'
-      env: SYMFONY=4.0.3
-    - php: '7.1'
+    - php: '7.2'
       env: SYMFONY=4.1.*
-    - php: '7.1'
+    - php: '7.2'
+      env: SYMFONY=4.2.*
+    - php: '7.2'
+      env: SYMFONY=4.2.*
+    - php: '7.3'
       env: TARGET=behat
 
   allow_failures:
