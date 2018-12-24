@@ -39,6 +39,7 @@
     "behat/symfony2-extension": "^2.1",
     "doctrine/doctrine-fixtures-bundle": "^3.0",
     "matthiasnoback/symfony-dependency-injection-test": "^3.0",
+    "oskarstark/behat-contexts": "^0.4",
     "sonata-project/doctrine-orm-admin-bundle": "^3.6",
     "symfony/framework-bundle": "^3.4 || ^4.0",
     "symfony/phpunit-bridge": "^4.0"

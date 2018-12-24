@@ -9,3 +9,6 @@ services:
     App\:
         resource: '../src/*'
         exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    Doctrine\ORM\Tools\SchemaTool:
+        public: true

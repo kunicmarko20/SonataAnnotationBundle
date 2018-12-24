@@ -12,7 +12,12 @@ Feature: List
     And I should see "NO RESULT"
 
   Scenario: Have Results
-    And I have items in the database
+    And the following YAML fixtures where loaded:
+    """
+    App\Entity\Category:
+        category_1:
+            name: 'Dummy Category'
+    """
     Then I should see "Name"
     And I should see "Edit" button
     And I should see "Delete" button

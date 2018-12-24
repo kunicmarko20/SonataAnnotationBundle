@@ -5,7 +5,12 @@ Feature: Edit
 
   Background:
     Given I am on the dashboard
-    And I have items in the database
+    And the following YAML fixtures where loaded:
+    """
+    App\Entity\Category:
+        category_1:
+            name: 'Dummy Category'
+    """
     When I follow "Category"
 
   Scenario: Edit

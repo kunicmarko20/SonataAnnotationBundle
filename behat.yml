@@ -3,6 +3,12 @@ default:
     default:
       contexts:
         - KunicMarko\SonataAnnotationBundle\Features\Context\AdminContext
+        - OStark\Behat\Context\AliceDataFixtures\AliceDataFixturesLoaderContext:
+            loader: '@fidry_alice_data_fixtures.doctrine.purger_loader'
+            fixturesBasePath: '%paths.base%/features/fixtures/'
+        - OStark\Behat\Context\Doctrine\DoctrineDatabaseContext:
+            em: '@doctrine.orm.default_entity_manager'
+            schemaTool: '@Doctrine\ORM\Tools\SchemaTool'
   extensions:
     Behat\MinkExtension:
       base_url: 'http://127.0.0.1:8000/'
