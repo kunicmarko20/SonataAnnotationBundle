@@ -80,7 +80,7 @@ final class AutoRegisterCompilerPass implements CompilerPassInterface
             return null;
         }
 
-        preg_match('/namespace (.*);$/', reset($namespaceLine), $match);
+        preg_match('/namespace (.*);$/', trim(reset($namespaceLine)), $match);
 
         return array_pop($match);
     }
