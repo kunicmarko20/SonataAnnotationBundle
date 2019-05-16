@@ -240,7 +240,10 @@ class Post
 
 You can specify action option that would allow you to have different fields or
 have different configuration for the same field for create and edit action.
-If not set, field will be used for create and edit.
+If not set, field will be used for create and edit. Besides that, you are able
+to set the position of the field. Position 1 would be the first field to 
+render and higher numbers after. If field doesn't have position, it will be 
+rendered after all fields with position.
 
 ```php
 <?php
@@ -265,7 +268,8 @@ class Category
      *      action="create",
      *      type="",
      *      options={},
-     *      fieldDescriptionOptions={}
+     *      fieldDescriptionOptions={},
+     *      position=1 
      * )
      *
      * @ORM\Column(name="name", type="string", length=255)
@@ -276,7 +280,8 @@ class Category
      * @Sonata\FormField(
      *      type="",
      *      options={},
-     *      fieldDescriptionOptions={}
+     *      fieldDescriptionOptions={},
+     *      position=2
      * )
      *
      * @ORM\Column(name="description", type="string", length=255)
