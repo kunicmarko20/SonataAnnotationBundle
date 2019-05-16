@@ -23,9 +23,9 @@ class DatagridField extends AbstractField
     public $fieldType;
 
     /**
-     * @var string
+     * @var array
      */
-    public $fieldOptions;
+    public $fieldOptions = [];
 
     public function getSettings(): array
     {
