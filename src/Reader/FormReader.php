@@ -4,7 +4,13 @@ declare(strict_types=1);
 
 namespace KunicMarko\SonataAnnotationBundle\Reader;
 
-use KunicMarko\SonataAnnotationBundle\Annotation\FormField;
+use Doctrine\Common\Annotations\Reader;
+use KunicMarko\SonataAnnotationBundle\Annotation;
+use KunicMarko\SonataAnnotationBundle\Grouping\Field;
+use KunicMarko\SonataAnnotationBundle\Grouping\Group;
+use KunicMarko\SonataAnnotationBundle\Grouping\GroupCollection;
+use KunicMarko\SonataAnnotationBundle\Grouping\Tab;
+use KunicMarko\SonataAnnotationBundle\Grouping\TabCollection;
 use Sonata\AdminBundle\Form\FormMapper;
 
 /**
@@ -14,58 +20,142 @@ final class FormReader
 {
     use AnnotationReaderTrait;
 
-    public function configureCreateFields(\ReflectionClass $class, FormMapper $formMapper): void
+    private const DEFAULT_GROUP_NAME = '-';
+
+    private const DEFAULT_TAB_NAME = 'default';
+
+    public function configureCreateFields(\ReflectionClass $class, FormMapper $formMapper, ?string $defaultGroup = self::DEFAULT_GROUP_NAME): void
     {
-        $this->configureFields($class, $formMapper, FormField::ACTION_EDIT);
+        $this->configureFields(
+            $class,
+            $formMapper,
+            Annotation\FormField::ACTION_EDIT,
+            Group::with($defaultGroup)
+        );
     }
 
-    private function configureFields(\ReflectionClass $class, FormMapper $formMapper, string $action): void
+    public function configureEditFields(\ReflectionClass $class, FormMapper $formMapper, ?string $defaultGroup = self::DEFAULT_GROUP_NAME): void
     {
-        $propertiesWithPosition = [];
-        $propertiesWithoutPosition = [];
+        $this->configureFields(
+            $class,
+            $formMapper,
+            Annotation\FormField::ACTION_CREATE,
+            Group::with($defaultGroup)
+        );
+    }
 
-        foreach ($class->getProperties() as $property) {
-            foreach ($this->getPropertyAnnotations($property) as $annotation) {
-                if (!$annotation instanceof FormField || $annotation->action === $action) {
-                    continue;
-                }
+    private function configureFields(\ReflectionClass $class, FormMapper $formMapper, string $action, Group $defaultGroup): void
+    {
+        $tabCollection = TabCollection::create();
+        $groupCollection = GroupCollection::create();
+        $groupCollection->add($defaultGroup);
 
-                if (!$annotation->hasPosition()) {
-                    $propertiesWithoutPosition[] = [
-                        'name' => $property->getName(),
-                        'settings' => $annotation->getSettings(),
-                    ];
+        $this->findTabsAndGroups(
+            $this->getClassAnnotations($class),
+            $tabCollection,
+            $groupCollection
+        );
 
-                    continue;
-                }
+        $this->fillTabsAndGroupsWithFields(
+            $class->getProperties(),
+            $action,
+            $defaultGroup->getName(),
+            $tabCollection,
+            $groupCollection
+        );
 
-                if (\array_key_exists($annotation->position, $propertiesWithPosition)) {
-                    throw new \InvalidArgumentException(sprintf(
-                        'Position "%s" is already in use by "%s", try setting a different position for "%s".',
-                        $annotation->position,
-                        $propertiesWithPosition[$annotation->position]['name'],
-                        $property->getName()
-                    ));
-                }
+        if ($tabCollection->isEmpty()) {
+            $groupCollection->render($formMapper);
+            return;
+        }
 
-                $propertiesWithPosition[$annotation->position] = [
-                    'name' => $property->getName(),
-                    'settings' => $annotation->getSettings(),
-                ];
+        $this->renderTabCollection($formMapper, $tabCollection, $groupCollection);
+    }
+
+    private function findTabsAndGroups(
+        array $annotations,
+        TabCollection $tabCollection,
+        GroupCollection $groupCollection
+    ): void {
+
+        foreach ($annotations as $annotation) {
+            if ($annotation instanceof Annotation\Tab) {
+                $tabCollection->add(Tab::with(
+                    $annotation->getName(),
+                    $annotation->options,
+                    $annotation->position
+                ));
+                continue;
+            }
+
+            if ($annotation instanceof Annotation\Group) {
+                $groupCollection->add(Group::with(
+                    $annotation->getName(),
+                    $annotation->options,
+                    $annotation->tab,
+                    $annotation->position
+                ));
             }
         }
+    }
 
-        \ksort($propertiesWithPosition);
-
-        $properties = \array_merge($propertiesWithPosition, $propertiesWithoutPosition);
-
+    private function fillTabsAndGroupsWithFields(
+        array $properties,
+        string $action,
+        string $defaultGroupName,
+        TabCollection $tabCollection,
+        GroupCollection $groupCollection
+    ): void {
         foreach ($properties as $property) {
-            $formMapper->add($property['name'], ...$property['settings']);
+            foreach ($this->getPropertyAnnotations($property) as $annotation) {
+                if (!$annotation instanceof Annotation\FormField || $annotation->action === $action) {
+                    continue;
+                }
+
+                $field = Field::with(
+                    $property->getName(),
+                    $annotation->getSettings(),
+                    $annotation->position,
+                    $annotation->getGroup(),
+                    $annotation->getTab()
+                );
+
+                if ($annotation->hasTab()) {
+                    $tabCollection->get($annotation->getTab())
+                        ->addField($field);
+                    continue;
+                }
+
+                $groupCollection->get($annotation->getGroup() ?? $defaultGroupName)
+                    ->addField($field);
+            }
         }
     }
 
-    public function configureEditFields(\ReflectionClass $class, FormMapper $formMapper): void
-    {
-        $this->configureFields($class, $formMapper, FormField::ACTION_CREATE);
+    private function renderTabCollection(
+        FormMapper $formMapper,
+        TabCollection $tabCollection,
+        GroupCollection $groupCollection
+    ): void {
+        $tabCollection->add(Tab::with(self::DEFAULT_TAB_NAME));
+
+        foreach ($groupCollection->all() as $group) {
+            if ($group->getTabName() === null) {
+                continue;
+            }
+
+            if ($tabCollection->has($group->getTabName() ?? self::DEFAULT_TAB_NAME)) {
+                throw new \InvalidArgumentException(sprintf(
+                    'Tab "%s" was not found, but was included in "%s" Group annotation.',
+                    $group->getTabName(),
+                    $group->getName()
+                ));
+            }
+
+            $tabCollection->get($group->getTabName())
+                ->addGroup($group);
+        }
+
+        $tabCollection->render($formMapper);
     }
 }
