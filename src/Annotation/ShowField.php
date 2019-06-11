@@ -12,4 +12,18 @@ namespace KunicMarko\SonataAnnotationBundle\Annotation;
  */
 class ShowField extends AbstractField
 {
+    /**
+     * @var integer
+     */
+    public $position;
+
+    public function getPosition(): int
+    {
+        return $this->position;
+    }
+
+    public function hasPosition(): bool
+    {
+        return $this->position !== null;
+    }
 }
