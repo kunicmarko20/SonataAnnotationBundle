@@ -33,7 +33,7 @@ final class ShowReader
                 // the name property changes for ShowAssociationField
                 $name = $property->getName();
                 if ($annotation instanceof ShowAssociationField) {
-                    $name .=  '.' . $annotation->getField();
+                    $name .= '.'.$annotation->getField();
                 }
 
                 if (!$annotation->hasPosition()) {

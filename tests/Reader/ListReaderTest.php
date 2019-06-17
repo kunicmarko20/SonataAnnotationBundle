@@ -9,6 +9,7 @@ use KunicMarko\SonataAnnotationBundle\Reader\ListReader;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationClass;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationExceptionClass;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationExceptionClass2;
+use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationExceptionClass4;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\EmptyClass;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
@@ -85,6 +86,37 @@ final class ListReaderTest extends TestCase
     {
         $this->listReader->configureFields(
             new \ReflectionClass(AnnotationExceptionClass2::class),
+            $this->listMapper->reveal()
+        );
+    }
+
+    public function testConfigureCreateFieldsAnnotationPresentPosition(): void
+    {
+        $mock = $this->createMock(ListMapper::class);
+
+        $properties = ['parent.name', 'field', 'additionalField', 'method'];
+        $mock->expects($this->exactly(4))
+            ->method('add')
+            ->with($this->callback(static function(string $field) use (&$properties): bool {
+                $property = array_shift($properties);
+                return $field === $property;
+            }));
+
+        $this->listReader->configureFields(
+            new \ReflectionClass(AnnotationClass::class),
+            $mock
+        );
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testPositionShouldBeUnique(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Position "1" is already in use by "field", try setting a different position for "field2".');
+        $this->listReader->configureFields(
+            new \ReflectionClass(AnnotationExceptionClass4::class),
             $this->listMapper->reveal()
         );
     }

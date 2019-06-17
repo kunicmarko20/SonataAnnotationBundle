@@ -7,7 +7,6 @@ namespace KunicMarko\SonataAnnotationBundle\Tests\Reader;
 use Doctrine\Common\Annotations\AnnotationReader;
 use KunicMarko\SonataAnnotationBundle\Reader\ShowReader;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationClass;
-use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationClass2;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationExceptionClass;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationExceptionClass3;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\EmptyClass;
@@ -74,8 +73,9 @@ final class ShowReaderTest extends TestCase
         $properties = ['parent.name', 'field', 'method'];
         $mock->expects($this->exactly(3))
             ->method('add')
-            ->with($this->callback(static function(string $field) use (&$properties): bool {
+            ->with($this->callback(static function (string $field) use (&$properties): bool {
                 $property = array_shift($properties);
+
                 return $field === $property;
             }));
 

@@ -16,4 +16,19 @@ class ListField extends AbstractField
      * @var bool
      */
     public $identifier = false;
+
+    /**
+     * @var int
+     */
+    public $position;
+
+    public function getPosition(): int
+    {
+        return $this->position;
+    }
+
+    public function hasPosition(): bool
+    {
+        return null !== $this->position;
+    }
 }
