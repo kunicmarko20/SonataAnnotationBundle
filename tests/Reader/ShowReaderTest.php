@@ -75,9 +75,9 @@ final class ShowReaderTest extends TestCase
         $mock->expects($this->exactly(4))
             ->method('add')
             ->with($this->callback(static function (string $field) use (&$propertiesAndMethods): bool {
-                $property = array_shift($propertiesAndMethods);
+                $propertyAndMethod = array_shift($propertiesAndMethods);
 
-                return $field === $property;
+                return $field === $propertyAndMethod;
             }));
 
         $this->showReader->configureFields(

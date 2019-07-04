@@ -18,33 +18,100 @@ final class ListReader
 
     public function configureFields(\ReflectionClass $class, ListMapper $listMapper): void
     {
+        $propertiesAndMethodsWithPosition = [];
+        $propertiesAndMethodsWithoutPosition = [];
+
+        //
+        // Properties
+        //
+
         foreach ($class->getProperties() as $property) {
             foreach ($this->getPropertyAnnotations($property) as $annotation) {
+                if (!$annotation instanceof ListField && !$annotation instanceof ListAssociationField) {
+                    continue;
+                }
+
+                // the name property changes for ListAssociationField
+                $name = $property->getName();
                 if ($annotation instanceof ListAssociationField) {
-                    $this->addField(
-                        $property->getName() . '.' . $annotation->getField(),
-                        $annotation,
-                        $listMapper
-                    );
+                    $name .= '.'.$annotation->getField();
+                }
+
+                if (!$annotation->hasPosition()) {
+                    $propertiesAndMethodsWithoutPosition[] = [
+                        'name' => $name,
+                        'annotation' => $annotation,
+                    ];
 
                     continue;
                 }
 
-                if ($annotation instanceof ListField) {
-                    $this->addField($property->getName(), $annotation, $listMapper);
+                if (\array_key_exists($annotation->position, $propertiesAndMethodsWithPosition)) {
+                    throw new \InvalidArgumentException(sprintf(
+                        'Position "%s" is already in use by "%s", try setting a different position for "%s".',
+                        $annotation->position,
+                        $propertiesAndMethodsWithPosition[$annotation->position]['name'],
+                        $property->getName()
+                    ));
                 }
+
+                $propertiesAndMethodsWithPosition[$annotation->position] = [
+                    'name' => $name,
+                    'annotation' => $annotation,
+                ];
             }
         }
+
+        //
+        // Methods
+        //
 
         foreach ($class->getMethods() as $method) {
             if ($annotation = $this->getMethodAnnotation($method, ListField::class)) {
-                $this->addField($method->getName(), $annotation, $listMapper);
+                if (!$annotation->hasPosition()) {
+                    $propertiesAndMethodsWithoutPosition[] = [
+                        'name' => $method->getName(),
+                        'annotation' => $annotation,
+                    ];
+
+                    continue;
+                }
+
+                if (\array_key_exists($annotation->position, $propertiesAndMethodsWithPosition)) {
+                    throw new \InvalidArgumentException(sprintf(
+                        'Position "%s" is already in use by "%s", try setting a different position for "%s".',
+                        $annotation->position,
+                        $propertiesAndMethodsWithPosition[$annotation->position]['name'],
+                        $method->getName()
+                    ));
+                }
+
+                $propertiesAndMethodsWithPosition[$annotation->position] = [
+                    'name' => $name,
+                    'annotation' => $annotation,
+                ];
             }
         }
 
+        //
+        // Sorting
+        //
+
+        \ksort($propertiesAndMethodsWithPosition);
+
+        $propertiesAndMethods = \array_merge($propertiesAndMethodsWithPosition, $propertiesAndMethodsWithoutPosition);
+
+        foreach ($propertiesAndMethods as $propertyAndMethod) {
+            $this->addField($propertyAndMethod['name'], $propertyAndMethod['annotation'], $listMapper);
+        }
+
+        //
+        // Actions
+        //
+
         if ($actions = $this->getListActions($this->getClassAnnotations($class))) {
             $listMapper->add('_action', null, [
-                'actions' => $actions
+                'actions' => $actions,
             ]);
         }
     }
@@ -53,6 +120,7 @@ final class ListReader
     {
         if ($annotation->identifier) {
             $listMapper->addIdentifier($name, ...$annotation->getSettings());
+
             return;
         }
 

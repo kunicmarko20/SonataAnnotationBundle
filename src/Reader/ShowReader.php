@@ -100,10 +100,10 @@ final class ShowReader
 
         \ksort($propertiesAndMethodsWithPosition);
 
-        $fields = \array_merge($propertiesAndMethodsWithPosition, $propertiesAndMethodsWithoutPosition);
+        $propertiesAndMethods = \array_merge($propertiesAndMethodsWithPosition, $propertiesAndMethodsWithoutPosition);
 
-        foreach ($fields as $field) {
-            $showMapper->add($field['name'], ...$field['settings']);
+        foreach ($propertiesAndMethods as $propertyAndMethod) {
+            $showMapper->add($propertyAndMethod['name'], ...$propertyAndMethod['settings']);
         }
     }
 }
