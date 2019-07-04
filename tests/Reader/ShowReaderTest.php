@@ -45,6 +45,7 @@ final class ShowReaderTest extends TestCase
         $this->showMapper->add('field', Argument::cetera())->shouldBeCalled();
         $this->showMapper->add('method', Argument::cetera())->shouldBeCalled();
         $this->showMapper->add('parent.name', Argument::cetera())->shouldBeCalled();
+        $this->showMapper->add('additionalField2', Argument::cetera())->shouldBeCalled();
 
         $this->showReader->configureFields(
             new \ReflectionClass(AnnotationClass::class),
@@ -70,11 +71,11 @@ final class ShowReaderTest extends TestCase
     {
         $mock = $this->createMock(ShowMapper::class);
 
-        $properties = ['parent.name', 'field', 'method'];
-        $mock->expects($this->exactly(3))
+        $propertiesAndMethods = ['parent.name', 'method', 'additionalField2', 'field'];
+        $mock->expects($this->exactly(4))
             ->method('add')
-            ->with($this->callback(static function (string $field) use (&$properties): bool {
-                $property = array_shift($properties);
+            ->with($this->callback(static function (string $field) use (&$propertiesAndMethods): bool {
+                $property = array_shift($propertiesAndMethods);
 
                 return $field === $property;
             }));

@@ -17,12 +17,12 @@ final class ShowReader
 
     public function configureFields(\ReflectionClass $class, ShowMapper $showMapper): void
     {
+        $propertiesAndMethodsWithPosition = [];
+        $propertiesAndMethodsWithoutPosition = [];
+
         //
         // Properties
         //
-
-        $propertiesWithPosition = [];
-        $propertiesWithoutPosition = [];
 
         foreach ($class->getProperties() as $property) {
             foreach ($this->getPropertyAnnotations($property) as $annotation) {
@@ -37,7 +37,7 @@ final class ShowReader
                 }
 
                 if (!$annotation->hasPosition()) {
-                    $propertiesWithoutPosition[] = [
+                    $propertiesAndMethodsWithoutPosition[] = [
                         'name' => $name,
                         'settings' => $annotation->getSettings(),
                     ];
@@ -45,70 +45,65 @@ final class ShowReader
                     continue;
                 }
 
-                if (\array_key_exists($annotation->position, $propertiesWithPosition)) {
+                if (\array_key_exists($annotation->position, $propertiesAndMethodsWithPosition)) {
                     throw new \InvalidArgumentException(sprintf(
                         'Position "%s" is already in use by "%s", try setting a different position for "%s".',
                         $annotation->position,
-                        $propertiesWithPosition[$annotation->position]['name'],
+                        $propertiesAndMethodsWithPosition[$annotation->position]['name'],
                         $property->getName()
                     ));
                 }
 
-                $propertiesWithPosition[$annotation->position] = [
+                $propertiesAndMethodsWithPosition[$annotation->position] = [
                     'name' => $name,
                     'settings' => $annotation->getSettings(),
                 ];
             }
-        }
-
-        \ksort($propertiesWithPosition);
-
-        $properties = \array_merge($propertiesWithPosition, $propertiesWithoutPosition);
-
-        foreach ($properties as $property) {
-            $showMapper->add($property['name'], ...$property['settings']);
         }
 
         //
         // Methods
         //
 
-        $methodsWithPosition = [];
-        $methodsWithoutPosition = [];
-
         foreach ($class->getMethods() as $method) {
             if ($annotation = $this->getMethodAnnotation($method, ShowField::class)) {
+                $name = $method->getName();
+
                 if (!$annotation->hasPosition()) {
-                    $methodsWithoutPosition[] = [
-                        'name' => $method->getName(),
+                    $propertiesAndMethodsWithoutPosition[] = [
+                        'name' => $name,
                         'settings' => $annotation->getSettings(),
                     ];
 
                     continue;
                 }
 
-                if (\array_key_exists($annotation->position, $methodsWithPosition)) {
+                if (\array_key_exists($annotation->position, $propertiesAndMethodsWithPosition)) {
                     throw new \InvalidArgumentException(sprintf(
                         'Position "%s" is already in use by "%s", try setting a different position for "%s".',
                         $annotation->position,
-                        $methodsWithPosition[$annotation->position]['name'],
+                        $propertiesAndMethodsWithPosition[$annotation->position]['name'],
                         $method->getName()
                     ));
                 }
 
-                $methodsWithPosition[$annotation->position] = [
+                $propertiesAndMethodsWithPosition[$annotation->position] = [
                     'name' => $name,
                     'settings' => $annotation->getSettings(),
                 ];
             }
         }
 
-        \ksort($methodsWithPosition);
+        //
+        // Sorting
+        //
 
-        $methods = \array_merge($methodsWithPosition, $methodsWithoutPosition);
+        \ksort($propertiesAndMethodsWithPosition);
 
-        foreach ($methods as $method) {
-            $showMapper->add($method['name'], ...$method['settings']);
+        $fields = \array_merge($propertiesAndMethodsWithPosition, $propertiesAndMethodsWithoutPosition);
+
+        foreach ($fields as $field) {
+            $showMapper->add($field['name'], ...$field['settings']);
         }
     }
 }
