@@ -93,7 +93,7 @@ final class ShowReaderTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Position "1" is already in use by "field", try setting a different position for "field2".');
         $this->showReader->configureFields(
-            new \ReflectionClass(AnnotationExceptionClass::class),
+            new \ReflectionClass(AnnotationExceptionClass3::class),
             $this->showMapper->reveal()
         );
     }
