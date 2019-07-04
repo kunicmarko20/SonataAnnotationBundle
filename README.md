@@ -389,6 +389,10 @@ class Category
 
 ### ListField
 
+You are able to set the position of the field. Position 1 would be the first
+field to render and higher numbers after. If field doesn't have position, it
+will be rendered after all fields with position.
+
 ```php
 <?php
 
@@ -418,7 +422,8 @@ class Category
      * @Sonata\ListField(
      *      type="",
      *      fieldDescriptionOptions={},
-     *      identifier=false
+     *      identifier=false,
+     *      position=1
      * )
      *
      * @ORM\Column(name="name", type="string", length=255)
@@ -426,7 +431,7 @@ class Category
     private $name;
 
     /**
-     * @Sonata\ListField()
+     * @Sonata\ListField(position=1)
      */
     public function listThis(): string
     {
