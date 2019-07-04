@@ -307,6 +307,10 @@ class Category
 
 ### ShowField
 
+You are able to set the position of the field. Position 1 would be the first
+field to render and higher numbers after. If field doesn't have position, it
+will be rendered after all fields with position.
+
 ```php
 <?php
 
@@ -326,7 +330,8 @@ class Category
     /**
      * @Sonata\ShowField(
      *      type="",
-     *      fieldDescriptionOptions={}
+     *      fieldDescriptionOptions={},
+     *      position=1
      * )
      *
      * @ORM\Column(name="name", type="string", length=255)
@@ -371,7 +376,8 @@ class Category
      * @Sonata\ShowAssociationField(
      *      field="email",
      *      type="",
-     *      fieldDescriptionOptions={}
+     *      fieldDescriptionOptions={},
+     *      position=1
      * )
      *
      * @ORM\ManyToOne(targetEntity="Owner")
