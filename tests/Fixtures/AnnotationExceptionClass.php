@@ -24,7 +24,7 @@ final class AnnotationExceptionClass
     /**
      * @Sonata\ParentAssociationMapping()
      * @Sonata\ExportAssociationField()
-     * @Sonata\ShowAssociationField()
+     * @Sonata\ShowAssociationField(position=1)
      * @Sonata\ListAssociationField()
      * @Sonata\DatagridAssociationField()
      * @Sonata\FormField(position=1)
@@ -33,6 +33,7 @@ final class AnnotationExceptionClass
 
     /**
      * @Sonata\FormField(position=1)
+     * @Sonata\ShowField(position=1)
      */
     private $field2;
 }

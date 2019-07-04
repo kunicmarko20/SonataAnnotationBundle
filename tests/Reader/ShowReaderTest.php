@@ -8,6 +8,7 @@ use Doctrine\Common\Annotations\AnnotationReader;
 use KunicMarko\SonataAnnotationBundle\Reader\ShowReader;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationClass;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationExceptionClass;
+use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationExceptionClass3;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\EmptyClass;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
@@ -59,6 +60,38 @@ final class ShowReaderTest extends TestCase
      */
     public function testConfigureFieldsAnnotationException(): void
     {
+        $this->showReader->configureFields(
+            new \ReflectionClass(AnnotationExceptionClass::class),
+            $this->showMapper->reveal()
+        );
+    }
+
+    public function testConfigureFieldsAnnotationPresentPosition(): void
+    {
+        $mock = $this->createMock(ShowMapper::class);
+
+        $properties = ['parent.name', 'field', 'method'];
+        $mock->expects($this->exactly(3))
+            ->method('add')
+            ->with($this->callback(static function (string $field) use (&$properties): bool {
+                $property = array_shift($properties);
+
+                return $field === $property;
+            }));
+
+        $this->showReader->configureFields(
+            new \ReflectionClass(AnnotationClass::class),
+            $mock
+        );
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testPositionShouldBeUnique(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Position "1" is already in use by "field", try setting a different position for "field2".');
         $this->showReader->configureFields(
             new \ReflectionClass(AnnotationExceptionClass::class),
             $this->showMapper->reveal()
