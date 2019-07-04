@@ -68,6 +68,8 @@ final class ListReader
 
         foreach ($class->getMethods() as $method) {
             if ($annotation = $this->getMethodAnnotation($method, ListField::class)) {
+                $name = $method->getName();
+
                 if (!$annotation->hasPosition()) {
                     $propertiesAndMethodsWithoutPosition[] = [
                         'name' => $method->getName(),
