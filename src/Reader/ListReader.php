@@ -72,7 +72,7 @@ final class ListReader
 
                 if (!$annotation->hasPosition()) {
                     $propertiesAndMethodsWithoutPosition[] = [
-                        'name' => $method->getName(),
+                        'name' => $name,
                         'annotation' => $annotation,
                     ];
 
@@ -84,7 +84,7 @@ final class ListReader
                         'Position "%s" is already in use by "%s", try setting a different position for "%s".',
                         $annotation->position,
                         $propertiesAndMethodsWithPosition[$annotation->position]['name'],
-                        $method->getName()
+                        $name
                     ));
                 }
 

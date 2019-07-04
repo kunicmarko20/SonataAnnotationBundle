@@ -83,7 +83,7 @@ final class ShowReader
                         'Position "%s" is already in use by "%s", try setting a different position for "%s".',
                         $annotation->position,
                         $propertiesAndMethodsWithPosition[$annotation->position]['name'],
-                        $method->getName()
+                        $name
                     ));
                 }
 
