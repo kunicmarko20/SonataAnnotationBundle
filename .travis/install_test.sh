@@ -2,7 +2,7 @@
 set -ev
 
 # Enables travis_retry function
-source travis_retry.sh
+. /travis_retry.sh
 
 mkdir --parents "${HOME}/bin"
 
