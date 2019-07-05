@@ -1,6 +1,9 @@
 #!/usr/bin/env sh
 set -ev
 
+# Enables travis_retry function
+source travis_retry.sh
+
 mkdir --parents "${HOME}/bin"
 
 # PHPUnit install
