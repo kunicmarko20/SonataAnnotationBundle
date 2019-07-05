@@ -33,15 +33,15 @@ final class AnnotationClass
      * @Sonata\ShowField()
      * @Sonata\DatagridField()
      * @Sonata\FormField(action="create", position=2)
-     * @Sonata\ListField(identifier=true)
+     * @Sonata\ListField(identifier=true, position=2)
      */
     private $field;
 
     /**
      * @Sonata\ExportAssociationField(field="name")
-     * @Sonata\ShowAssociationField(field="name")
+     * @Sonata\ShowAssociationField(field="name", position=1)
      * @Sonata\DatagridAssociationField(field="name")
-     * @Sonata\ListAssociationField(field="name")
+     * @Sonata\ListAssociationField(field="name", position=1)
      * @Sonata\FormField(position=1)
      */
     private $parent;
@@ -55,12 +55,13 @@ final class AnnotationClass
 
     /**
      * @Sonata\FormField()
+     * @Sonata\ShowField(position=3)
      */
     private $additionalField2;
 
     /**
      * @Sonata\ExportField()
-     * @Sonata\ShowField()
+     * @Sonata\ShowField(position=2)
      * @Sonata\ListField()
      */
     public function method(): string

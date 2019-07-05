@@ -7,33 +7,28 @@ namespace KunicMarko\SonataAnnotationBundle\Tests\Fixtures;
 use KunicMarko\SonataAnnotationBundle\Annotation as Sonata;
 
 /**
- * @Sonata\Admin(
- *     serviceId="test.the.id"
- * )
- *
- * @Sonata\Access("ROLE_VENDOR", permissions={"ALL"})
- * @Sonata\ActionButton()
- * @Sonata\AddChild()
- *
- * @Sonata\AddRoute()
+ * @Sonata\ListAction()
+ * @Sonata\RemoveRoute()
+ * @Sonata\AddChild(class=AnnotationClass::class)
  *
  * @author Marko Kunic <kunicmarko20@gmail.com>
  */
-final class AnnotationExceptionClass
+final class AnnotationExceptionClass4
 {
     /**
      * @Sonata\ParentAssociationMapping()
      * @Sonata\ExportAssociationField()
-     * @Sonata\ShowAssociationField()
-     * @Sonata\ListAssociationField()
+     * @Sonata\ShowField(position=1)
+     * @Sonata\ListField(position=1)
      * @Sonata\DatagridAssociationField()
-     * @Sonata\FormField(position=1)
+     * @Sonata\FormField()
      */
     private $field;
 
     /**
-     * @Sonata\FormField(position=1)
+     * @Sonata\FormField()
      * @Sonata\ShowField()
+     * @Sonata\ListField(position=1)
      */
     private $field2;
 }
