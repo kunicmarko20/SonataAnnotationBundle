@@ -43,7 +43,7 @@
     "sonata-project/doctrine-orm-admin-bundle": "^3.6",
     "symfony/framework-bundle": "^3.4 || ^4.0",
     "symfony/phpunit-bridge": "^4.0",
-    "symfony/var-dumper": "^3.4"
+    "symfony/var-dumper": "^3.4 || ^4.0"
   },
   "config": {
     "sort-packages": true
