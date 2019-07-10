@@ -27,6 +27,21 @@ class DatagridField extends AbstractField
      */
     public $fieldOptions = [];
 
+    /**
+     * @var int
+     */
+    public $position;
+
+    public function getPosition(): int
+    {
+        return $this->position;
+    }
+
+    public function hasPosition(): bool
+    {
+        return null !== $this->position;
+    }
+
     public function getSettings(): array
     {
         return [

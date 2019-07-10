@@ -40,7 +40,7 @@ final class AnnotationClass
     /**
      * @Sonata\ExportAssociationField(field="name")
      * @Sonata\ShowAssociationField(field="name", position=1)
-     * @Sonata\DatagridAssociationField(field="name")
+     * @Sonata\DatagridAssociationField(field="name", position=1)
      * @Sonata\ListAssociationField(field="name", position=1)
      * @Sonata\FormField(position=1)
      */
@@ -48,6 +48,7 @@ final class AnnotationClass
 
     /**
      * @Sonata\ExportField("label")
+     * @Sonata\DatagridField(position=2)
      * @Sonata\FormField(action="edit")
      * @Sonata\ListField()
      */

@@ -13,11 +13,13 @@ final class AnnotationExceptionClass3
 {
     /**
      * @Sonata\ShowField(position=1)
+     * @Sonata\DatagridAssociationField(field="name", position=1)
      */
     private $field;
 
     /**
      * @Sonata\ShowAssociationField(field="name", position=1)
+     * @Sonata\DatagridField(position=1)
      */
     private $field2;
 }
