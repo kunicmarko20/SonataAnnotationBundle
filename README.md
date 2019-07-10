@@ -350,6 +350,10 @@ class Category
 
 ### ShowAssociationField
 
+You are able to set the position of the field. Position 1 would be the first
+field to render and higher numbers after. If field doesn't have position, it
+will be rendered after all fields with position.
+
 ```php
 <?php
 
@@ -370,7 +374,8 @@ class Category
      * @Sonata\ShowAssociationField(
      *      field="name",
      *      type="",
-     *      fieldDescriptionOptions={}
+     *      fieldDescriptionOptions={},
+     *      position=1
      * )
      *
      * @Sonata\ShowAssociationField(
@@ -442,6 +447,10 @@ class Category
 
 ### ListAssociationField
 
+You are able to set the position of the field. Position 1 would be the first
+field to render and higher numbers after. If field doesn't have position, it
+will be rendered after all fields with position.
+
 ```php
 <?php
 
@@ -463,7 +472,8 @@ class Category
      *      field="name",
      *      type="",
      *      fieldDescriptionOptions={},
-     *      identifier=false
+     *      identifier=false,
+     *      position=1
      * )
      * 
      * @Sonata\ListAssociationField(
@@ -482,6 +492,10 @@ class Category
 
 
 ### DatagridField
+
+You are able to set the position of the field. Position 1 would be the first
+field to render and higher numbers after. If field doesn't have position, it
+will be rendered after all fields with position.
 
 ```php
 <?php
@@ -505,7 +519,8 @@ class Category
      *      fieldDescriptionOptions={},
      *      filterOptions={},
      *      fieldType="",
-     *      fieldOptions={}
+     *      fieldOptions={},
+     *      position=1
      * )
      *
      * @ORM\Column(name="name", type="string", length=255)
@@ -515,6 +530,10 @@ class Category
 ```
 
 ### DatagridAssociationField
+
+You are able to set the position of the field. Position 1 would be the first
+field to render and higher numbers after. If field doesn't have position, it
+will be rendered after all fields with position.
 
 ```php
 <?php
@@ -539,7 +558,8 @@ class Category
      *      fieldDescriptionOptions={},
      *      filterOptions={},
      *      fieldType="",
-     *      fieldOptions={}
+     *      fieldOptions={},
+     *      position=1
      * )
      *
      * @Sonata\DatagridAssociationField(
