@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace KunicMarko\SonataAnnotationBundle\Tests\Reader;
 
 use Doctrine\Common\Annotations\AnnotationReader;
+use InvalidArgumentException;
 use KunicMarko\SonataAnnotationBundle\Reader\ShowReader;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationClass;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationExceptionClass;
@@ -56,11 +57,11 @@ final class ShowReaderTest extends TestCase
     /**
      * @group legacy
      * @expectedDeprecation The "KunicMarko\SonataAnnotationBundle\Annotation\ParentAssociationMapping" annotation is deprecated since 1.1, to be removed in 2.0. Use KunicMarko\SonataAnnotationBundle\Annotation\AddChild instead.
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Argument "field" is mandatory in "KunicMarko\SonataAnnotationBundle\Annotation\ShowAssociationField" annotation.
      */
     public function testConfigureFieldsAnnotationException(): void
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Argument "field" is mandatory in "KunicMarko\SonataAnnotationBundle\Annotation\ShowAssociationField" annotation.');
         $this->showReader->configureFields(
             new \ReflectionClass(AnnotationExceptionClass::class),
             $this->showMapper->reveal()

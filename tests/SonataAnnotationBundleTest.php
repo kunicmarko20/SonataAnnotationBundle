@@ -23,7 +23,7 @@ final class SonataAnnotationBundleTest extends TestCase
      */
     private $bundle;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->bundle = new SonataAnnotationBundle();
     }

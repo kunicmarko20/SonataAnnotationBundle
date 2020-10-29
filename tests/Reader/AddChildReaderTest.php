@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace KunicMarko\SonataAnnotationBundle\Tests\Reader;
 
 use Doctrine\Common\Annotations\AnnotationReader;
+use InvalidArgumentException;
 use KunicMarko\SonataAnnotationBundle\Reader\AddChildReader;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationClass;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationExceptionClass;
@@ -46,23 +47,21 @@ final class AddChildReaderTest extends TestCase
         $this->assertSame('test', reset($children));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Argument "class" is mandatory in "KunicMarko\SonataAnnotationBundle\Annotation\AddChild" annotation.
-     */
     public function testGetChildrenAnnotationException(): void
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Argument "class" is mandatory in "KunicMarko\SonataAnnotationBundle\Annotation\AddChild" annotation.');
+
         $this->addChildReader->getChildren(
             new \ReflectionClass(AnnotationExceptionClass::class)
         );
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Argument "field" is mandatory in "KunicMarko\SonataAnnotationBundle\Annotation\AddChild" annotation.
-     */
     public function testGetChildrenAnnotationException2(): void
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Argument "field" is mandatory in "KunicMarko\SonataAnnotationBundle\Annotation\AddChild" annotation.');
+
         $this->addChildReader->getChildren(
             new \ReflectionClass(AnnotationExceptionClass2::class)
         );

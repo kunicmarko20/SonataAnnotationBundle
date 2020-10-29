@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace KunicMarko\SonataAnnotationBundle\Tests\DependencyInjection\Compiler;
 
 use Doctrine\Common\Annotations\AnnotationReader;
+use InvalidArgumentException;
 use KunicMarko\SonataAnnotationBundle\DependencyInjection\Compiler\AddChildCompilerPass;
 use KunicMarko\SonataAnnotationBundle\Reader\AddChildReader;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationClass;
@@ -62,12 +63,11 @@ final class AddChildCompilerPassTest extends TestCase
         }
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage KunicMarko\SonataAnnotationBundle\Tests\Fixtures\EmptyClass is missing Admin Class.
-     */
     public function testProcessExceptionParamNotFound(): void
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('KunicMarko\SonataAnnotationBundle\Tests\Fixtures\EmptyClass is missing Admin Class.');
+
         $this->initAdminClasses([AnnotationClass::class]);
 
         $accessCompilerPass = new AddChildCompilerPass();
