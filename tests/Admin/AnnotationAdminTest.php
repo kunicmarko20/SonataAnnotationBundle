@@ -5,9 +5,16 @@ namespace KunicMarko\SonataAnnotationBundle\Tests\Admin;
 use Doctrine\Common\Annotations\AnnotationReader;
 use KunicMarko\SonataAnnotationBundle\Admin\AnnotationAdmin;
 use KunicMarko\SonataAnnotationBundle\Reader\ActionButtonReader;
+use KunicMarko\SonataAnnotationBundle\Reader\DashboardActionReader;
+use KunicMarko\SonataAnnotationBundle\Reader\DatagridReader;
 use KunicMarko\SonataAnnotationBundle\Reader\ExportReader;
+use KunicMarko\SonataAnnotationBundle\Reader\FormReader;
+use KunicMarko\SonataAnnotationBundle\Reader\ListReader;
+use KunicMarko\SonataAnnotationBundle\Reader\RouteReader;
+use KunicMarko\SonataAnnotationBundle\Reader\ShowReader;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationClass;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Sonata\AdminBundle\Admin\Pool;
 use Symfony\Component\DependencyInjection\Container;
 
@@ -16,6 +23,8 @@ use Symfony\Component\DependencyInjection\Container;
  */
 final class AnnotationAdminTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var AnnotationAdmin
      */
@@ -31,9 +40,22 @@ final class AnnotationAdminTest extends TestCase
         $this->container = new Container();
 
         $pool = $this->prophesize(Pool::class);
-        $pool->getContainer()->willReturn($this->container);
 
-        $this->admin = new AnnotationAdmin(null, AnnotationClass::class, null);
+        $mock = new AnnotationReader();
+
+        $this->admin = new AnnotationAdmin(
+            new FormReader($mock),
+            new ListReader($mock),
+            new ShowReader($mock),
+            new DatagridReader($mock),
+            new RouteReader($mock),
+            new ActionButtonReader($mock),
+            new DashboardActionReader($mock),
+            new ExportReader($mock),
+            '',
+            AnnotationClass::class,
+            null
+        );
 
         $this->admin->setConfigurationPool($pool->reveal());
     }
@@ -45,7 +67,7 @@ final class AnnotationAdminTest extends TestCase
             new ActionButtonReader(new AnnotationReader())
         );
 
-        $actions = $this->admin->configureActionButtons('');
+        $actions = $this->admin->configureActionButtons([], '');
 
         $this->assertContains('fake_template.html.twig', reset($actions));
     }
@@ -57,7 +79,7 @@ final class AnnotationAdminTest extends TestCase
             new ExportReader(new AnnotationReader())
         );
 
-        $formats = $this->admin->getExportFormats('');
+        $formats = $this->admin->getExportFormats();
 
         $this->assertSame(['json', 'xml'], $formats);
     }

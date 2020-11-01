@@ -10,6 +10,7 @@ use KunicMarko\SonataAnnotationBundle\DependencyInjection\Compiler\AutoRegisterC
 use KunicMarko\SonataAnnotationBundle\SonataAnnotationBundle;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -18,6 +19,8 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 final class SonataAnnotationBundleTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var SonataAnnotationBundle
      */

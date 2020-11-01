@@ -39,8 +39,8 @@ final class AddChildCompilerPassTest extends TestCase
 
         $calls = $this->container->getDefinition('app.admin.AnnotationClass')->getMethodCalls();
 
-        $this->assertContains('addChild', $calls[0][0]);
-        $this->assertContains('test', $calls[0][1][1]);
+        $this->assertEquals('addChild', $calls[0][0]);
+        $this->assertEquals('test', $calls[0][1][1]);
     }
 
     private function initAdminClasses(

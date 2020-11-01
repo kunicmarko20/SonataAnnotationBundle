@@ -14,6 +14,7 @@ use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationExceptionClass4;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\EmptyClass;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 
 /**
@@ -21,6 +22,8 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
  */
 final class ListReaderTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var ListReader
      */

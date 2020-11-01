@@ -29,6 +29,7 @@
   "require-dev": {
     "doctrine/doctrine-fixtures-bundle": "^3.0",
     "matthiasnoback/symfony-dependency-injection-test": "^4.0",
+    "phpspec/prophecy-phpunit": "^2.0",
     "phpstan/phpstan-phpunit": "^0.11.2",
     "phpunit/phpunit": "^9.4",
     "sonata-project/doctrine-orm-admin-bundle": "dev-master",

@@ -11,6 +11,7 @@ use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationExceptionClass;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\EmptyClass;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Sonata\AdminBundle\Form\FormMapper;
 
 /**
@@ -18,6 +19,8 @@ use Sonata\AdminBundle\Form\FormMapper;
  */
 final class FormReaderTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var FormReader
      */

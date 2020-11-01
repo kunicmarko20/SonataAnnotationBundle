@@ -13,6 +13,7 @@ use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationExceptionClass3;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\EmptyClass;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 
 /**
@@ -20,6 +21,8 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
  */
 final class DatagridReaderTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var DatagridReader
      */

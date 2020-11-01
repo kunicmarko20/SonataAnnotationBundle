@@ -16,5 +16,15 @@
         <service id="sonata.annotation.reader.add_child" class="KunicMarko\SonataAnnotationBundle\Reader\AddChildReader">
             <argument type="service" id="annotation_reader" />
         </service>
+        <service id="sonata.annotation.admin" class="KunicMarko\SonataAnnotationBundle\Admin\AnnotationAdmin">
+            <argument type="service" id="sonata.annotation.reader.form" />
+            <argument type="service" id="sonata.annotation.reader.list" />
+            <argument type="service" id="sonata.annotation.reader.show" />
+            <argument type="service" id="sonata.annotation.reader.datagrid" />
+            <argument type="service" id="sonata.annotation.reader.route" />
+            <argument type="service" id="sonata.annotation.reader.action_button" />
+            <argument type="service" id="sonata.annotation.reader.dashboard_action" />
+            <argument type="service" id="sonata.annotation.reader.export" />
+        </service>
     </services>
 </container>
