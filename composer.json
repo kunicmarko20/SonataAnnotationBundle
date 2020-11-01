@@ -1,5 +1,5 @@
 {
-  "name": "kunicmarko/sonata-annotation-bundle",
+  "name": "mpetrini/sonata-annotation-bundle",
   "type": "symfony-bundle",
   "description": "Symfony Bundle that adds annotations for Sonata Admin.",
   "keywords": [
