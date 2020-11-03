@@ -27,6 +27,14 @@ final class AutoRegisterCompilerPass implements CompilerPassInterface
     public function process(ContainerBuilder $container): void
     {
         $this->annotationReader = $container->get('annotation_reader');
+        $formReader = $container->get('sonata.annotation.reader.form');
+        $listReader = $container->get('sonata.annotation.reader.list');
+        $showReader = $container->get('sonata.annotation.reader.show');
+        $datagridReader = $container->get('sonata.annotation.reader.datagrid');
+        $routeReader = $container->get('sonata.annotation.reader.route');
+        $actionButtonReader = $container->get('sonata.annotation.reader.action_button');
+        $dashboardActionReader = $container->get('sonata.annotation.reader.dashboard_action');
+        $exportReader = $container->get('sonata.annotation.reader.export');
 
         foreach ($this->findFiles($container->getParameter('sonata_annotation.directory')) as $file) {
             if (!($className = $this->getFullyQualifiedClassName($file))) {
@@ -44,7 +52,8 @@ final class AutoRegisterCompilerPass implements CompilerPassInterface
             $definition = new Definition(
                 $annotation->admin,
                 [
-                    'sonata.annotation.reader.form',
+                    /**
+                     * 'sonata.annotation.reader.form',
                     'sonata.annotation.reader.list',
                     'sonata.annotation.reader.show',
                     'sonata.annotation.reader.datagrid',
@@ -52,6 +61,15 @@ final class AutoRegisterCompilerPass implements CompilerPassInterface
                     'sonata.annotation.reader.action_button',
                     'sonata.annotation.reader.dashboard_action',
                     'sonata.annotation.reader.export',
+                     */
+                    $formReader,
+                    $listReader,
+                    $showReader,
+                    $datagridReader,
+                    $routeReader,
+                    $actionButtonReader,
+                    $dashboardActionReader,
+                    $exportReader,
                     $annotation->code,
                     $className,
                     $annotation->controller
