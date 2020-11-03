@@ -44,6 +44,9 @@ final class AnnotationAdminTest extends TestCase
         $mock = new AnnotationReader();
 
         $this->admin = new AnnotationAdmin(
+            '',
+            AnnotationClass::class,
+            null,
             new FormReader($mock),
             new ListReader($mock),
             new ShowReader($mock),
@@ -51,10 +54,7 @@ final class AnnotationAdminTest extends TestCase
             new RouteReader($mock),
             new ActionButtonReader($mock),
             new DashboardActionReader($mock),
-            new ExportReader($mock),
-            '',
-            AnnotationClass::class,
-            null
+            new ExportReader($mock)
         );
 
         $this->admin->setConfigurationPool($pool->reveal());

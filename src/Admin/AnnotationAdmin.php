@@ -67,6 +67,9 @@ class AnnotationAdmin extends AbstractAdmin
     private $exportReader;
 
     public function __construct(
+        string $code,
+        string $class,
+        ?string $baseControllerName,
         FormReader $formReader,
         ListReader $listReader,
         ShowReader $showReader,
@@ -74,10 +77,7 @@ class AnnotationAdmin extends AbstractAdmin
         RouteReader $routeReader,
         ActionButtonReader $actionButtonReader,
         DashboardActionReader $dashboardActionReader,
-        ExportReader $exportReader,
-        string $code,
-        string $class,
-        ?string $baseControllerName = null
+        ExportReader $exportReader
     ) {
         parent::__construct($code, $class, $baseControllerName);
         $this->formReader = $formReader;
