@@ -12,7 +12,12 @@ declare(strict_types=1);
  */
 
 use KunicMarko\SonataAnnotationBundle\Admin\AnnotationAdmin;
+use KunicMarko\SonataAnnotationBundle\Reader\ActionButtonReader;
+use KunicMarko\SonataAnnotationBundle\Reader\AddChildReader;
+use KunicMarko\SonataAnnotationBundle\Reader\DashboardActionReader;
 use KunicMarko\SonataAnnotationBundle\Reader\DatagridReader;
+use KunicMarko\SonataAnnotationBundle\Reader\DatagridValuesReader;
+use KunicMarko\SonataAnnotationBundle\Reader\ExportReader;
 use KunicMarko\SonataAnnotationBundle\Reader\FormReader;
 use KunicMarko\SonataAnnotationBundle\Reader\ListReader;
 use KunicMarko\SonataAnnotationBundle\Reader\RouteReader;
@@ -65,45 +70,45 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
         ->alias(RouteReader::class, 'sonata.annotation.reader.route')
 
-        ->set('sonata.annotation.reader.action_button', RouteReader::class)
+        ->set('sonata.annotation.reader.action_button', ActionButtonReader::class)
             ->public()
             ->args([
                 new ReferenceConfigurator('annotation_reader'),
             ])
 
-        ->alias(RouteReader::class, 'sonata.annotation.reader.action_button')
+        ->alias(ActionButtonReader::class, 'sonata.annotation.reader.action_button')
 
-        ->set('sonata.annotation.reader.dashboard_action', RouteReader::class)
+        ->set('sonata.annotation.reader.dashboard_action', DashboardActionReader::class)
             ->public()
             ->args([
                 new ReferenceConfigurator('annotation_reader'),
             ])
 
-        ->alias(RouteReader::class, 'sonata.annotation.reader.dashboard_action')
+        ->alias(DashboardActionReader::class, 'sonata.annotation.reader.dashboard_action')
 
-        ->set('sonata.annotation.reader.export', RouteReader::class)
+        ->set('sonata.annotation.reader.export', ExportReader::class)
             ->public()
             ->args([
                 new ReferenceConfigurator('annotation_reader'),
             ])
 
-        ->alias(RouteReader::class, 'sonata.annotation.reader.export')
+        ->alias(ExportReader::class, 'sonata.annotation.reader.export')
 
-        ->set('sonata.annotation.reader.datagrid_values', RouteReader::class)
+        ->set('sonata.annotation.reader.datagrid_values', DatagridValuesReader::class)
             ->public()
             ->args([
                 new ReferenceConfigurator('annotation_reader'),
             ])
 
-        ->alias(RouteReader::class, 'sonata.annotation.reader.datagrid_values')
+        ->alias(DatagridValuesReader::class, 'sonata.annotation.reader.datagrid_values')
 
-        ->set('sonata.annotation.reader.add_child', RouteReader::class)
+        ->set('sonata.annotation.reader.add_child', AddChildReader::class)
             ->public()
             ->args([
                 new ReferenceConfigurator('annotation_reader'),
             ])
 
-        ->alias(RouteReader::class, 'sonata.annotation.reader.add_child')
+        ->alias(AddChildReader::class, 'sonata.annotation.reader.add_child')
 
         ->set('sonata.annotation.admin', AnnotationAdmin::class)
             ->public()
