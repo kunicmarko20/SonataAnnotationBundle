@@ -52,14 +52,14 @@ final class AutoRegisterCompilerPass implements CompilerPassInterface
             $definition = new Definition(
                 $annotation->admin,
                 [
-                    $formReader,
-                    $listReader,
-                    $showReader,
-                    $datagridReader,
-                    $routeReader,
-                    $actionButtonReader,
-                    $dashboardActionReader,
-                    $exportReader,
+                    'sonata.annotation.reader.form',
+                    'sonata.annotation.reader.list',
+                    'sonata.annotation.reader.show',
+                    'sonata.annotation.reader.datagrid',
+                    'sonata.annotation.reader.route',
+                    'sonata.annotation.reader.action_button',
+                    'sonata.annotation.reader.dashboard_action',
+                    'sonata.annotation.reader.export',
                     $annotation->code,
                     $className,
                     $annotation->controller
