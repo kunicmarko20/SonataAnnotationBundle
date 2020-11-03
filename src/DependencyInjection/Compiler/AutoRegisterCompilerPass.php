@@ -9,6 +9,7 @@ use KunicMarko\SonataAnnotationBundle\Annotation\Admin;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -52,31 +53,21 @@ final class AutoRegisterCompilerPass implements CompilerPassInterface
             $definition = new Definition(
                 $annotation->admin,
                 [
-                    /**
-                     * 'sonata.annotation.reader.form',
-                    'sonata.annotation.reader.list',
-                    'sonata.annotation.reader.show',
-                    'sonata.annotation.reader.datagrid',
-                    'sonata.annotation.reader.route',
-                    'sonata.annotation.reader.action_button',
-                    'sonata.annotation.reader.dashboard_action',
-                    'sonata.annotation.reader.export',
-                     */
-                    $formReader,
-                    $listReader,
-                    $showReader,
-                    $datagridReader,
-                    $routeReader,
-                    $actionButtonReader,
-                    $dashboardActionReader,
-                    $exportReader,
+                    new Reference('sonata.annotation.reader.form'),
+                    new Reference('sonata.annotation.reader.list'),
+                    new Reference('sonata.annotation.reader.show'),
+                    new Reference('sonata.annotation.reader.datagrid'),
+                    new Reference('sonata.annotation.reader.route'),
+                    new Reference('sonata.annotation.reader.action_button'),
+                    new Reference('sonata.annotation.reader.dashboard_action'),
+                    new Reference('sonata.annotation.reader.export'),
                     $annotation->code,
                     $className,
                     $annotation->controller
                 ]
             );
 
-            $definition->addTag('sonata.admin', $annotation->getTagOptions());
+            // $definition->addTag('sonata.admin', $annotation->getTagOptions());
 
             $container->setDefinition(
                 $serviceId = ($annotation->serviceId ?? $this->getServiceId($file)),
