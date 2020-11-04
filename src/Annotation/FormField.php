@@ -25,6 +25,11 @@ final class FormField extends AbstractField
      */
     public $options = [];
 
+    /**
+     * @var integer
+     */
+    public $position;
+
     public function getSettings(): array
     {
         return [
@@ -32,5 +37,15 @@ final class FormField extends AbstractField
             $this->options,
             $this->fieldDescriptionOptions
         ];
+    }
+
+    public function getPosition(): int
+    {
+        return $this->position;
+    }
+
+    public function hasPosition(): bool
+    {
+        return $this->position !== null;
     }
 }

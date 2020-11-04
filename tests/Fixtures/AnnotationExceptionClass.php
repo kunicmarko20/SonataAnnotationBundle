@@ -27,6 +27,13 @@ final class AnnotationExceptionClass
      * @Sonata\ShowAssociationField()
      * @Sonata\ListAssociationField()
      * @Sonata\DatagridAssociationField()
+     * @Sonata\FormField(position=1)
      */
     private $field;
+
+    /**
+     * @Sonata\FormField(position=1)
+     * @Sonata\ShowField()
+     */
+    private $field2;
 }

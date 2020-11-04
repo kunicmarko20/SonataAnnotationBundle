@@ -1,0 +1,12 @@
+<?php
+
+return PhpCsFixer\Config::create()
+    ->setRules([
+        '@Symfony'               => true,
+        'binary_operator_spaces' => [
+            'default' => 'align_single_space_minimal',
+        ],
+    ])
+;
+
+// vim: syntax=php

@@ -240,7 +240,10 @@ class Post
 
 You can specify action option that would allow you to have different fields or
 have different configuration for the same field for create and edit action.
-If not set, field will be used for create and edit.
+If not set, field will be used for create and edit. Besides that, you are able
+to set the position of the field. Position 1 would be the first field to 
+render and higher numbers after. If field doesn't have position, it will be 
+rendered after all fields with position.
 
 ```php
 <?php
@@ -265,7 +268,8 @@ class Category
      *      action="create",
      *      type="",
      *      options={},
-     *      fieldDescriptionOptions={}
+     *      fieldDescriptionOptions={},
+     *      position=1 
      * )
      *
      * @ORM\Column(name="name", type="string", length=255)
@@ -276,7 +280,8 @@ class Category
      * @Sonata\FormField(
      *      type="",
      *      options={},
-     *      fieldDescriptionOptions={}
+     *      fieldDescriptionOptions={},
+     *      position=2
      * )
      *
      * @ORM\Column(name="description", type="string", length=255)
@@ -302,6 +307,10 @@ class Category
 
 ### ShowField
 
+You are able to set the position of the field. Position 1 would be the first
+field to render and higher numbers after. If field doesn't have position, it
+will be rendered after all fields with position.
+
 ```php
 <?php
 
@@ -321,7 +330,8 @@ class Category
     /**
      * @Sonata\ShowField(
      *      type="",
-     *      fieldDescriptionOptions={}
+     *      fieldDescriptionOptions={},
+     *      position=1
      * )
      *
      * @ORM\Column(name="name", type="string", length=255)
@@ -339,6 +349,10 @@ class Category
 ```
 
 ### ShowAssociationField
+
+You are able to set the position of the field. Position 1 would be the first
+field to render and higher numbers after. If field doesn't have position, it
+will be rendered after all fields with position.
 
 ```php
 <?php
@@ -360,13 +374,15 @@ class Category
      * @Sonata\ShowAssociationField(
      *      field="name",
      *      type="",
-     *      fieldDescriptionOptions={}
+     *      fieldDescriptionOptions={},
+     *      position=1
      * )
      *
      * @Sonata\ShowAssociationField(
      *      field="email",
      *      type="",
-     *      fieldDescriptionOptions={}
+     *      fieldDescriptionOptions={},
+     *      position=1
      * )
      *
      * @ORM\ManyToOne(targetEntity="Owner")
@@ -377,6 +393,10 @@ class Category
 ```
 
 ### ListField
+
+You are able to set the position of the field. Position 1 would be the first
+field to render and higher numbers after. If field doesn't have position, it
+will be rendered after all fields with position.
 
 ```php
 <?php
@@ -407,7 +427,8 @@ class Category
      * @Sonata\ListField(
      *      type="",
      *      fieldDescriptionOptions={},
-     *      identifier=false
+     *      identifier=false,
+     *      position=1
      * )
      *
      * @ORM\Column(name="name", type="string", length=255)
@@ -415,7 +436,7 @@ class Category
     private $name;
 
     /**
-     * @Sonata\ListField()
+     * @Sonata\ListField(position=1)
      */
     public function listThis(): string
     {
@@ -425,6 +446,10 @@ class Category
 ```
 
 ### ListAssociationField
+
+You are able to set the position of the field. Position 1 would be the first
+field to render and higher numbers after. If field doesn't have position, it
+will be rendered after all fields with position.
 
 ```php
 <?php
@@ -447,7 +472,8 @@ class Category
      *      field="name",
      *      type="",
      *      fieldDescriptionOptions={},
-     *      identifier=false
+     *      identifier=false,
+     *      position=1
      * )
      * 
      * @Sonata\ListAssociationField(
@@ -466,6 +492,10 @@ class Category
 
 
 ### DatagridField
+
+You are able to set the position of the field. Position 1 would be the first
+field to render and higher numbers after. If field doesn't have position, it
+will be rendered after all fields with position.
 
 ```php
 <?php
@@ -489,7 +519,8 @@ class Category
      *      fieldDescriptionOptions={},
      *      filterOptions={},
      *      fieldType="",
-     *      fieldOptions={}
+     *      fieldOptions={},
+     *      position=1
      * )
      *
      * @ORM\Column(name="name", type="string", length=255)
@@ -499,6 +530,10 @@ class Category
 ```
 
 ### DatagridAssociationField
+
+You are able to set the position of the field. Position 1 would be the first
+field to render and higher numbers after. If field doesn't have position, it
+will be rendered after all fields with position.
 
 ```php
 <?php
@@ -523,7 +558,8 @@ class Category
      *      fieldDescriptionOptions={},
      *      filterOptions={},
      *      fieldType="",
-     *      fieldOptions={}
+     *      fieldOptions={},
+     *      position=1
      * )
      *
      * @Sonata\DatagridAssociationField(

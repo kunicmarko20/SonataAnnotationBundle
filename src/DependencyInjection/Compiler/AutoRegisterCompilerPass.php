@@ -33,6 +33,10 @@ final class AutoRegisterCompilerPass implements CompilerPassInterface
                 continue;
             }
 
+            if (!\class_exists($className)) {
+                continue;
+            }
+
             if (!($annotation = $this->getClassAnnotation($reflection = new \ReflectionClass($className)))) {
                 continue;
             }
@@ -76,7 +80,7 @@ final class AutoRegisterCompilerPass implements CompilerPassInterface
             return null;
         }
 
-        preg_match('/namespace (.*);$/', reset($namespaceLine), $match);
+        preg_match('/namespace (.*);$/', trim(reset($namespaceLine)), $match);
 
         return array_pop($match);
     }

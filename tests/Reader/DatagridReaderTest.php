@@ -8,6 +8,7 @@ use Doctrine\Common\Annotations\AnnotationReader;
 use KunicMarko\SonataAnnotationBundle\Reader\DatagridReader;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationClass;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationExceptionClass;
+use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationExceptionClass3;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\EmptyClass;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
@@ -41,8 +42,9 @@ final class DatagridReaderTest extends TestCase
 
     public function testConfigureFieldsAnnotationPresent(): void
     {
-        $this->datagridMapper->add('field', Argument::cetera())->shouldBeCalled();
         $this->datagridMapper->add('parent.name', Argument::cetera())->shouldBeCalled();
+        $this->datagridMapper->add('additionalField', Argument::cetera())->shouldBeCalled();
+        $this->datagridMapper->add('field', Argument::cetera())->shouldBeCalled();
 
         $this->datagridReader->configureFields(
             new \ReflectionClass(AnnotationClass::class),
@@ -60,6 +62,38 @@ final class DatagridReaderTest extends TestCase
     {
         $this->datagridReader->configureFields(
             new \ReflectionClass(AnnotationExceptionClass::class),
+            $this->datagridMapper->reveal()
+        );
+    }
+
+    public function testConfigureFieldsAnnotationPresentPosition(): void
+    {
+        $mock = $this->createMock(DatagridMapper::class);
+
+        $propertiesAndMethods = ['parent.name', 'additionalField', 'field'];
+        $mock->expects($this->exactly(3))
+            ->method('add')
+            ->with($this->callback(static function (string $field) use (&$propertiesAndMethods): bool {
+                $propertyAndMethod = array_shift($propertiesAndMethods);
+
+                return $field === $propertyAndMethod;
+            }));
+
+        $this->datagridReader->configureFields(
+            new \ReflectionClass(AnnotationClass::class),
+            $mock
+        );
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testPositionShouldBeUnique(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Position "1" is already in use by "field.name", try setting a different position for "field2".');
+        $this->datagridReader->configureFields(
+            new \ReflectionClass(AnnotationExceptionClass3::class),
             $this->datagridMapper->reveal()
         );
     }

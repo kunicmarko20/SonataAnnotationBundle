@@ -12,4 +12,4 @@ wget https://github.com/satooshi/php-coveralls/releases/download/v1.0.1/coverall
 chmod u+x "${HOME}/bin/coveralls"
 
 if [ "$SYMFONY" != "" ]; then composer require "symfony/symfony:$SYMFONY" --no-update; fi;
-composer install --dev --prefer-dist
+COMPOSER_MEMORY_LIMIT=-1 composer install --prefer-dist --no-interaction
