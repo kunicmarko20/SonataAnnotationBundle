@@ -18,32 +18,24 @@
     }
   ],
   "require": {
-    "php": "^7.1",
+    "php": "^7.2",
     "doctrine/annotations": "^1.6",
-    "sonata-project/admin-bundle": "^3.35",
-    "symfony/config": "^3.4 || ^4.0",
-    "symfony/dependency-injection": "^3.4 || ^4.0",
-    "symfony/finder": "^3.4 || ^4.0",
-    "symfony/http-kernel": "^3.4 || ^4.0"
-  },
-  "conflict": {
-    "sonata-project/admin-bundle": "<3.35"
+    "sonata-project/admin-bundle": "dev-master",
+    "symfony/config": "^4.0 || ^5.0",
+    "symfony/dependency-injection": "^4.0 || ^5.0",
+    "symfony/finder": "^4.0 || ^5.0",
+    "symfony/http-kernel": "^4.0 || ^5.0"
   },
   "require-dev": {
-    "behat/behat": "^3.5",
-    "behat/mink": "1.7.x-dev",
-    "behat/mink-browserkit-driver": "^1.3",
-    "behat/mink-extension": "^2.3",
-    "behat/mink-goutte-driver": "^1.2",
-    "behat/mink-selenium2-driver": "^1.3",
-    "behat/symfony2-extension": "^2.1",
     "doctrine/doctrine-fixtures-bundle": "^3.0",
-    "matthiasnoback/symfony-dependency-injection-test": "^3.0",
-    "phpstan/phpstan-phpunit": "^0.11.2",
-    "sonata-project/doctrine-orm-admin-bundle": "^3.6",
-    "symfony/framework-bundle": "^3.4 || ^4.0",
-    "symfony/phpunit-bridge": "^4.0",
-    "symfony/var-dumper": "^3.4 || ^4.0"
+    "matthiasnoback/symfony-dependency-injection-test": "^4.0",
+    "phpspec/prophecy-phpunit": "^2.0",
+    "phpstan/phpstan-phpunit": "^0.12.16",
+    "phpunit/phpunit": "^9.4",
+    "sonata-project/doctrine-orm-admin-bundle": "dev-master",
+    "symfony/framework-bundle": "^4.0 ||^5.0",
+    "symfony/phpunit-bridge": "^4.0 || ^5.0",
+    "symfony/var-dumper": "^4.0 || ^5.0"
   },
   "config": {
     "sort-packages": true

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace KunicMarko\SonataAnnotationBundle\Tests\Reader;
 
 use Doctrine\Common\Annotations\AnnotationReader;
+use InvalidArgumentException;
 use KunicMarko\SonataAnnotationBundle\Reader\ActionButtonReader;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationExceptionClass;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\EmptyClass;
@@ -25,12 +26,11 @@ final class ActionButtonReaderTest extends TestCase
         $this->actionButtonReader = new ActionButtonReader(new AnnotationReader());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Argument "template" is mandatory in "KunicMarko\SonataAnnotationBundle\Annotation\ActionButton" annotation.
-     */
     public function testGetActionsException(): void
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Argument "template" is mandatory in "KunicMarko\SonataAnnotationBundle\Annotation\ActionButton" annotation.');
+
         $this->actionButtonReader->getActions(new \ReflectionClass(AnnotationExceptionClass::class), []);
     }
 

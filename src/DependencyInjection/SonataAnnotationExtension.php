@@ -6,7 +6,7 @@ namespace KunicMarko\SonataAnnotationBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
@@ -24,7 +24,7 @@ final class SonataAnnotationExtension extends Extension
             $config['directory'] ?? $container->getParameter('kernel.project_dir') . '/src/'
         );
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('reader.xml');
+        $loader = new PhpFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('reader.php');
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace KunicMarko\SonataAnnotationBundle\Tests\Reader;
 
 use Doctrine\Common\Annotations\AnnotationReader;
+use InvalidArgumentException;
 use KunicMarko\SonataAnnotationBundle\Reader\DatagridReader;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationClass;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationExceptionClass;
@@ -12,6 +13,7 @@ use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationExceptionClass3;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\EmptyClass;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 
 /**
@@ -19,6 +21,8 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
  */
 final class DatagridReaderTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var DatagridReader
      */
@@ -55,11 +59,12 @@ final class DatagridReaderTest extends TestCase
     /**
      * @group legacy
      * @expectedDeprecation The "KunicMarko\SonataAnnotationBundle\Annotation\ParentAssociationMapping" annotation is deprecated since 1.1, to be removed in 2.0. Use KunicMarko\SonataAnnotationBundle\Annotation\AddChild instead.
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Argument "field" is mandatory in "KunicMarko\SonataAnnotationBundle\Annotation\DatagridAssociationField" annotation.
      */
     public function testConfigureFieldsAnnotationException(): void
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Argument "field" is mandatory in "KunicMarko\SonataAnnotationBundle\Annotation\DatagridAssociationField" annotation.');
+
         $this->datagridReader->configureFields(
             new \ReflectionClass(AnnotationExceptionClass::class),
             $this->datagridMapper->reveal()

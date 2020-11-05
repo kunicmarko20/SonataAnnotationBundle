@@ -20,7 +20,11 @@ trait FindClassTrait
         //Entity can be a class or a parameter
         $class = $definition->getArgument(1); //1 is Entity
 
-        if ($class[0] !== '%') {
+        if ($class && $container->hasDefinition($class)) {
+            return $container->getDefinition($class)->getClass();
+        }
+
+        if ($class === null || (is_string($class) && $class[0] !== '%')) {
             return $class;
         }
 

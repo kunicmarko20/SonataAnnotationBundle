@@ -7,6 +7,14 @@ namespace KunicMarko\SonataAnnotationBundle\Tests\DependencyInjection\Compiler;
 use Doctrine\Common\Annotations\AnnotationReader;
 use KunicMarko\SonataAnnotationBundle\Admin\AnnotationAdmin;
 use KunicMarko\SonataAnnotationBundle\DependencyInjection\Compiler\AutoRegisterCompilerPass;
+use KunicMarko\SonataAnnotationBundle\Reader\ActionButtonReader;
+use KunicMarko\SonataAnnotationBundle\Reader\DashboardActionReader;
+use KunicMarko\SonataAnnotationBundle\Reader\DatagridReader;
+use KunicMarko\SonataAnnotationBundle\Reader\ExportReader;
+use KunicMarko\SonataAnnotationBundle\Reader\FormReader;
+use KunicMarko\SonataAnnotationBundle\Reader\ListReader;
+use KunicMarko\SonataAnnotationBundle\Reader\RouteReader;
+use KunicMarko\SonataAnnotationBundle\Reader\ShowReader;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationClass;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationExceptionClass;
 use PHPUnit\Framework\TestCase;
@@ -25,7 +33,16 @@ final class AutoRegisterCompilerPassTest extends TestCase
     protected function setUp(): void
     {
         $this->container =  new ContainerBuilder();
-        $this->container->set('annotation_reader', new AnnotationReader());
+        $annotationReader = new AnnotationReader();
+        $this->container->set('annotation_reader', $annotationReader);
+        $this->container->set('sonata.annotation.reader.form', new FormReader($annotationReader));
+        $this->container->set('sonata.annotation.reader.list', new ListReader($annotationReader));
+        $this->container->set('sonata.annotation.reader.show', new ShowReader($annotationReader));
+        $this->container->set('sonata.annotation.reader.datagrid', new DatagridReader($annotationReader));
+        $this->container->set('sonata.annotation.reader.route', new RouteReader($annotationReader));
+        $this->container->set('sonata.annotation.reader.action_button', new ActionButtonReader($annotationReader));
+        $this->container->set('sonata.annotation.reader.dashboard_action', new DashboardActionReader($annotationReader));
+        $this->container->set('sonata.annotation.reader.export', new ExportReader($annotationReader));
         $this->container->setParameter('sonata_annotation.directory', __DIR__ . '/../../Fixtures');
     }
 
