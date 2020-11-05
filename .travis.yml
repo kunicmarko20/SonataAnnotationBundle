@@ -2,8 +2,6 @@ language: php
 
 sudo: true
 php:
-  - '7.1'
-  - '7.2'
   - '7.3'
   - '7.4'
   - nightly
@@ -15,12 +13,6 @@ env:
 matrix:
   fast_finish: true
   include:
-    - php: '7.2'
-      env: SYMFONY=3.4.*
-    - php: '7.2'
-      env: SYMFONY=4.1.*
-    - php: '7.2'
-      env: SYMFONY=4.2.*
     - php: '7.3'
       env: SYMFONY=4.2.*
     - php: '7.4'
