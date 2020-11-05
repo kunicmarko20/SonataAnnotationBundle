@@ -1,0 +1,5 @@
+parameters:
+    ignoreErrors:
+        - '#on an unknown class Prophecy#'
+    autoload_files:
+        - vendor/bin/.phpunit/phpunit-7.4/vendor/autoload.php

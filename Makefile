@@ -44,5 +44,5 @@ cs-fix-xml:
 .PHONY: cs-fix-xml
 
 test:
-	phpunit -c phpunit.xml.dist --coverage-clover build/logs/clover.xml
+	./vendor/bin/phpunit -c phpunit.xml.dist --coverage-clover build/logs/clover.xml
 .PHONY: test

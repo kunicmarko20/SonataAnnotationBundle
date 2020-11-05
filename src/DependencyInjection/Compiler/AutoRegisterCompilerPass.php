@@ -9,6 +9,7 @@ use KunicMarko\SonataAnnotationBundle\Annotation\Admin;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -33,13 +34,29 @@ final class AutoRegisterCompilerPass implements CompilerPassInterface
                 continue;
             }
 
+            if (!\class_exists($className)) {
+                continue;
+            }
+
             if (!($annotation = $this->getClassAnnotation($reflection = new \ReflectionClass($className)))) {
                 continue;
             }
 
             $definition = new Definition(
                 $annotation->admin,
-                [$annotation->code, $className, $annotation->controller]
+                [
+                    $annotation->code,
+                    $className,
+                    $annotation->controller,
+                    new Reference('sonata.annotation.reader.form'),
+                    new Reference('sonata.annotation.reader.list'),
+                    new Reference('sonata.annotation.reader.show'),
+                    new Reference('sonata.annotation.reader.datagrid'),
+                    new Reference('sonata.annotation.reader.route'),
+                    new Reference('sonata.annotation.reader.action_button'),
+                    new Reference('sonata.annotation.reader.dashboard_action'),
+                    new Reference('sonata.annotation.reader.export'),
+                ]
             );
 
             $definition->addTag('sonata.admin', $annotation->getTagOptions());
@@ -76,7 +93,7 @@ final class AutoRegisterCompilerPass implements CompilerPassInterface
             return null;
         }
 
-        preg_match('/namespace (.*);$/', reset($namespaceLine), $match);
+        preg_match('/namespace (.*);$/', trim(reset($namespaceLine)), $match);
 
         return array_pop($match);
     }

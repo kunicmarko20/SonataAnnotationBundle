@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [1.1.2](https://github.com/kunicmarko20/SonataAnnotationBundle/compare/1.1.1...1.1.2) - 2018-11-11
+### Fixed
+- An issue when compiler pass is trying to create a reflection of a class that doesn't exist
+
 ## [1.1.1](https://github.com/kunicmarko20/SonataAnnotationBundle/compare/1.1.0...1.1.1) - 2018-04-24
 ### Fixed
 - AddChildReader throwing exception for missing argument

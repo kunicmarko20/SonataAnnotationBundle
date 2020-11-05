@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace KunicMarko\SonataAnnotationBundle\Tests\DependencyInjection\Compiler;
 
 use Doctrine\Common\Annotations\AnnotationReader;
+use InvalidArgumentException;
 use KunicMarko\SonataAnnotationBundle\DependencyInjection\Compiler\AccessCompilerPass;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AccessExceptionClass;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationClass;
 use KunicMarko\SonataAnnotationBundle\Tests\Fixtures\AnnotationExceptionClass;
+use LogicException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -62,24 +64,22 @@ final class AccessCompilerPassTest extends TestCase
         }
     }
 
-    /**
-     * @expectedException \LogicException
-     * @expectedExceptionMessage Service "app.admin.%class%" has a parameter "class" as an argument but it is not found.
-     */
     public function testProcessExceptionParamNotFound(): void
     {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Service "app.admin.%class%" has a parameter "class" as an argument but it is not found.');
+
         $this->initAdminClasses(['%class%']);
 
         $accessCompilerPass = new AccessCompilerPass();
         $accessCompilerPass->process($this->container);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Argument "role" is mandatory in "KunicMarko\SonataAnnotationBundle\Annotation\Access" annotation.
-     */
     public function testProcessExceptionAnnotation(): void
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Argument "role" is mandatory in "KunicMarko\SonataAnnotationBundle\Annotation\Access" annotation.');
+
         $this->initAdminClasses([AccessExceptionClass::class]);
 
         $accessCompilerPass = new AccessCompilerPass();
